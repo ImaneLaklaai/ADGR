@@ -29,6 +29,18 @@
         <script src="{{asset("vendor/morrisjs/morris.min.js")}}"></script>
         <script src="{{asset("data/morris-data.js")}}"></script>
 
+        <!-- DataTables JavaScript -->
+        <script src="{{asset("vendor/datatables/js/jquery.dataTables.min.js")}}"></script>
+        <script src="{{asset("vendor/datatables-plugins/dataTables.bootstrap.min.js")}}"></script>
+        <script src="{{asset("vendor/datatables-responsive/dataTables.responsive.js")}}"></script>
+        <script>
+            $(document).ready(function() {
+                $('.dataTables-example').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+
         <!-- Custom Theme JavaScript -->
         <script src="{{asset("dist/js/sb-admin-2.js")}}"></script>
     </body>

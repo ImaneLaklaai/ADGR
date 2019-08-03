@@ -27,7 +27,7 @@ class Donneur extends Model
     }
 
     public function etatCivil(){
-        return $this->belongsTo("App\\etatCivil");
+        return $this->belongsTo("App\etatCivil");
     }
     public function groupeSanguin(){
         return $this->belongsTo("App\groupeSanguin");

@@ -6,7 +6,14 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Dons
+                        <div class="row">
+                            <div class="col-md-9">
+                                Donneurs
+                            </div>
+                            <div class="col-md-2">
+                                <a href="/donneur/create"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Ajouter</button></a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -27,11 +34,12 @@
                                         <td>{{$donneur->nom}}</td>
                                         <td>{{$donneur->prenom}}</td>
                                         <td>{{$donneur->CIN}}</td>
-                                        <td>{{$donneur->groupe}}</td>
+                                        <td>{{$donneur->groupeSanguin->libelle.$donneur->groupeSanguin->rhesus}}</td>
                                         <td>
                                             <a href="/donneur/delete/{{$donneur->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
                                             <a href="/donneur/edit/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                             <a href="/donneur/show/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
+                                            <a href="/don/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-heart"></span></a>
                                         </td>
                                     </tr>
                                 @endforeach

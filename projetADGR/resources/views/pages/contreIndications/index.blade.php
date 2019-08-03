@@ -6,7 +6,14 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Contre-indications
+                        <div class="row">
+                            <div class="col-md-9">
+                                Contre indications
+                            </div>
+                            <div class="col-md-2">
+                                <a href="/contreIndication/create"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Ajouter</button></a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

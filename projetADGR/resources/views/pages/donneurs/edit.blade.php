@@ -42,7 +42,13 @@
                     <select id="sexe" name="sexe" class="form-control" value={{$donneur->sexe}}>
                         <option value="Femme">Femme</option>
                         <option value="Homme">Homme</option>
-                        <option value="Autre">Autre</option>
+                        {{--<option value="Autre">Autre</option>--}}
+                    </select><br>
+
+                    <label for="moyen">Moyen d'adhésion</label>
+                    <select id="moyen" name="moyen" class="form-control">
+                        <option value="Rencontre ADGR">Une rencontre organisée par l'ADGR</option>
+                        <option value="conseil d'un ami">Conseil d'un ami</option>
                     </select><br>
 
                     <label for="etat">Etat d'activité</label>
@@ -73,17 +79,6 @@
                     <label for="nombreEnfants">Nombre d'enfants</label>
                     <input type="text" name="nombreEnfants" id="nombreEnfants" class="form-control" value={{$donneur->nombreEnfants}}><br>
 
-                    <div class="form-check">
-                        @if($donneur->type == 0)
-                            <input class="form-check-input" name="type" type="checkbox" value="1" id="type">
-                        @else
-                            <input class="form-check-input" name="type" type="checkbox" value="1" id="type" checked>
-                        @endif
-                        <label class="form-check-label" for="type">
-                            Donneur confidentiel
-                        </label>
-                    </div>
-
                     <label for="ville">Ville</label>
                     <select id="ville" name="ville" class="form-control">
                         @foreach(App\Ville::all() as $ville)
@@ -110,6 +105,17 @@
 
                     <label for="remarque">Remarque(s)</label>
                     <input type="textarea" name="remarque" id="remarque" class="form-control" value={{$donneur->remarque}}><br>
+
+                    <div class="form-check">
+                        @if($donneur->type == 0)
+                            <input class="form-check-input" name="type" type="checkbox" value="1" id="type">
+                        @else
+                            <input class="form-check-input" name="type" type="checkbox" value="1" id="type" checked>
+                        @endif
+                        <label class="form-check-label" for="type">
+                            Donneur confidentiel
+                        </label>
+                    </div>
 
                     <input type="submit" value="Modifier" class="btn btn-primary">
                     <input type="reset" value="Annuler" class="btn btn-primary">

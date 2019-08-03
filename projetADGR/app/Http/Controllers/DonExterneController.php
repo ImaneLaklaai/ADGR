@@ -36,7 +36,12 @@ class DonExterneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+                "donneur"=>"required",
+                "dateDon" => "required",
+                "raison" => ""
+            ]
+        );
     }
 
     /**

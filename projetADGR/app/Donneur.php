@@ -25,4 +25,15 @@ class Donneur extends Model
     public function donsExternes(){
         return $this->hasMany("App\donExterne");
     }
+
+    public function donneurContreIndications(){
+        return $this->hasMany("App\DonneurContreIndication");
+    }
+
+    public function etatCivil(){
+        return $this->belongsTo("App\\etatCivil");
+    }
+    public function groupeSanguin(){
+        return $this->belongsTo("App\groupeSanguin");
+    }
 }

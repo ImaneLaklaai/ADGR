@@ -15,7 +15,6 @@ class CreateDonneursTable extends Migration
     {
         Schema::create('donneurs', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('nom');
             $table->string('prenom');
             $table->string('CIN');
@@ -29,16 +28,20 @@ class CreateDonneursTable extends Migration
             $table->string('profession');
             $table->string('sexe');
             $table->boolean('etat');
-            $table->string('groupe');
-            $table->date('dateDernierDon');
-            $table->string('etatCivil');
-            $table->integer('nombreEnfants');
+            $table->date('dateDernierDon')->nullable()->default(null);
+            $table->integer('nombreEnfants')->nullable()->default(null);
+            $table->string("moyenAdhesion");
             $table->boolean('type');
             $table->mediumText('remarque')->nullable()->default(null);;
+            $table->string('etatCivil_id');
+            $table->foreign('etatCivil_id')->references("id")->on("App\\etatCivil");
+            $table->string('groupe_sanguin_id');
+            $table->foreign("groupe_sanguin_id")->references("id")->on("App\groupeSanguin");
             $table->integer('zone_id');
             $table->foreign('zone_id')->references("id")->on("App\Zone");
             $table->integer('carte_id')->nullable()->default(null);
-            $table->foreign("carte_id")->references("id")->on("cartes");
+            $table->foreign("carte_id")->references("id")->on("App\carte");
+            $table->timestamps();
         });
     }
 

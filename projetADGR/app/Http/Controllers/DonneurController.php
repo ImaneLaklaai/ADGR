@@ -56,9 +56,9 @@ class DonneurController extends Controller
         $donneur->profession = $request->input('profession');
         $donneur->sexe = $request->input('sexe');
         $donneur->etat = $request->input('etat');
-        $donneur->groupe = $request->input('groupe');
+        $donneur->groupe_sanguin_id = $request->input('groupe');
         $donneur->dateDernierDon = $request->input('dateDernierDon');
-        $donneur->etatCivil = $request->input('etatCivil');
+        $donneur->etatCivil_id = $request->input('etatCivil');
         $donneur->nombreEnfants = $request->input('nombreEnfants');
         if($request->type){
             $donneur->type = 1;
@@ -70,6 +70,7 @@ class DonneurController extends Controller
         $donneur->carte_id = 0;
         $donneur->remarque = $request->input('remarque');
         $donneur->zone_id = $request->input('zone_id');
+        $donneur->moyenAdhesion = $request->input("moyen");
         $donneur->save();
         return redirect('/donneur')->with('success', 'Donneur ajouté');
     }

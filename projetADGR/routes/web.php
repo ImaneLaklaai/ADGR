@@ -71,14 +71,6 @@ Route::post("/centre/update/{idCentre}","CentreController@update");
 Route::get("/centre/delete/{idCentre}","CentreController@destroy");
 
 
-//AJAX handlers
-Route::get("/getZones/{id}", function($id){
-    if(Request::ajax()){
-        return json_encode(App\Ville::find($id)->zone);
-    }else{
-        return Redirect::to("/");
-    }
-});
 
 //Cartes:
 Route::get("/carte/", "CartesController@index");
@@ -99,19 +91,22 @@ Route::post("/donneur/update/{id}", "DonneurController@update");
 Route::get("/donneur/delete/{id}", "DonneurController@destroy");
 
 //Dons:
-Route::get("/don/{idDonneur}", "DonController@index");
+Route::get("/don/", "DonController@index");
 Route::get("/don/create", "DonController@create");
+Route::get("/don/{idDonneur}", "DonController@index");
 Route::post("/don/store", "DonController@store");
 
 //Dons ADGR:
 Route::get("/don/adgr/delete/{id}","DonADGRController@destroy");
-Route::get("/don/edit/{id}","DonADGRController@edit");
-Route::post("/don/update/{id}","DonADGRController@update");
+Route::get("/don/adgr/edit/{id}","DonADGRController@edit");
+Route::post("/don/adgr/update/{id}","DonADGRController@update");
+Route::post("/don/adgr/store/","DonADGRController@store");
 
 //Dons externes:
 Route::get("/don/externe/delete/{id}","DonExterneController@destroy");
 Route::get("/don/externe/edit/{id}","DonExterneController@edit");
 Route::post("/don/externe/update/{id}","DonExterneController@update");
+Route::post("/don/externe/store/","DonExterneController@store");
 
 //Contre indications:
 
@@ -122,3 +117,13 @@ Route::get("/contreIndication/edit/{id}", "ContreIndicationController@edit");
 Route::post("/contreIndication/update/{id}", "ContreIndicationController@update");
 Route::get("/contreIndication/delete/{id}","ContreIndicationController@destroy");
 
+//AJAX handlers
+Route::get("/getZones/{id}", function($id){
+    if(Request::ajax()){
+        return json_encode(App\Ville::find($id)->zone);
+    }else{
+        return Redirect::to("/");
+    }
+});
+
+Route::post("/cinTest", "ajaxHandlers@CINtest");

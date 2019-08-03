@@ -9,7 +9,7 @@
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
-                            </span>
+                        </span>
                     </div>
                     <!-- /input-group -->
                 </li>
@@ -17,11 +17,19 @@
                     <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-users fa-fw"></i> Donneurs<span class="fa arrow"></span></a>
+                    <a href="/donneur"><i class="fa fa-users fa-fw"></i> Donneurs</a>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="/contreIndication"><i class="fa fa-remove fa-fw"></i> Contre indications</a>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-heart fa-fw"></i> Dons<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/donneur">Liste</a>
-                            <a href="/donneur/create">Ajouter</a>
+                            <a href="/don">Liste</a>
+                            <a href="/don/create">Ajouter</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

@@ -39,7 +39,13 @@
                     <select id="sexe" name="sexe" class="form-control">
                         <option value="Femme">Femme</option>
                         <option value="Homme">Homme</option>
-                        <option value="Autre">Autre</option>
+                        {{--<option value="Autre">Autre</option>--}}
+                    </select><br>
+
+                    <label for="moyen">Moyen d'adhésion</label>
+                    <select id="moyen" name="moyen" class="form-control">
+                        <option value="Rencontre ADGR">Une rencontre organisée par l'ADGR</option>
+                        <option value="conseil d'un ami">Conseil d'un ami</option>
                     </select><br>
 
                     <label for="etat">Etat d'activité</label>
@@ -50,10 +56,14 @@
 
                     <label for="groupe">Groupe sanguin</label>
                     <select id="groupe" name="groupe" class="form-control">
-                        <option value="A-">A négatif</option>
-                        <option value="B-">B négatif</option>
-                        <option value="AB-">AB négatif</option>
-                        <option value="O-">O négatif</option>
+                        @foreach(App\groupeSanguin::all() as $groupe)
+                            @if($groupe->rhesus == '-')
+                                <?php $rhesus = 'négatif' ?>
+                            @else
+                                <?php $rhesus = 'positif' ?>
+                            @endif
+                            <option value="{{$groupe->id}}">{{$groupe->libelle." ".$rhesus}}</option>
+                        @endforeach
                     </select><br>
 
                     <label for="dateDernierDon">Date du dernier don</label>
@@ -61,21 +71,13 @@
 
                     <label for="etatCivil">Etat civil</label>
                     <select id="etatCivil" name="etatCivil" class="form-control">
-                        <option value="Célibataire">Célibataire</option>
-                        <option value="Marié.e">Marié.e</option>
-                        <option value="Divorcé.e">Divorcé.e</option>
-                        <option value="Veuf.ve">Veuf.ve</option>
+                        @foreach(App\etatCivil::all() as $etat)
+                            <option value="{{$etat->id}}">{{$etat->libelle}}</option>
+                        @endforeach
                     </select><br>
 
                     <label for="nombreEnfants">Nombre d'enfants</label>
                     <input type="text" name="nombreEnfants" id="nombreEnfants" class="form-control"><br>
-
-                    <div class="form-check">
-                        <input class="form-check-input" name="type" type="checkbox" value="1" id="type">
-                        <label class="form-check-label" for="type">
-                            Donneur confidentiel
-                        </label>
-                    </div>
 
                     <label for="ville">Ville</label>
                     <select id="ville" name="ville" class="form-control">
@@ -96,7 +98,14 @@
                     <label for="remarque">Remarque(s)</label>
                     <input type="textarea" name="remarque" id="remarque" class="form-control"><br>
 
-                    <input type="submit" value="Ajouter" class="btn btn-primary">
+                    <div class="form-check">
+                        <input class="form-check-input" name="type" type="checkbox" value="1" id="type">
+                        <label class="form-check-label" for="type">
+                            Donneur confidentiel
+                        </label>
+                    </div>
+
+                    <input type="submit" value="Ajouter" id='ajouter' class="btn btn-primary">
                     <input type="reset" value="Annuler" class="btn btn-primary">
                 </form>
             </div>
@@ -122,6 +131,31 @@
                         divZone.innerHTML = html;
                     })
                 })
+            });
+            $("#cin").on("keyup", function(){
+                let cin = $("#cin").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/cinTest',
+                    data: {
+                        "_token": "<?php echo csrf_token() ?>",
+                        "CIN": cin
+                    },
+                    success:function(data){
+                        if(data == 1){
+                            $("#cin").css("background-color", "#FF5050");
+                            $("#cin").css("color", "#FFFFFF");
+                            $("#ajouter").className += " disabled";
+                        }else{
+                            $("#cin").css("background-color","");
+                            $("#cin").css("color", "");
+                            $("#ajouter").className -= " disabled";
+                        }
+                    },
+                    error: function(reject){
+                        console.log(reject);
+                    }
+                });
             });
         });
     </script>

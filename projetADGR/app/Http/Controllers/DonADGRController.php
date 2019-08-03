@@ -49,7 +49,7 @@ class DonADGRController extends Controller
         $don->donneur = $request->input('donneur');
         $don->dateDon = $request->get('dateDon');
         $don->save();
-        return redirect('/dons')->with('success', 'Don ajouté');
+        return redirect('/don')->with('success', 'Don ajouté');
     }
 
     /**

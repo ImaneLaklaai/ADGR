@@ -10,10 +10,6 @@ class Donneur extends Model
         return $this->hasOne("carte");
     }
 
-    public function dons(){
-        return $this->hasMany("App\Don");
-    }
-
     public function zone(){
         return $this->belongsTo("App\Zone");
     }

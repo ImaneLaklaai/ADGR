@@ -1,7 +1,8 @@
 <?php
         $donneur = \App\Donneur::find($id);
 ?>
-<center>
+<div align="center">
+
 <h1> {{$donneur->nom}} {{$donneur->prenom}} </h1>
 <table class="table table-striped">
     <tr>
@@ -42,7 +43,7 @@
             CIN : 
         </td>
         <td>
-            {{$donneur->cin}}
+            {{$donneur->CIN}}
         </td>
     </tr>
     <tr>
@@ -106,7 +107,7 @@
             Ville : 
         </td>
         <td>
-            {{$donneur->ville_id->libelle}}
+            {{$donneur->zone->ville->libVille}}
         </td>
     </tr>
     <tr>
@@ -114,13 +115,13 @@
             Zone : 
         </td>
         <td>
-            {{$donneur->zone_id->libelle}}
+            {{$donneur->zone->libZone}}
         </td>
     </tr>
 </table>
 <h1> Dons : </h1>
-<h2> Dons ADGR : </h2>
-<table class="table table-striped">
+<h3> Dons ADGR : </h3>
+<table class="table table-striped" width="100%">
     <thead>
         <tr>
             <th>Date </th>
@@ -132,14 +133,18 @@
         @foreach(App\donAdgr::all() as $don)
             <tr>
                 <td>{{$don->dateDon}}</td>
-                <td>{{$don->collecte_id->libCollecte}}</td>
-                <td>{{$don->collecte->typeCollecte}}</td>
+                <td>{{$don->collecte->libCollecte}}</td>
+                @if($don->collecte->typeCollecte == 0)
+                    <td>Collecte fixe</td>
+                @else
+                    <td>Collecte mobile</td>
+                @endif
             </tr>
         @endforeach
     </tbody>
 </table>
-<h2> Dons externes : </h2>
-<table class="table table-striped">
+<h3> Dons externes : </h3>
+<table class="table table-striped" width="100%">
     <thead>
         <tr>
             <th>Date </th>
@@ -149,10 +154,55 @@
     <tbody>
         @foreach(App\donExterne::all() as $don)
             <tr>
-                <td>{{$don->dateDon}}</td>
+                <td>{{$don->date}}</td>
                 <td>{{$don->raison}}</td>
             </tr>
         @endforeach
     </tbody>
 </table>
-</center>
+<h1>Contre indications</h1>
+<table class="table table-striped" width="100%">
+    <thead>
+    <tr>
+        <th>Libelle</th>
+        <th>Duree</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach(App\donneurContreIndication::all()->where("donneur_id", $donneur->id) as $dci)
+        <tr>
+            <td>{{$dci->contreIndication->nom}}</td>
+            <?php
+            $unite = "jours";
+            if($dci->contreIndication->unite == "j"){
+                $unite = "jours";
+            }elseif($dci->contreIndication->unite == "m"){
+                $unite = "mois";
+            }elseif($dci->contreIndication->unite == "a"){
+                $unite = "ans";
+            }else{
+                $unite = "-";
+            }
+            $duree = $dci->contreIndication->duree!=null?$dci->contreIndication->duree:"-";
+            ?>
+            <td>{{$duree. " " . $unite}}</td>
+            <td>{{$dci->dateDebut}}</td>
+            @if(!(is_string($dci->dateFin())))
+                <td>{{$dci->dateFin()->format("Y-m-d")}}</td>
+            @else
+                <td>-------</td>
+            @endif
+            @if($dci->contreIndication->type == "definitive")
+                <td>Définitive</td>
+            @else
+                <td>Provisoire</td>
+            @endif
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+
+</div>

@@ -17,8 +17,8 @@ class DonneurController extends Controller
     public function export_pdf($id)
     {
         $donneur = Donneur::find($id); //Chargement des informations depuis la base de données
-        $pdf = PDF::loadView('donneurs.printable', $donneur); //Envoi des informations à la vue concernée
-        return $pdf->download('donneur.pdf'); 
+        $pdf = PDF::loadView('pages.donneurs.printable', $donneur); //Envoi des informations à la vue concernée
+        return $pdf->download($donneur->nom.$donneur->prenom.time().'.pdf');
     }
     
     public function index()

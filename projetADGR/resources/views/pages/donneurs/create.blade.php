@@ -1,39 +1,40 @@
 @extends("layouts.app")
 @section("title","Nouveau donneur")
 @section("content")
+
     <div class="container">
         <div class="row">
             <div class="col-md-2">
             </div>
             <div class="col-md-4">
-                <form action="/donneur/store" method="post">
+                <form action="/donneur/store" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <label for="nom">Nom</label>
-                    <input type="text" name="nom" id="nom" class="form-control"><br>
+                    <input type="text" name="nom" id="nom" class="form-control" placeholder="Nom"><br>
 
                     <label for="prenom">Prenom</label>
-                    <input type="text" name="prenom" id="prenom" class="form-control"><br>
+                    <input type="text" name="prenom" id="prenom" class="form-control" placeholder="Prenom"><br>
 
                     <label for="cin">CIN</label>
-                    <input type="text" name="cin" id="cin" class="form-control"><br>
+                    <input type="text" name="cin" id="cin" class="form-control" placeholder="CIN"><br>
 
                     <label for="numeroTelephone">Numéro de téléphone</label>
-                    <input type="tel" name="numeroTelephone" id="numeroTelephone" class="form-control"><br>
+                    <input type="tel" name="numeroTelephone" id="numeroTelephone" class="form-control" placeholder="Numéro de telephone"><br>
 
                     <label for="numeroTelephoneSecondaire">Numéro de téléphone secondaire</label>
-                    <input type="tel" name="numeroTelephoneSecondaire" id="numeroTelephoneSecondaire" class="form-control"><br>
+                    <input type="tel" name="numeroTelephoneSecondaire" id="numeroTelephoneSecondaire" class="form-control" placeholder="Numéro de telephone secondaire"><br>
 
                     <label for="dateNaissance">Date de naissance</label>
                     <input type="date" name="dateNaissance" id="dateNaissance" class="form-control"> <br>
 
                     <label for="adresse">Adresse</label>
-                    <input type="text" name="adresse" id="adresse" class="form-control"><br>
+                    <input type="text" name="adresse" id="adresse" class="form-control" placeholder="Adresse"><br>
 
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control"><br>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Email"><br>
 
                     <label for="profession">Profession</label>
-                    <input type="text" name="profession" id="profession" class="form-control"><br>
+                    <input type="text" name="profession" id="profession" class="form-control" placeholder="Profession"><br>
 
                     <label for="sexe">Sexe</label>
                     <select id="sexe" name="sexe" class="form-control">
@@ -66,6 +67,10 @@
                         @endforeach
                     </select><br>
 
+                    <label for="photo">Charger une photo de profil</label>
+                    <input type="file" name="photo" id="photo" class="form-control"><br>
+
+
                     <label for="dateDernierDon">Date du dernier don</label>
                     <input type="date" name="dateDernierDon" id="dateDernierDon" class="form-control" > <br>
 
@@ -77,7 +82,7 @@
                     </select><br>
 
                     <label for="nombreEnfants">Nombre d'enfants</label>
-                    <input type="text" name="nombreEnfants" id="nombreEnfants" class="form-control"><br>
+                    <input type="text" name="nombreEnfants" id="nombreEnfants" class="form-control" placeholder="Nombre d'enfants"><br>
 
                     <label for="ville">Ville</label>
                     <select id="ville" name="ville" class="form-control">
@@ -96,7 +101,7 @@
                     </div>
 
                     <label for="remarque">Remarque(s)</label>
-                    <input type="textarea" name="remarque" id="remarque" class="form-control"><br>
+                    <input type="textarea" name="remarque" id="remarque" class="form-control" placeholder="Remarque(s)"><br>
 
                     <div class="form-check">
                         <input class="form-check-input" name="type" type="checkbox" value="1" id="type">

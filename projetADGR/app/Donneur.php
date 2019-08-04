@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Donneur extends Model
 {
     public function carte(){
-        return $this->hasOne("carte");
+        return $this->hasOne("App\Carte");
     }
 
     public function zone(){
@@ -27,7 +28,7 @@ class Donneur extends Model
     }
 
     public function etatCivil(){
-        return $this->belongsTo("App\\etatCivil");
+        return $this->belongsTo("App\EtatCivil");
     }
     public function groupeSanguin(){
         return $this->belongsTo("App\groupeSanguin");

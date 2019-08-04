@@ -85,7 +85,7 @@ Route::get("/carte/delete/{id}", "CartesController@destroy");
 Route::get("/donneur", "DonneurController@index");
 Route::get("/donneur/create", "DonneurController@create");
 Route::post("/donneur/store", "DonneurController@store");
-Route::get("/donneur/show", "DonneurController@show");
+Route::get("/donneur/show/{id}", "DonneurController@show");
 Route::get("/donneur/edit/{id}", "DonneurController@edit");
 Route::post("/donneur/update/{id}", "DonneurController@update");
 Route::get("/donneur/delete/{id}", "DonneurController@destroy");

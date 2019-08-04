@@ -30,6 +30,6 @@ class CreateContreIndicationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contreIndications');
+        Schema::dropIfExists('contre_indications');
     }
 }

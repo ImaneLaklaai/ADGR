@@ -33,8 +33,8 @@ class CreateDonneursTable extends Migration
             $table->string("moyenAdhesion");
             $table->boolean('type');
             $table->mediumText('remarque')->nullable()->default(null);;
-            $table->string('etatCivil_id');
-            $table->foreign('etatCivil_id')->references("id")->on("App\\etatCivil");
+            $table->string('etat_civil_id');
+            $table->foreign('etat_civil_id')->references("id")->on("App\EtatCivil");
             $table->string('groupe_sanguin_id');
             $table->foreign("groupe_sanguin_id")->references("id")->on("App\groupeSanguin");
             $table->integer('zone_id');

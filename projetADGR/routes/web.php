@@ -89,6 +89,7 @@ Route::get("/donneur/show/{id}", "DonneurController@show");
 Route::get("/donneur/edit/{id}", "DonneurController@edit");
 Route::post("/donneur/update/{id}", "DonneurController@update");
 Route::get("/donneur/delete/{id}", "DonneurController@destroy");
+Route::get("/donneur/{id}/pdf", "DonneurController@export_pdf");
 
 //Dons:
 Route::get("/don/", "DonController@index");

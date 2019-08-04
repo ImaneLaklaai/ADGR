@@ -70,6 +70,7 @@
                                         <a href="/donneur/edit/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                         <a href="/donneur/show/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
                                         <a href="/don/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-heart"></span></a>
+                                        <a href="/donneur/{{$donneur->id}}/pdf}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
                                     </td>
                                 </tr>
                             @endforeach

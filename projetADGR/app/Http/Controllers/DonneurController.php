@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Donneur;
 use Illuminate\Http\Request;
+use PDF;
 
 
 class DonneurController extends Controller
@@ -13,6 +14,13 @@ class DonneurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function export_pdf($id)
+    {
+        $donneur = Donneur::find($id); //Chargement des informations depuis la base de données
+        $pdf = PDF::loadView('donneurs.printable', $donneur); //Envoi des informations à la vue concernée
+        return $pdf->download('donneur.pdf'); 
+    }
+    
     public function index()
     {
         return view("pages.donneurs.index");

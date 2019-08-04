@@ -30,7 +30,15 @@
                                         ?>
                                         <td>{{$donneur->nom}}</td>
                                         <td>{{$donneur->prenom}}</td>
-                                        <td>{{$carte->etatCarte}}</td>
+                                        <td>
+                                            @if($carte->etatCarte == 1)
+                                                Conçue
+                                            @elseif($carte->etatCarte == 2)
+                                                Imprimée
+                                            @else
+                                                Livrée
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="/carte/delete/{{$carte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
                                             <a href="/carte/edit/{{$carte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>

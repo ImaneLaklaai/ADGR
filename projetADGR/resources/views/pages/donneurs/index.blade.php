@@ -25,6 +25,7 @@
                                 <th>CIN</th>
                                 <th>Groupe sanguin</th>
                                 <th>Dernier don</th>
+                                <th>Prochain don</th>
                                 <th>Aptitude</th>
                                 <th>Actions</th>
                             </tr>
@@ -40,14 +41,28 @@
                                         @if($donneur->dateDernierDon == null)
                                             ----
                                         @else
-                                            {{$donneur->dateDernierDon}}
+                                            <?php
+                                                $dernierDon = new DateTime($donneur->dateDernierDon);
+                                            ?>
+                                                {{$dernierDon->format("d-m-Y")}}
                                         @endif
                                     </td>
                                     <td>
-                                        @if(count(\App\donneurContreIndication::All()->where("donneur_id",$donneur->id)) > 0)
-                                            <span class="btn btn-danger">Inapte</span>
+                                        @if($donneur->getProchainDon() != null && $donneur->getProchainDon() != "01-01-2000")
+                                            {{$donneur->getProchainDon()->format("d-m-Y")}}
                                         @else
+                                            @if($donneur->getProchainDon() == null)
+                                                Prochaine occasion
+                                            @else
+                                                Inaptitude définitive
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($donneur->isApte())
                                             <span class="btn btn-success">Apte</span>
+                                        @else
+                                            <span class="btn btn-danger">Inapte</span>
                                         @endif
                                     </td>
                                     <td>

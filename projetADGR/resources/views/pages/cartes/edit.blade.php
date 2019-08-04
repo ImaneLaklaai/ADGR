@@ -13,8 +13,8 @@
                     {{csrf_field()}}
                     <label for="etatCarte">Etat de la carte</label>
                     <select id="etatCarte" name="etatCarte" class="form-control">
-                        <option value="Imprimée">Imprimée</option>
-                        <option value="Livrée">Livrée</option>
+                        <option value="2">Imprimée</option>
+                        <option value="3">Livrée</option>
                     </select><br>
                     <input type="submit" value="Enregistrer" class="btn btn-primary">
                     <input type="reset" value="Annuler" class="btn btn-primary">

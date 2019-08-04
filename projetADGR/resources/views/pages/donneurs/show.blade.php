@@ -13,48 +13,94 @@
             </div>
             <div class="col-md-9">
                 <div class="well">
-                    <b>Nom et prénom:</b> {{$donneur->nom}} {{$donneur->prenom}}<br>
+                    <b>Nom et prénom:</b> {{$donneur->nom}} {{$donneur->prenom}}
+                    @if($donneur->isApte())
+                        <span class="btn btn-success">Apte</span>
+                    @else
+                        <span class="btn btn-danger">Inapte</span>
+                    @endif
+                    <br>
                     <b>Email: </b> {{$donneur->email}}<br>
                     <b>Date de naissance:</b> {{$donneur->dateNaissance}}<br>
                     <b>Groupe sanguin:</b> {{$donneur->groupeSanguin->libelle.$donneur->groupeSanguin->rhesus}}<br>
                     <b>Dernier don: </b>{{$donneur->dateDernierDon}}<br>
-                    <b>Etat de la carte:</b>
-                    @if($donneur->carte->etatCarte == 1)
-                        <div>
-                            <p>
-                                <strong>Conçue</strong>
-                                <span class="pull-right text-muted">33% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                    <span class="sr-only">33% Complete</span>
+                    @if(isset($donneur->carte))
+                        <b>Etat de la carte: </b>
+                        @if($donneur->carte->etatCarte == 1)
+                            <div>
+                                <p>
+                                    <strong>Conçue</strong>
+                                    <span class="pull-right text-muted">33% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                                        <span class="sr-only">33% Complete</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @elseif($donneur->carte->etatCarte == 2)
-                        <div>
-                            <p>
-                                <strong>Imprimée</strong>
-                                <span class="pull-right text-muted">66% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100" style="width: 66%">
-                                    <span class="sr-only">66% Complete</span>
+
+                        @elseif($donneur->carte->etatCarte == 2)
+                            <div>
+                                <p>
+                                    <strong>Imprimée</strong>
+                                    <span class="pull-right text-muted">66% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100" style="width: 66%">
+                                        <span class="sr-only">66% Complete</span>
+                                    </div>
                                 </div>
                             </div>
+                        @else
+                            <div>
+                                <p>
+                                    <strong>Livrée</strong>
+                                    <span class="pull-right text-muted">100% Complete</span>
+                                </p>
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span class="sr-only">100% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Modifier l'état de la carte
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">Modifier l'état de la carte</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/carte/update/{{$donneur->carte->id}}" method="post" id="modifierCarte">
+                                            {{csrf_field()}}
+                                            <label for="etatCarte">Etat de la carte</label>
+                                            <select id="etatCarte" name="etatCarte" class="form-control">
+                                                <option value="1">Conçue</option>
+                                                <option value="2">Imprimée</option>
+                                                <option value="3">Livrée</option>
+                                            </select><br>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" onclick="document.getElementById('modifierCarte').submit()">Modifier</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
                         </div>
                     @else
-                        <div>
-                            <p>
-                                <strong>Livrée</strong>
-                                <span class="pull-right text-muted">100% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                    <span class="sr-only">100% Complete</span>
-                                </div>
-                            </div>
-                        </div>
+                        <form  action="/carte/store" method="post">
+                            {{csrf_field()}}
+                            <input type="hidden" name="donneur_id" value={{$donneur->id}}>
+                            <input type="submit" class="btn btn-primary" value="Créer une carte">
+                        </form>
                     @endif
                 </div>
             </div>
@@ -72,11 +118,11 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Détails</a>
                             </li>
-                            <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Profile</a>
+                            <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Dons</a>
                             </li>
-                            <li class=""><a href="#messages" data-toggle="tab" aria-expanded="false">Messages</a>
+                            <li class=""><a href="#messages" data-toggle="tab" aria-expanded="false">Contre indications</a>
                             </li>
-                            <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a>
+                            <li class=""><a href="#contact" data-toggle="tab" aria-expanded="false">Contact</a>
                             </li>
                         </ul>
 
@@ -110,14 +156,18 @@
                                         <td>
                                             {{$donneur->etatCivil->libelle}}
                                         </td>
-                                </tr>
-                                <tr>
-                                    <td>Nombre d'enfants</td>
-                                    <td>{{$donneur->nombreEnfants}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nombre d'enfants</td>
+                                        <td>{{$donneur->nombreEnfants}}</td>
                                     </tr>
                                     <tr>
                                         <td>email</td>
                                         <td>{{$donneur->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Moyen d'adhesion</td>
+                                        <td> {{$donneur->moyenAdhesion}}</td>
                                     </tr>
                                     <tr>
                                         <td>Remarque(s)</td>
@@ -126,16 +176,192 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="profile">
-                                <h4>Profile Tab</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <h4>Dons</h4>
+                                <input type="radio" id="btnDonsADGR" checked name="typeDon"><label for="btnDonsADGR">Dons ADGR</label>
+                                <input type="radio" id="btnDonsExternes" name="typeDon"><label for="btnDonsExternes">Dons Externes</label>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Dons
+                                    </div>
+                                <!-- /.panel-heading -->
+                                    <div class="panel-body" id="donsADGR">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Date du don</th>
+                                                    <th>Collecte</th>
+                                                    <th>Type de collecte</th>
+                                                    <th>Donneur</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($donneur->donsADGR as $don)
+                                                    <tr>
+                                                        <td>{{$don->dateDon}}</td>
+                                                        <td>{{$don->collecte->libCollecte}}</td>
+                                                        @if($don->typeCollecte == 1)
+                                                            <td>Fixe</td>
+                                                        @else
+                                                            <td>Mobile</td>
+                                                        @endif
+                                                        <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
+                                                        <td>
+                                                            <a href="/dons/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                            <a href="/dons/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.panel-body -->
+                                    <div class="panel-body" id="donsExternes" style="display:none;">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date du don</th>
+                                                        <th>Raison</th>
+                                                        <th>Donneur</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($donneur->donsExternes as $don)
+                                                        <tr>
+                                                            <td>{{$don->date}}</td>
+                                                            <td>{{$don->raison}}</td>
+                                                            <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
+                                                            <td>
+                                                                <a href="/don/externe/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                                <a href="/don/externe/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="messages">
-                                <h4>Messages Tab</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <h4>Contre indications</h4>
+                                <!-- Modal -->
+                                <div class="modal fade" id="contreIndication" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="myModalLabel">Ajouter une contre indication</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/donneurContreIndication/store/{{$donneur->id}}" method="post" id="ajouterContreIndication">
+                                                    {{csrf_field()}}
+                                                    <label for="contre_indication_id">Contre indication</label>
+                                                    <select id="contre_indication_id" name="contre_indication_id" class="form-control">
+                                                        @foreach(\App\contreIndication::All() as $ci)
+                                                            <option value={{$ci->id}}>{{$ci->nom}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="dateDebut">Date de début</label>
+                                                    <input type="date" name="dateDebut" id="dateDebut" class="form-control">
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('ajouterContreIndication').submit()">Ajouter</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div><br>
+                                @if(count(App\donneurContreIndication::all()->where("donneur_id", $donneur->id))>0)
+                                    <table width="100%" class="table-striped table-hover">
+                                        <thead>
+                                            <th>Libelle</th>
+                                            <th>Duree</th>
+                                            <th>Date debut</th>
+                                            <th>Date fin</th>
+                                            <th>type</th>
+                                            <th>Action</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(App\donneurContreIndication::all()->where("donneur_id", $donneur->id) as $dci)
+                                                <tr>
+                                                    <td>{{$dci->contreIndication->nom}}</td>
+                                                    <?php
+                                                        $unite = "jours";
+                                                        if($dci->contreIndication->unite == "j"){
+                                                            $unite = "jours";
+                                                        }elseif($dci->contreIndication->unite == "m"){
+                                                            $unite = "mois";
+                                                        }elseif($dci->contreIndication->unite == "a"){
+                                                            $unite = "ans";
+                                                        }else{
+                                                            $unite = "-";
+                                                        }
+                                                        $duree = $dci->contreIndication->duree!=null?$dci->contreIndication->duree:"-";
+                                                    ?>
+                                                    <td>{{$duree. " " . $unite}}</td>
+                                                    <td>{{$dci->dateDebut}}</td>
+                                                    @if(!(is_string($dci->dateFin())))
+                                                        <td>{{$dci->dateFin()->format("Y-m-d")}}</td>
+                                                    @else
+                                                        <td>-------</td>
+                                                    @endif
+                                                    @if($dci->contreIndication->type == "definitive")
+                                                        <td>Définitive</td>
+                                                    @else
+                                                        <td>Provisoire</td>
+                                                    @endif
+                                                    <td><a href="/donneurContreIndication/delete/{{$dci->id}}">Supprimer</a></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <div class="alert alert-success">
+                                        Pas de contre indications !
+                                    </div>
+                                @endif
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#contreIndication">
+                                    Ajouter
+                                </button>
                             </div>
-                            <div class="tab-pane fade" id="settings">
-                                <h4>Settings Tab</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <div class="tab-pane fade" id="contact">
+                                <h4>Moyens de contact : </h4>
+                                <table class="table-striped table-bordered" width="50%">
+                                    <tr>
+                                        <td><label>Numéro de téléphone :</label></td>
+                                        <td>{{$donneur->numeroTelephone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Numéro de téléphone secondaire :</label></td>
+                                        <td>{{$donneur->numeroTelephoneSecondaire}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Adresse e-mail :</label></td>
+                                        <td>{{$donneur->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Adresse :</label></td>
+                                        <td>{{$donneur->adresse}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Ville :</label></td>
+                                        <td>{{$donneur->zone->ville->libVille}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Zone :</label></td>
+                                        <td>{{$donneur->zone->libZone}}</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -144,4 +370,21 @@
             </div>
         </div>
     </div>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#btnDonsADGR").on("change", function(){
+                $("#donsExternes").fadeOut();
+                $("#donsADGR").delay(400).fadeIn();
+            });
+            $("#btnDonsExternes").on("change", function(){
+                $("#donsADGR").fadeOut();
+                $("#donsExternes").delay(400).fadeIn();
+            });
+        })
+    </script>
 @endsection

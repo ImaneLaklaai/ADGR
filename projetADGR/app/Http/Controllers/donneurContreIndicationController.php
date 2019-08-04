@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Carte;
+use App\donneurContreIndication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
-class CartesController extends Controller
+class donneurContreIndicationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class CartesController extends Controller
      */
     public function index()
     {
-        Return view("pages.cartes.index");
+        //
     }
 
     /**
@@ -24,7 +25,7 @@ class CartesController extends Controller
      */
     public function create()
     {
-        return view("pages.cartes.create");
+        //
     }
 
     /**
@@ -33,20 +34,18 @@ class CartesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $this->validate($request, [
-            'donneur_id' => 'required',
+            "contre_indication_id" => "required",
+            "dateDebut"=>"required"
         ]);
-
-        $carte = new Carte();
-        $carte->donneur_id = $request->input('donneur_id');
-        $carte->etatCarte = 1;
-        $carte->dateConception = date('Y-m-d');
-        $carte->dateImpression = null;
-        $carte->dateLivraison = null;
-        $carte->save();
-        return redirect('/carte')->with('success', 'Carte ajoutée');
+        $dci = new donneurContreIndication();
+        $dci->donneur_id = $id;
+        $dci->contre_indication_id = $request->input("contre_indication_id");
+        $dci->dateDebut = $request->input("dateDebut");
+        $dci->save();
+        return Redirect::to("/donneur/show/$id");
     }
 
     /**
@@ -68,7 +67,7 @@ class CartesController extends Controller
      */
     public function edit($id)
     {
-        return view("pages.cartes.edit")->with("id", $id);
+        //
     }
 
     /**
@@ -80,26 +79,7 @@ class CartesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'etatCarte' => 'required',
-        ]);
-
-        $carte = Carte::find($id);
-        $carte->etatCarte = $request->input('etatCarte');
-        if($request->input('etatCarte') == "1")
-        {
-            $carte->dateConception = date('Y-m-d');
-        }
-        if($request->input('etatCarte') == "2")
-        {
-            $carte->dateImpression = date('Y-m-d');
-        }
-        if($request->input('etatCarte') == "3")
-        {
-            $carte->dateLivraison = date('Y-m-d');
-        }
-        $carte->save();
-        return redirect('/donneur')->with('success', 'Carte mise à jour');
+        //
     }
 
     /**
@@ -110,7 +90,8 @@ class CartesController extends Controller
      */
     public function destroy($id)
     {
-        Carte::find($id)->delete();
-        return redirect("/carte")->with("success", "Carte supprimée");
+        $dci = donneurContreIndication::find($id);
+        $dci->delete();
+        return Redirect::to("/donneur");
     }
 }

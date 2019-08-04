@@ -6,11 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "ext-json": "*",
+        "barryvdh/laravel-dompdf": "^0.8.2",
         "doctrine/dbal": "^2.5",
         "illuminate/html": "^5.0",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0",
-        "ext-json": "*"
+        "laravel/tinker": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

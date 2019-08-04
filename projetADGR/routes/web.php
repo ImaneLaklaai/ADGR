@@ -127,3 +127,8 @@ Route::get("/getZones/{id}", function($id){
 });
 
 Route::post("/cinTest", "ajaxHandlers@CINtest");
+
+
+//donneurContreIndication
+Route::post("/donneurContreIndication/store/{id}","donneurContreIndicationController@store");
+Route::get("/donneurContreIndication/delete/{id}","donneurContreIndicationController@destroy");

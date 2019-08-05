@@ -138,7 +138,7 @@ class DonneurController extends Controller
         $donneur->profession = $request->input('profession');
         $donneur->sexe = $request->input('sexe');
         $donneur->etat = $request->input('etat');
-        $donneur->groupe = $request->input('groupe');
+        $donneur->groupe_sanguin_id = $request->input('groupe');
         $donneur->dateDernierDon = $request->input('dateDernierDon');
         $donneur->etat_civil_id = $request->input('etatCivil');
         $donneur->nombreEnfants = $request->input('nombreEnfants');

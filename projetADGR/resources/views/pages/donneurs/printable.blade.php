@@ -1,6 +1,7 @@
 <?php
         $donneur = \App\Donneur::find($id);
 ?>
+{{date("d-m-Y")}}
 <div align="center">
 
 <h1> {{$donneur->nom}} {{$donneur->prenom}} </h1>
@@ -118,91 +119,120 @@
             {{$donneur->zone->libZone}}
         </td>
     </tr>
+    <tr>
+        <td>
+            Date du prochain don :
+        </td>
+        <td>
+            @if(!is_string($donneur->getProchainDon()))
+                @if($donneur->getProchainDon() == null)
+                    Prochaine occasion
+                @else
+                    {{$donneur->getProchainDon()->format("d-m-Y")}}
+                @endif
+            @else
+                Inaptitude définitive
+            @endif
+
+        </td>
+    </tr>
 </table>
 <h1> Dons : </h1>
 <h3> Dons ADGR : </h3>
-<table class="table table-striped" width="100%">
-    <thead>
-        <tr>
-            <th>Date </th>
-            <th>Collecte</th>
-            <th>Type collecte</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(App\donAdgr::all() as $don)
+@if(count(App\donAdgr::all()->where("donneur_id",$donneur->id)) > 0)
+    <table class="table table-striped" width="100%">
+        <thead>
             <tr>
-                <td>{{$don->dateDon}}</td>
-                <td>{{$don->collecte->libCollecte}}</td>
-                @if($don->collecte->typeCollecte == 0)
-                    <td>Collecte fixe</td>
+                <th>Date </th>
+                <th>Collecte</th>
+                <th>Type collecte</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach(App\donAdgr::all()->where("donneur_id",$donneur->id) as $don)
+                    <tr>
+                        <td>{{$don->dateDon}}</td>
+                        <td>{{$don->collecte->libCollecte}}</td>
+                        @if($don->collecte->typeCollecte == 0)
+                            <td>Collecte fixe</td>
+                        @else
+                            <td>Collecte mobile</td>
+                        @endif
+                    </tr>
+                @endforeach
+        </tbody>
+    </table>
+@else
+    Pas de dons ADGR
+@endif
+<h3> Dons externes : </h3>
+@if(count(App\donExterne::all()->where("donneur_id",$donneur->id)) > 0)
+    <table class="table table-striped" width="100%">
+        <thead>
+            <tr>
+                <th>Date </th>
+                <th>Raison</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(App\donExterne::all()->where("donneur_id",$donneur->id) as $don)
+                <tr>
+                    <td>{{$don->date}}</td>
+                    <td>{{$don->raison}}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+    Pas de dons externes
+@endif
+<h1>Contre indications</h1>
+@if(count(App\donneurContreIndication::all()->where("donneur_id", $donneur->id)) > 0)
+    <table class="table table-striped" width="100%">
+        <thead>
+        <tr>
+            <th>Libelle</th>
+            <th>Duree</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach(App\donneurContreIndication::all()->where("donneur_id", $donneur->id) as $dci)
+            <tr>
+                <td>{{$dci->contreIndication->nom}}</td>
+                <?php
+                $unite = "jours";
+                if($dci->contreIndication->unite == "j"){
+                    $unite = "jours";
+                }elseif($dci->contreIndication->unite == "m"){
+                    $unite = "mois";
+                }elseif($dci->contreIndication->unite == "a"){
+                    $unite = "ans";
+                }else{
+                    $unite = "-";
+                }
+                $duree = $dci->contreIndication->duree!=null?$dci->contreIndication->duree:"-";
+                ?>
+                <td>{{$duree. " " . $unite}}</td>
+                <td>{{$dci->dateDebut}}</td>
+                @if(!(is_string($dci->dateFin())))
+                    <td>{{$dci->dateFin()->format("Y-m-d")}}</td>
                 @else
-                    <td>Collecte mobile</td>
+                    <td>-------</td>
+                @endif
+                @if($dci->contreIndication->type == "definitive")
+                    <td>Définitive</td>
+                @else
+                    <td>Provisoire</td>
                 @endif
             </tr>
         @endforeach
-    </tbody>
-</table>
-<h3> Dons externes : </h3>
-<table class="table table-striped" width="100%">
-    <thead>
-        <tr>
-            <th>Date </th>
-            <th>Raison</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(App\donExterne::all() as $don)
-            <tr>
-                <td>{{$don->date}}</td>
-                <td>{{$don->raison}}</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-<h1>Contre indications</h1>
-<table class="table table-striped" width="100%">
-    <thead>
-    <tr>
-        <th>Libelle</th>
-        <th>Duree</th>
-        <th>Date début</th>
-        <th>Date fin</th>
-        <th>Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach(App\donneurContreIndication::all()->where("donneur_id", $donneur->id) as $dci)
-        <tr>
-            <td>{{$dci->contreIndication->nom}}</td>
-            <?php
-            $unite = "jours";
-            if($dci->contreIndication->unite == "j"){
-                $unite = "jours";
-            }elseif($dci->contreIndication->unite == "m"){
-                $unite = "mois";
-            }elseif($dci->contreIndication->unite == "a"){
-                $unite = "ans";
-            }else{
-                $unite = "-";
-            }
-            $duree = $dci->contreIndication->duree!=null?$dci->contreIndication->duree:"-";
-            ?>
-            <td>{{$duree. " " . $unite}}</td>
-            <td>{{$dci->dateDebut}}</td>
-            @if(!(is_string($dci->dateFin())))
-                <td>{{$dci->dateFin()->format("Y-m-d")}}</td>
-            @else
-                <td>-------</td>
-            @endif
-            @if($dci->contreIndication->type == "definitive")
-                <td>Définitive</td>
-            @else
-                <td>Provisoire</td>
-            @endif
-        </tr>
-    @endforeach
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+@else
+    Pas de contre indications !
+@endif
 </div>

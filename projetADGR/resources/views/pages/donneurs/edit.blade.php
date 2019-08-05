@@ -58,22 +58,25 @@
                     </select><br>
 
                     <label for="groupe">Groupe sanguin</label>
-                    <select id="groupe" name="groupe" class="form-control" value={{$donneur->groupe}}>
-                        <option value="A-">A négatif</option>
-                        <option value="B-">B négatif</option>
-                        <option value="AB-">AB négatif</option>
-                        <option value="O-">O négatif</option>
+                    <select id="groupe" name="groupe" class="form-control">
+                        @foreach(App\groupeSanguin::all() as $groupe)
+                            @if($groupe->rhesus == '-')
+                                <?php $rhesus = 'négatif' ?>
+                            @else
+                                <?php $rhesus = 'positif' ?>
+                            @endif
+                            <option value="{{$groupe->id}}">{{$groupe->libelle." ".$rhesus}}</option>
+                        @endforeach
                     </select><br>
 
                     <label for="dateDernierDon">Date du dernier don</label>
                     <input type="date" name="dateDernierDon" id="dateDernierDon" class="form-control" value={{$donneur->dateDernierDon}}> <br>
 
                     <label for="etatCivil">Etat civil</label>
-                    <select id="etatCivil" name="etatCivil" class="form-control" value={{$donneur->etatCivil}}>
-                        <option value="Célibataire">Célibataire</option>
-                        <option value="Marié.e">Marié.e</option>
-                        <option value="Divorcé.e">Divorcé.e</option>
-                        <option value="Veuf.ve">Veuf.ve</option>
+                    <select id="etatCivil" name="etatCivil" class="form-control">
+                        @foreach(App\etatCivil::all() as $etat)
+                            <option value="{{$etat->id}}">{{$etat->libelle}}</option>
+                        @endforeach
                     </select><br>
 
                     <label for="nombreEnfants">Nombre d'enfants</label>

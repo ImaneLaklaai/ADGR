@@ -99,7 +99,7 @@ class CartesController extends Controller
             $carte->dateLivraison = date('Y-m-d');
         }
         $carte->save();
-        return redirect('/donneur')->with('success', 'Carte mise à jour');
+        return redirect('/donneur/show/'.$carte->donneur->id)->with('success', 'Carte mise à jour');
     }
 
     /**

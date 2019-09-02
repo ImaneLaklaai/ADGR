@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectesTable extends Migration
+class CreateEtatCivilsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateCollectesTable extends Migration
      */
     public function up()
     {
-        Schema::create('collectes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer("collecte_id");
-            $table->integer("typeCollecte");
+        Schema::create('etat_civils', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string("libelle");
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateCollectesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collectes');
+        Schema::dropIfExists('etat_civils');
     }
 }

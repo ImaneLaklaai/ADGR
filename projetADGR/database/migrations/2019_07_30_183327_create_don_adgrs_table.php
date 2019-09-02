@@ -15,11 +15,11 @@ class CreateDonAdgrsTable extends Migration
     {
         Schema::create('don_adgrs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('collecte_id');
-            $table->integer('donneur_id');
+            $table->integer('collecte_id')->unsigned()->index();
+            $table->integer('donneur_id')->unsigned()->index();
             $table->date('dateDon');
-            $table->foreign("donneur_id")->references("id")->on("App\Donneur");
-            $table->foreign("collecte_id")->references("id")->on("App\Collecte");
+            $table->foreign("donneur_id")->references("id")->on("donneurs")->onDelete("cascade");
+            $table->foreign("collecte_id")->references("id")->on("collectes")->onDelete("cascade");
             $table->timestamps();
         });
     }

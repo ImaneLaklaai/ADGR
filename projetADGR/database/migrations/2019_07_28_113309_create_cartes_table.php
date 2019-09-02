@@ -20,8 +20,8 @@ class CreateCartesTable extends Migration
             $table->date('dateConception');
             $table->date('dateImpression')->nullable()->default(null);
             $table->date('dateLivraison')->nullable()->default(null);
-            $table->string('donneur_id');
-            $table->foreign("donneur_id")->references("id")->on("App\Donneur");
+            $table->integer('donneur_id')->unsigned()->index();
+            $table->foreign("donneur_id")->references("id")->on("donneurs")->onDelete("cascade");
         });
     }
 

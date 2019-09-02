@@ -14,7 +14,7 @@ class CreateDonneursTable extends Migration
     public function up()
     {
         Schema::create('donneurs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nom');
             $table->string('prenom');
             $table->string('CIN');
@@ -33,11 +33,11 @@ class CreateDonneursTable extends Migration
             $table->string("moyenAdhesion");
             $table->boolean('type');
             $table->mediumText('remarque')->nullable()->default(null);;
-            $table->string('etat_civil_id');
+            $table->string('etat_civil_id')->unsigned()->index();
             $table->foreign('etat_civil_id')->references("id")->on("App\EtatCivil");
-            $table->string('groupe_sanguin_id');
+            $table->string('groupe_sanguin_id')->unsigned()->index();
             $table->foreign("groupe_sanguin_id")->references("id")->on("App\groupeSanguin");
-            $table->integer('zone_id');
+            $table->integer('zone_id')->unsigned()->index();
             $table->foreign('zone_id')->references("id")->on("App\Zone");
             $table->integer('carte_id')->nullable()->default(null);
             $table->foreign("carte_id")->references("id")->on("App\carte");

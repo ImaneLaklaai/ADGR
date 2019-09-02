@@ -14,7 +14,7 @@ class CreateGroupeSanguinsTable extends Migration
     public function up()
     {
         Schema::create('groupe_sanguins', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string("libelle");
             $table->string("rhesus");
             $table->timestamps();

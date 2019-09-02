@@ -179,6 +179,7 @@ Route::post("/benevole/update/{id}", "BenevoleController@update");
 Route::get("/benevole/delete/{id}", "BenevoleController@destroy");
 Route::get("/benevole/show/{id}", "BenevoleController@show");
 Route::get("/benevole/printlist","BenevoleController@export_all_pdf");
+Route::get("/benevole/printable/{id}","BenevoleController@export_pdf");
 Route::get("/benevole/showprintlist",function(){
     return view("pages.benevole.printlist");
 });

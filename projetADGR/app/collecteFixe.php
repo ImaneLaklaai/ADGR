@@ -9,6 +9,6 @@ class collecteFixe extends Model
     public function centre(){
         return $this->belongsTo("App\Centre");
     }
-    
+
 
 }

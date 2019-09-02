@@ -32,6 +32,8 @@ class CreateBenevolesTable extends Migration
             $table->string("password");
             $table->boolean("etat")->default(true);
             $table->boolean('droitAcces')->default(false);
+            $table->integer('etat_civil')->unsigned()->index();
+            $table->foreign('etat_civil')->references('id')->on('etat_civils');
             $table->timestamps();
         });
     }

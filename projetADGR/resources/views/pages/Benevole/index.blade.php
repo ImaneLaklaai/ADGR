@@ -57,7 +57,7 @@
                                             <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
                                             <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                             <a href="/benevole/show/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
-                                            <a href="/benevole/{{$benevole->id}}/pdf"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
+                                            <a href="/benevole/printable/{{$benevole->id}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -1,23 +1,39 @@
+<head>
+    <meta charset="utf8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
 <?php
-        $donneur = \App\Donneur::find($id);
+        $donneur = null;
+        if(isset($id)){
+            $donneur = \App\Donneur::find($id);
+        }
 ?>
+@if($donneur != null)
 {{date("d-m-Y")}}
 <div align="center">
-
-<h1> {{$donneur->nom}} {{$donneur->prenom}} </h1>
+<table>
+    <tr>
+        <td>
+            <img width="200px" src="{{config('app.url')."/storage/profilePhotos/donneurs/".$id.".jpg"}}">
+        </td>
+        <td align="center">
+            <h1>{{$donneur->nom." ".$donneur->prenom}}</h1>
+        </td>
+    </tr>
+</table>
 <table class="table table-striped">
     <tr>
         <td>
-            Date de naissance : 
+            Date de naissance :
         </td>
         <td>
             {{$donneur->dateNaissance}}
         </td>
     </tr>
-    
+
     <tr>
         <td>
-            Sexe : 
+            Sexe :
         </td>
         <td>
             {{$donneur->sexe}}
@@ -25,7 +41,7 @@
     </tr>
     <tr>
         <td>
-            Groupe sanguin : 
+            Groupe sanguin :
         </td>
         <td>
             {{$donneur->groupeSanguin->libelle.$donneur->groupeSanguin->rhesus}}
@@ -33,7 +49,7 @@
     </tr>
     <tr>
         <td>
-            Date du dernier don : 
+            Date du dernier don :
         </td>
         <td>
             {{$donneur->dateDernierDon}}
@@ -41,7 +57,7 @@
     </tr>
     <tr>
         <td>
-            CIN : 
+            CIN :
         </td>
         <td>
             {{$donneur->CIN}}
@@ -49,7 +65,7 @@
     </tr>
     <tr>
         <td>
-            Etat civil : 
+            Etat civil :
         </td>
         <td>
             {{$donneur->etatCivil->libelle}}
@@ -57,7 +73,7 @@
     </tr>
     <tr>
         <td>
-            Nombre d'enfants : 
+            Nombre d'enfants :
         </td>
         <td>
             {{$donneur->nombreEnfants}}
@@ -65,7 +81,7 @@
     </tr>
     <tr>
         <td>
-            Profession : 
+            Profession :
         </td>
         <td>
             {{$donneur->profession}}
@@ -73,7 +89,7 @@
     </tr>
     <tr>
         <td>
-            Moyen d'adhésion : 
+            Moyen d'adhésion :
         </td>
         <td>
             {{$donneur->moyenAdhesion}}
@@ -81,7 +97,7 @@
     </tr>
     <tr>
         <td>
-            Numéro de téléphone : 
+            Numéro de téléphone :
         </td>
         <td>
             {{$donneur->numeroTelephone}}
@@ -89,7 +105,7 @@
     </tr>
     <tr>
         <td>
-            Adresse e-mail : 
+            Adresse e-mail :
         </td>
         <td>
             {{$donneur->email}}
@@ -97,7 +113,7 @@
     </tr>
     <tr>
         <td>
-            Adresse : 
+            Adresse :
         </td>
         <td>
             {{$donneur->adresse}}
@@ -105,7 +121,7 @@
     </tr>
     <tr>
         <td>
-            Ville : 
+            Ville :
         </td>
         <td>
             {{$donneur->zone->ville->libVille}}
@@ -113,7 +129,7 @@
     </tr>
     <tr>
         <td>
-            Zone : 
+            Zone :
         </td>
         <td>
             {{$donneur->zone->libZone}}
@@ -137,8 +153,8 @@
         </td>
     </tr>
 </table>
+    <br><br><br>
 <h1> Dons : </h1>
-<h3> Dons ADGR : </h3>
 @if(count(App\donAdgr::all()->where("donneur_id",$donneur->id)) > 0)
     <table class="table table-striped" width="100%">
         <thead>
@@ -166,9 +182,10 @@
 @else
     Pas de dons ADGR
 @endif
-<h3> Dons externes : </h3>
+
 @if(count(App\donExterne::all()->where("donneur_id",$donneur->id)) > 0)
-    <table class="table table-striped" width="100%">
+        <h3> Dons externes : </h3>
+        <table class="table table-striped" width="100%">
         <thead>
             <tr>
                 <th>Date </th>
@@ -187,9 +204,10 @@
 @else
     Pas de dons externes
 @endif
-<h1>Contre indications</h1>
+
 @if(count(App\donneurContreIndication::all()->where("donneur_id", $donneur->id)) > 0)
-    <table class="table table-striped" width="100%">
+        <h1>Contre indications</h1>
+        <table class="table table-striped" width="100%">
         <thead>
         <tr>
             <th>Libelle</th>
@@ -236,3 +254,6 @@
     Pas de contre indications !
 @endif
 </div>
+@else
+    HELLO !
+@endif

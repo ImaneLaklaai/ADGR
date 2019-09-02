@@ -5,7 +5,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">ADGR</a>
+    {{--<a class="navbar-brand" href="/"><img src="{{asset("/storage/logo.jpg")}}" height="35px"></a>--}}
+    <a class="navbar-brand" href="/">ADGR</a>
 </div>
 
 <ul class="nav navbar-top-links navbar-right">

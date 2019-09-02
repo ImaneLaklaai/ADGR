@@ -3,15 +3,16 @@
 @section("content")
     <div class="container">
         <div class="row">
-            <div class="col-lg-10" id="collectesFixes">
+            <div class="col-lg-10">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                 Liste des donneurs
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                     <a href="/donneur/create"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Ajouter</button></a>
+                                <a href="/donneur/printlist"><button class="btn btn-primary"><span class="glyphicon glyphicon-print"></span>Imprimer</button></a>
                             </div>
                         </div>
                     </div>
@@ -48,7 +49,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($donneur->getProchainDon() != null && $donneur->getProchainDon() != "01-01-2000")
+                                        @if($donneur->getProchainDon() != null && $donneur->getProchainDon() != new \DateTime("01-01-2000"))
                                             {{$donneur->getProchainDon()->format("d-m-Y")}}
                                         @else
                                             @if($donneur->getProchainDon() == null)
@@ -60,10 +61,68 @@
                                     </td>
                                     <td>
                                         @if($donneur->isApte())
-                                            <span class="btn btn-success">Apte</span>
+                                            <span class="btn btn-success" data-toggle="modal" data-target="{{"#modalApte".$donneur->id}}">Apte</span>
+                                            <div class="modal fade" id="{{"modalApte".$donneur->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Apte</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <b>Ajouter une contre indication</b>
+                                                            <form action="/donneurContreIndication/store/{{$donneur->id}}" method="post" id="ajouterContreIndication">
+                                                                {{csrf_field()}}
+                                                                <label for="contre_indication_id">Contre indication</label>
+                                                                <select id="contre_indication_id" name="contre_indication_id" class="form-control">
+                                                                    @foreach(\App\contreIndication::All() as $ci)
+                                                                        <option value={{$ci->id}}>{{$ci->nom}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <label for="dateDebut">Date de début</label>
+                                                                <input type="date" name="dateDebut" id="dateDebut" class="form-control">
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                            <button type="button" class="btn btn-primary" onclick="document.getElementById('ajouterContreIndication').submit()">Ajouter</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
                                         @else
-                                            <span class="btn btn-danger">Inapte</span>
+                                            <span class="btn btn-danger" data-toggle="modal" data-target="{{"#modalInapte".$donneur->id}}">Inapte</span>
+                                            <div class="modal fade" id="{{"modalInapte".$donneur->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Inapte !</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @if($donneur->getProchainDon() != null)
+                                                                @if($donneur->getProchainDon() != new DateTime("01-01-2000"))
+                                                                    <b>Inaptitude provisoire !</b><br>
+                                                                    <b>Cause:</b> {{$donneur->getCauseInaptitude()}}<br>
+                                                                    <b>Date du prochain don :</b> {{$donneur->getProchainDon()->format("d-m-Y")}}
+                                                                @else
+                                                                    <b>Inaptitude définitive !</b><br>
+                                                                    <b>Cause: </b> {{$donneur->getCauseInaptitude()}}
+                                                                @endif
+                                                            @endif
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
                                         @endif
+
                                     </td>
                                     <td>
                                         <a href="/donneur/delete/{{$donneur->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
@@ -81,10 +140,5 @@
             </div>
         </div>
     </div>
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
-
-    </script>
+    <script src="js/jQuery.js"></script>
 @endsection

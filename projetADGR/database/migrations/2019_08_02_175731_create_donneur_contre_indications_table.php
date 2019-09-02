@@ -15,10 +15,10 @@ class CreateDonneurContreIndicationsTable extends Migration
     {
         Schema::create('donneur_contre_indications', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("donneur_id");
-            $table->integer("contre_indication_id");
-            $table->foreign("donneur_id")->references("id")->on("App\donneur_id");
-            $table->foreign("contre_indication_id")->references("id")->on("App\contreIndication");
+            $table->integer("donneur_id")->unsigned()->index();
+            $table->integer("contre_indication_id")->unsigned()->index();
+            $table->foreign("donneur_id")->references("id")->on("donneurs")->onDelete("cascade");
+            $table->foreign("contre_indication_id")->references("id")->on("contre_indications")->onDelete("cascade");
             $table->date("dateDebut");
             $table->timestamps();
         });

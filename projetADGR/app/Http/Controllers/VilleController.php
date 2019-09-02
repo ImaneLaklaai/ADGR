@@ -39,9 +39,11 @@ class VilleController extends Controller
     {
         $this->validate($request, [
             'libVille' => "required|unique:villes",
+            'bureau' => 'required'
         ]);
         $ville = new Ville();
         $ville->libVille = $request->input("libVille");
+        $ville->bureau_id = $request->input("bureau");
         $ville->save();
         return redirect("/ville");
     }
@@ -79,7 +81,7 @@ class VilleController extends Controller
     {
         $ville = Ville::find($id);
         $ville->libVille = $request->input("libVille");
-//        $ville->bureau->id = $request->input("bureau_id");
+        $ville->bureau->id = $request->input("bureau");
         $ville->save();
         return Redirect::to("/ville");
     }

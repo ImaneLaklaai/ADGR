@@ -17,71 +17,40 @@
                     <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="/donneur"><i class="fa fa-users fa-fw"></i> Donneurs</a>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a href="/contreIndication"><i class="fa fa-remove fa-fw"></i> Contre indications</a>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-heart fa-fw"></i> Dons<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-medkit fa-fw"></i> Gestion des dons <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/don">Liste</a>
-                            <a href="/don/create">Ajouter</a>
+                            <a href="/collecte"><i class="fa fa-tint fa-fw"></i>Collectes</a>
+                            <a href="/donneur"><i class="fa fa-users fa-fw"></i> Donneurs</a>
+                            <a href="/contreIndication"><i class="fa fa-remove fa-fw"></i> Contre indications</a>
+                            <a href="/centre"> <i class="fa fa-building fa-fw"></i> Centres</a>
+                            <a href="/ville"><i class="fa fa-home fa-fw"></i> Villes</a>
+                            <a href="/zone"><i class="fa fa-map-marker fa-fw"></i> Zones</a>
+                            <a href="/bureau"><i class="fa fa-desktop fa-fw"></i> Bureaux</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-map-marker fa-fw"></i> Villes<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-dollar fa-fw"></i> Gestion financière<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/ville">Liste</a>
-                            <a href="/ville/create">Ajouter</a>
-                        </li>
-                        <li>
-                            <a href="#">Zones <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="/zone/">Par ville</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-third-level -->
+                            <a href="/compte"><i class="fa fa-briefcase fa-fw"></i> Comptes</a>
+                            <a href="/entrees"><i class="fa fa-plus fa-fw"></i> Entrées</a>
+                            <a href="/depense"><i class="fa fa-minus fa-fw"></i> Dépenses</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-medkit fa-fw"></i> Centres<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-heart fa-fw"></i> Gestion des événements <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/centre">Liste</a>
-                            <a href="/centre/create">Ajouter</a>
+                            <a href="/evenement"><i class="fa fa-heart fa-fw"></i> Evenement </a>
+                            <a href="/equipe"><i class="fa fa-users fa-fw"></i> Equipes</a>
+                            <a href="/benevole"><i class="fa fa-user fa-fw"></i> Benevoles</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-tint fa-fw"></i> Collectes<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="/collecte">Liste</a>
-                            <a href="/collecte/create">Ajouter</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-building fa-fw"></i> Bureaux<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="/bureau">Liste</a>
-                            <a href="/bureau/create">Ajouter</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
                 </li>
             </ul>
         </div>

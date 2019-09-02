@@ -16,9 +16,9 @@
                             @foreach(App\collecteFixe::all() as $collecte)
                                 <option value="{{$collecte->id}}">{{$collecte->libCollecte}}</option>
                             @endforeach
-                            @foreach(App\collecteMobile::all() as $collecte)
-                                <option value="{{$collecte->id}}">{{$collecte->libCollecte}}</option>
-                            @endforeach
+                            {{--@foreach(App\collecteMobile::all() as $collecte)--}}
+                                {{--<option value="{{$collecte->id}}">{{$collecte->libCollecte}}</option>--}}
+                            {{--@endforeach--}}
                         </select><br>
                         <label for="donneur">CIN du donneur</label>
                         <select name="donneur" id="donneur" class="form-control">
@@ -27,6 +27,7 @@
                             @endforeach
                         </select><br>
                         <label for="dateDon">Date du don</label>
+                        <input type="hidden" name="typeCollecte" value="0">
                         <input type="date" name="dateDon" id="dateDon" class="form-control" > <br>
                         <input type="submit" value="Ajouter" class="btn btn-primary">
                         <input type="reset" value="Annuler" class="btn btn-primary">
@@ -41,7 +42,7 @@
                                 <option value="{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom . "(".$donneur->CIN.")"}}</option>
                             @endforeach
                         </select><br>
-
+                        <input type="hidden" name="typeCollecte" value="1">
                         <label for="dateDon">Date du don</label>
                         <input type="date" name="dateDon" class="form-control" id="dateDon"><br>
 
@@ -56,9 +57,7 @@
         </div>
     </div>
     <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
+            src="/js/jquery.js">
     </script>
     <script>
         $(document).ready(function () {

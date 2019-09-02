@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bureau extends Model
 {
-    public function ville(){
-        return $this->belongsTo("App\Ville");
+    public function villes(){
+        return $this->hasMany("App\Ville");
     }
 }

@@ -14,7 +14,7 @@ class CreateEtatCivilsTable extends Migration
     public function up()
     {
         Schema::create('etat_civils', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string("libelle");
             $table->timestamps();
         });

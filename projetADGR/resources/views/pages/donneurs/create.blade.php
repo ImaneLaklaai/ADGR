@@ -15,7 +15,7 @@
                     <label for="prenom">Prenom</label>
                     <input type="text" name="prenom" id="prenom" class="form-control" placeholder="Prenom"><br>
 
-                    <label for="cin">CIN</label>
+                    <label for="cin">CIN</label><span id="cinMsg" style="color:red"></span>
                     <input type="text" name="cin" id="cin" class="form-control" placeholder="CIN"><br>
 
                     <label for="numeroTelephone">Numéro de téléphone</label>
@@ -116,10 +116,7 @@
             </div>
         </div>
     </div>
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+    <script src="/js/jquery.js"></script>
     <script type="text/javascript">
         let divZone = document.getElementById("listeZones");
         $(document).ready(function() {
@@ -150,10 +147,12 @@
                         if(data == 1){
                             $("#cin").css("background-color", "#FF5050");
                             $("#cin").css("color", "#FFFFFF");
+                            $("#cinMsg").html(" <b>déjà utilisé</b>");
                             $("#ajouter").className += " disabled";
                         }else{
                             $("#cin").css("background-color","");
                             $("#cin").css("color", "");
+                            $("#cinMsg").text("");
                             $("#ajouter").className -= " disabled";
                         }
                     },

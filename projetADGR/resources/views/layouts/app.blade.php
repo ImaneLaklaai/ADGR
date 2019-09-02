@@ -8,7 +8,9 @@
         </nav>
         <div id="wrapper">
             <div id="page-wrapper">
-                @include("layouts.partials.pageHeader")
+                <div class="row">
+                    @include("layouts.partials.pageHeader")
+                </div>
                 @yield("content")
             </div>
             <!-- /#page-wrapper -->

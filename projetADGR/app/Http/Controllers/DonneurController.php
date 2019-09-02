@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Carte;
 use App\Donneur;
+use FontLib\EOT\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 
@@ -20,7 +23,11 @@ class DonneurController extends Controller
         $pdf = PDF::loadView('pages.donneurs.printable', $donneur); //Envoi des informations à la vue concernée
         return $pdf->download($donneur->nom.$donneur->prenom.time().'.pdf');
     }
-    
+
+    public function export_all_pdf(){
+        $pdf = PDF::loadView("pages.donneurs.printlist");
+        return $pdf->download("ListeDonneurs.pdf");
+    }
     public function index()
     {
         return view("pages.donneurs.index");
@@ -76,13 +83,12 @@ class DonneurController extends Controller
             }
             $donneur->x = 0;
             $donneur->y = 0;
-            $donneur->carte_id = 0;
             $donneur->remarque = $request->input('remarque');
             $donneur->zone_id = $request->input('zone_id');
             $donneur->moyenAdhesion = $request->input("moyen");
             $donneur->save();
             $filename = $donneur->id. "." .$file->getClientOriginalExtension();
-            $file->storeAs("public/profilePhotos", $filename);
+            $file->storeAs("public/profilePhotos/donneurs/", $filename);
         }
         return redirect('/donneur')->with('success', 'Donneur ajouté');
     }
@@ -149,7 +155,6 @@ class DonneurController extends Controller
         }
         $donneur->x = 0;
         $donneur->y = 0;
-        $donneur->carte_id = 0;
         $donneur->remarque = $request->input('remarque');
         $donneur->zone_id = $request->input('zone_id');
         $donneur->save();
@@ -165,6 +170,7 @@ class DonneurController extends Controller
     public function destroy($id)
     {
         $donneur = Donneur::find($id);
+        Storage::delete("public/profilePhotos/donneurs/".$donneur->id.".jpg");
         $donneur->delete();
         return redirect('/donneur')->with('success', 'Donneur supprimé');
     }

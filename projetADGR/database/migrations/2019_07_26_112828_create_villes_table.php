@@ -16,8 +16,8 @@ class CreateVillesTable extends Migration
         Schema::create('villes', function (Blueprint $table) {
             $table->increments('id');
             $table->string("libVille");
-            $table->integer("bureau_id")->nullable()->default(null);;
-            $table->foreign("bureau_id")->references("id")->on("App\Bureau");
+            $table->integer("bureau_id")->unsigned()->index();
+            $table->foreign("bureau_id")->references("id")->on("bureaus");
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateCollecteFixesTable extends Migration
             $table->increments('id');
             $table->date("date");
             $table->string("libCollecte");
-            $table->integer("centre_id");
-            $table->foreign("centre_id")->references("id")->on("centre")->onDelete("cascade")->onUpdate("cascade");
+            $table->integer("centre_id")->unsigned()->index();
+            $table->foreign("centre_id")->references("id")->on("centres")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }

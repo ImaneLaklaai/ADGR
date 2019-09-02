@@ -17,8 +17,8 @@ class CreateZonesTable extends Migration
             $table->increments('id');
             $table->string("libZone");
             $table->string("codePostal");
-            $table->integer("ville_id");
-            $table->foreign("ville_id")->references("id")->on("App\Ville")->onDelete("cascade")->onUpdate("cascade");
+            $table->integer("ville_id")->unsigned()->index();
+            $table->foreign("ville_id")->references("id")->on("villes")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }

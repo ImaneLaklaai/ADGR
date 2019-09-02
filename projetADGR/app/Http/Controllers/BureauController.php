@@ -38,16 +38,13 @@ class BureauController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            "ville_id"=>"required",
+            "responsable"=>"required",
             "dateCreation"=>"required",
         ]);
         $bureau = new Bureau();
-        $bureau->ville_id = $request->input("ville_id");
+        $bureau->responsable_id = $request->input("responsable");
         $bureau->dateCreation = $request->input("dateCreation");
         $bureau->save();
-        $ville = Ville::find($bureau->ville_id);
-        $ville->bureau_id = $bureau->id;
-        $ville->save();
         return Redirect::to("/bureau");
     }
 

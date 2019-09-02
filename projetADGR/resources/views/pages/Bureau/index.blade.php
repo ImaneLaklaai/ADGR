@@ -16,7 +16,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Ville</th>
+                                        <th>Villes</th>
                                         <th>Créé le</th>
                                         <th>Actions</th>
                                     </tr>
@@ -25,7 +25,11 @@
                                     @foreach(App\Bureau::All() as $bureau)
                                         <tr>
                                             <td>{{$bureau->id}}</td>
-                                            <td>{{$bureau->ville->libVille}}</td>
+                                            <td>
+                                                @foreach($bureau->villes as $v)
+                                                    <b>-</b> {{$v->libVille}}<br>
+                                                @endforeach
+                                            </td>
                                             <td>{{$bureau->dateCreation}}</td>
                                             <td>
                                                 <a href="/bureau/delete/{{$bureau->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
@@ -48,20 +52,5 @@
             </div>
         </div>
     </div>
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#fixe").on("change",function(){
-                $("#collectesMobiles").fadeOut();
-                $("#collectesFixes").delay(400).fadeIn();
-            });
-            $("#mobile").on("change",function(){
-                $("#collectesFixes").fadeOut();
-                $("#collectesMobiles").delay(400).fadeIn();
-            });
-        });
-    </script>
+    <script src="/js/jquery.js"></script>
 @endsection

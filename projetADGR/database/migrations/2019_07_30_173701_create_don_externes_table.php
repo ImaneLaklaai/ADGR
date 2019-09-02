@@ -17,8 +17,8 @@ class CreateDonExternesTable extends Migration
             $table->increments('id');
             $table->date("date");
             $table->string("raison");
-            $table->integer("donneur_id");
-            $table->foreign("donneur_id")->references("id")->on("App\Donneur");
+            $table->integer("donneur_id")->unsigned()->index();
+            $table->foreign("donneur_id")->references("id")->on("donneurs")->onDelete("cascade");
             $table->timestamps();
         });
     }

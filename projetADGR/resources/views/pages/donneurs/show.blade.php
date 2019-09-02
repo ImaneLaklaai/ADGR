@@ -4,20 +4,79 @@
         $donneur = \App\Donneur::find($id);
     }
 ?>
-@section("title", $donneur->nom. " ". $donneur->prenom);
+@section("title", $donneur->nom. " ". $donneur->prenom)
 @section("content")
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <a href="/storage/profilePhotos/{{$donneur->id}}.jpg"><img src="/storage/profilePhotos/{{$donneur->id}}.jpg" width="100%"></a>
+                <a href="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg"><img src="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg" width="100%"></a>
             </div>
             <div class="col-md-9">
                 <div class="well">
                     <b>Nom et prénom:</b> {{$donneur->nom}} {{$donneur->prenom}}
                     @if($donneur->isApte())
+
                         <span class="btn btn-success">Apte</span>
                     @else
-                        <span class="btn btn-danger">Inapte</span>
+                        <span class="btn btn-danger" data-toggle="modal" data-target="#inaptitude">Inapte</span>
+                        <div class="modal fade" id="inaptitude" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">Inapte !</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @if($donneur->getProchainDon() != null)
+                                            @if($donneur->getProchainDon() != new DateTime("01-01-2000"))
+                                                <b>Inaptitude provisoire !</b><br>
+                                                <?php
+                                                    $idContreI = 0;
+                                                    $prochain2 = new \DateTime(Date("01-01-2000"));
+                                                    $donneurContreIndications = $donneur->donneurContreIndications()->get();
+                                                    foreach ($donneurContreIndications as $dci) {
+                                                        if($dci->contreIndication->type != "definitive"){
+                                                            $dateFin = new \DateTime($dci->dateFin()->format("d-m-Y"));
+                                                            if ($dateFin > $prochain2) {
+                                                                $idContreI = $dci->contreIndication->id;
+                                                                $prochain2 = $dateFin;
+                                                            }
+                                                        }
+
+                                                    }
+                                                    if($idContreI != 0){
+                                                        echo "<b>Contre indication : </b>".\App\contreIndication::find($idContreI)->nom."<br>";
+                                                    }else{
+                                                        echo "<b>Cause: </b> Dérnier don<br>";
+                                                    }
+                                                ?>
+                                                <b>Date du prochain don :</b> {{$donneur->getProchainDon()->format("d-m-Y")}}
+                                            @else
+                                                <b>Inaptitude définitive !</b><br>
+                                                <b>Cause: </b>
+                                                @if($donneur->getAge() >= 63)
+                                                    Age
+                                                @else
+                                                    <?php
+                                                        $donneurContreIndications = $donneur->donneurContreIndications()->get();
+                                                        foreach($donneurContreIndications as $dci){
+                                                            if($dci->contreIndication->type == "definitive"){
+                                                                echo $dci->contreIndication->nom."<br>";
+                                                            }
+                                                        }
+                                                    ?>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
                     @endif
                     <br>
                     <b>Email: </b> {{$donneur->email}}<br>
@@ -87,7 +146,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                                         <button type="button" class="btn btn-primary" onclick="document.getElementById('modifierCarte').submit()">Modifier</button>
                                     </div>
                                 </div>

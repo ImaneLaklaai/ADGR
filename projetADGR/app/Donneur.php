@@ -2,9 +2,9 @@
 
 namespace App;
 
-use http\Exception;
+//use http\Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
+use DateTime;
 
 class Donneur extends Model
 {
@@ -43,56 +43,109 @@ class Donneur extends Model
         return $this->belongsTo("App\groupeSanguin");
     }
 
-    /* getProchainDon() retourne :
-     *    Soit DateTime() : la date du prochain don
-     *    Soit : null si la date du prochain don est inférieur à la date d'aujourd'hui
-     *    Soit : 01-01-2000 si l'inaptitude est définitive donc pas de prochains dons
-     */
-    public function getProchainDon()
-    {
-        $ci = donneurContreIndication::all()->where("donneur_id","=", $this->id);
-
-        $prochain = null;
-        if($this->dateDernierDon != null) {
-            $dernierDon = new \DateTime($this->dateDernierDon);
-            $prochain = $dernierDon->add(\DateInterval::createFromDateString("3 months")); //$prochain: Prochain don en ajoutant 3 mois à la date du dernier don
-        }
-
-
-        if (count($ci) >  0) {
-            $prochain2 = new \DateTime(Date("01-01-2000")); //$prochain2: Prochain don en se basant sur la contre-indication ayant la date de fin la plus lointaine
-            foreach ($ci as $contreI) {
-                if($contreI->contreIndication->type == "definitive") return "01-01-2000";
-                $dateFin = new \DateTime($contreI->dateFin()->format("d-m-Y"));
-                if ($dateFin->format("d-m-Y") > $prochain2->format("d-m-Y")) {
-                    $prochain2 = $dateFin;
+    //Cause d'inaptitude
+    public function getCauseInaptitude(){
+        if($this->getProchainDon() == new DateTime("01-01-2000")){
+            foreach($this->donneurContreIndications as $dci){
+                if($dci->contreIndication->type == "definitive"){
+                    echo $dci->contreIndication->nom."<br>";
                 }
             }
-            if ($prochain < $prochain2) {
-                $currentDate = new \DateTime(date("d-m-Y"));
-                if($prochain2 < $currentDate){
-                    return null;
-                }else{
-                    return $prochain2;
+        }else {
+            if ($this->getAge() >= 63) {
+                echo "Age";
+            } else {
+                $idContreI = 0;
+                $dateFinCI = "";
+                $prochain2 = new \DateTime(Date("01-01-2000"));
+                $donneurContreIndications = $this->donneurContreIndications;
+                foreach ($donneurContreIndications as $dci) {
+                    if ($dci->contreIndication->type != "definitive") {
+                        $dateFin = new \DateTime($dci->dateFin()->format("d-m-Y"));
+                        if ($dateFin > $prochain2) {
+                            $idContreI = $dci->contreIndication->id;
+                            $dateFinCI = $dci->dateFin();
+                            $prochain2 = $dateFin;
+                        }
+                    }
                 }
-            }
-        }
-
-        if($prochain == null){
-            return null;
-        }else{
-            $currentDate = new \DateTime(date("d-m-Y"));
-            if($prochain < $currentDate){
-                return null;
-            }else{
-                return $prochain;
+                $dernierDon = $this->dateDernierDon != null ? new DateTime($this->dateDernierDon) : "";
+                $dernierDonPlusTroisMois = $dernierDon != "" ? $dernierDon->add(\DateInterval::createFromDateString("3 months")) : "";
+                if ($idContreI != 0) {
+                    if ($dernierDon == "") {
+                        $ci = \App\contreIndication::find($idContreI);
+                        echo $ci->nom;
+                    } else {
+                        if ($dernierDonPlusTroisMois > $dateFinCI) {
+                            echo "Dérnier don";
+                        } else {
+                            $ci = \App\contreIndication::find($idContreI);
+                            echo $ci->nom;
+                        }
+                    }
+                } else {
+                    echo "Dérnier don";
+                }
             }
         }
     }
 
+    /* getProchainDon() retourne :
+     *    Soit DateTime() avec la date du prochain don
+     *    Soit DateTime() avec la date du 01-01-2000 si l'inaptitude est définitive donc pas de prochains dons
+     *    Soit null si la date du prochain don est inférieure à la date d'aujourd'hui (donc le donneur est apte à donner le sang à la prochaine occasion)
+     */
+    public function getProchainDon()
+    {
+        $prochainDon = new DateTime("01-01-2000");
+        if($this->getAge() >= 63){
+            return new DateTime("01-01-2000");
+        }else{
+            $donneurContreIndication= $this->donneurContreIndications()->get();
+            if(count($donneurContreIndication) > 0){
+                //Présence de contre indications
+                foreach($donneurContreIndication as $dci){
+                    if($dci->contreIndication->type=="definitive")return new DateTime("01-01-2000");
+                    if($dci->dateFin() > $prochainDon){
+                        $prochainDon = $dci->dateFin();
+                    }
+                }
+            }
+            if($this->dateDernierDon != null){
+                //Présence de dernier dons
+                $dernierDonPlusTroisMois = new DateTime($this->dateDernierDon);
+                $dernierDonPlusTroisMois->add(\DateInterval::createFromDateString("3 months"));
+                if( $dernierDonPlusTroisMois > $prochainDon){
+                    if($dernierDonPlusTroisMois > new DateTime(date("d-m-Y"))){
+                        return $dernierDonPlusTroisMois;
+                    }else{
+                        if($prochainDon > new DateTime(date("d-m-Y"))){
+                            return $prochainDon;
+                        }else{
+                            return null;
+                        }
+                    }
+                }
+
+            }else{
+                //Absence de dernier dons
+                if($prochainDon > new DateTime(date("d-m-Y"))){
+                    return $prochainDon;
+                }else{
+                    return null;
+                }
+            }
+        }
+    }
+    public function getAge(){
+        $dateN = new \DateTime($this->dateNaissance);
+        $diff = $dateN->diff(new DateTime(date("d-m-Y")));
+        return $diff->y;
+    }
     public function isApte(){
         $currentDate = new \DateTime(date("d-m-Y"));
-        if(is_string($this->getProchainDon())) return false;
+        if($this->getAge() >= 63 || $this->getAge() < 18)return false;
+        if($this->getProchainDon() == new \DateTime("01-01-2000")) return false;
         if ($this->getProchainDon() > $currentDate) {
             return false;
         }

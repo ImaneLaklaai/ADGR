@@ -46,7 +46,7 @@ class CartesController extends Controller
         $carte->dateImpression = null;
         $carte->dateLivraison = null;
         $carte->save();
-        return redirect('/carte')->with('success', 'Carte ajoutée');
+        return redirect('/donneur/show/'.$carte->donneur_id)->with(["success" => "Carte créée !"]);
     }
 
     /**

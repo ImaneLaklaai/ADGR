@@ -13,7 +13,7 @@
                                     Dons
                                 </div>
                             <?php
-                            $donneur = \App\Donneur::find($idDonneur);
+                                $donneur = \App\Donneur::find($idDonneur);
                             ?>
                             <!-- /.panel-heading -->
                                 <div class="panel-body" id="donsADGR">
@@ -23,7 +23,6 @@
                                             <tr>
                                                 <th>Date du don</th>
                                                 <th>Collecte</th>
-                                                <th>Type de collecte</th>
                                                 <th>Donneur</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -33,12 +32,7 @@
                                                 <tr>
                                                     <td>{{$don->dateDon}}</td>
                                                     <td>{{$don->collecte->libCollecte}}</td>
-                                                    @if($don->typeCollecte == 1)
-                                                        <td>Fixe</td>
-                                                    @else
-                                                        <td>Mobile</td>
-                                                    @endif
-                                                    <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
+                                                    <td><a href="/donneur/show/{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom}}</a></td>
                                                     <td>
                                                         <a href="/dons/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
                                                         <a href="/dons/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
@@ -111,7 +105,6 @@
                                             <tr>
                                                 <th>Date du don</th>
                                                 <th>Collecte</th>
-                                                <th>Type de collecte</th>
                                                 <th>Donneur</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -121,15 +114,10 @@
                                                 <tr>
                                                     <td>{{$don->dateDon}}</td>
                                                     <td>{{$don->collecte->libCollecte}}</td>
-                                                    @if($don->typeCollecte == 1)
-                                                        <td>Fixe</td>
-                                                    @else
-                                                        <td>Mobile</td>
-                                                    @endif
-                                                    <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
+                                                    <td><a href="/donneur/show/{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom}}</a></td>
                                                     <td>
-                                                        <a href="/dons/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                                        <a href="/dons/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                        <a href="/don/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                        <a href="/don/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -178,9 +166,7 @@
         </div>
     </div>
     <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
+            src="/js/jquery.js">
     </script>
     <script>
         $(document).ready(function(){
@@ -191,6 +177,10 @@
             $("#btnDonsExternes").on("change", function(){
                 $("#donsADGR").fadeOut();
                 $("#donsExternes").delay(400).fadeIn();
+            });
+
+            $("#donneurs").on("change", function(){
+
             });
         })
     </script>

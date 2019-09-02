@@ -11,7 +11,7 @@ class collecteController extends Controller
     }
 
     public function create(){
-        $centres = \App\Centre::all();
+//        $centres = \App\Centre::all();
         return view("pages.collecte.nouvelleCollecte");
     }
 }

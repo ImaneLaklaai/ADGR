@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\donExterne;
+use App\Donneur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -39,9 +40,18 @@ class DonExterneController extends Controller
         $this->validate($request,[
                 "donneur"=>"required",
                 "dateDon" => "required",
-                "raison" => ""
+                "raison" => "required"
             ]
         );
+        $don = new donExterne();
+        $don->date  = $request->input("dateDon");
+        $don->donneur_id = $request->input("donneur");
+        $don->raison = $request->input("raison");
+        $donneur = Donneur::find($don->donneur_id);
+        $donneur->dateDernierDon = $don->date;
+        $donneur->save();
+        $don->save();
+        return Redirect::to("/don");
     }
 
     /**

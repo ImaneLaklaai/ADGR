@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\donAdgr;
+use App\Donneur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -36,18 +37,20 @@ class DonADGRController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'collecte' => 'required',
-            'typeCollecte' => 'required',
-            'donneur_id' => 'required',
-            'dateDon' => 'required',
-        ]);
+//        $this->validate($request, [
+//            'collecte' => 'required',
+//            'typeCollecte' => 'required',
+//            'donneur_id' => 'required',
+//            'dateDon' => 'required',
+//        ]);
 
         $don = new donAdgr();
-        $don->collecte = $request->input('collecte');
-        $don->typeCollecte = $request->get('typeCollecte');
-        $don->donneur = $request->input('donneur');
-        $don->dateDon = $request->get('dateDon');
+        $don->collecte_id = $request->input('collecte');
+        $don->donneur_id = $request->input('donneur');
+        $don->dateDon = $request->input('dateDon');
+        $donneur = Donneur::find($don->donneur_id);
+        $donneur->dateDernierDon = $don->dateDon;
+        $donneur->save();
         $don->save();
         return redirect('/don')->with('success', 'Don ajouté');
     }
@@ -71,7 +74,7 @@ class DonADGRController extends Controller
      */
     public function edit($id)
     {
-        return view("pages.dons.donsADGR.edit")->with("id", $id);
+        return view("pages.dons.edit")->with("typeDon","ADGR")->with("id", $id);
     }
 
     /**
@@ -94,7 +97,7 @@ class DonADGRController extends Controller
      */
     public function destroy($id)
     {
-        App\DonAdgr::find($id)->delete();
-        return Redirect::to("/");
+        donAdgr::find($id)->delete();
+        return Redirect::to("/don");
     }
 }

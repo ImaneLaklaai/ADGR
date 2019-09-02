@@ -20,7 +20,7 @@ class CreateDepensesTable extends Migration
             $table->double("montant");
             $table->integer("categorie_depense_id")->unsigned()->index();
             $table->string("motif");
-            $table->string("remarque");
+            $table->string("remarque")->nullable()->default(null);
             $table->foreign("compte_id")->references("id")->on("comptes")->onDelete("cascade");
             $table->foreign("Evenement_id")->references("id")->on("evenements")->onDelete("cascade");
             $table->foreign("categorie_depense_id")->references("id")->on("categorie_depenses")->onDelete("cascade");

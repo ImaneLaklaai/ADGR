@@ -28,6 +28,12 @@
                         <input type="date" name="dateNaissance" class="form-control" id="dateNaissance"><br>
                         <label for="dateAdhesion">Date d'adhésion:</label>
                         <input type="date" name="dateAdhesion" class="form-control" id="dateAdhesion"><br>
+                        <label for="etatCivil">Etat civil</label>
+                        <select id="etatCivil" name="etatCivil" class="form-control">
+                            @foreach(App\etatCivil::all() as $etat)
+                                <option value="{{$etat->id}}">{{$etat->libelle}}</option>
+                            @endforeach
+                        </select><br>
                         <label for="photo">Photo de profil</label>
                         <input type="file" name="photo" id="photo">
                     </div>

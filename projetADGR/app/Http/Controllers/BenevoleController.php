@@ -17,7 +17,8 @@ class BenevoleController extends Controller
      */
     public function index()
     {
-        return view("pages.Benevole.index");
+        $benevoles = Benevole::paginate(10);
+        return view("pages.Benevole.index")->with("benevoles", $benevoles);
     }
 
     /**
@@ -68,10 +69,13 @@ class BenevoleController extends Controller
         $benevole->login = $request->input("login");
         $benevole->password = $request->input("password");
         $benevole->etat = true;
+        $benevole->etat_civil = $request->input("etatCivil");
         $benevole->droitAcces = false;
         $benevole->save();
-        $filename = $benevole->id.".".$request->file("photo")->getClientOriginalExtension();
-        $request->file("photo")->storeAs("public/profilePhotos/benevoles",$filename);
+        if($request->file("photo")){
+            $filename = $benevole->id.".".$request->file("photo")->getClientOriginalExtension();
+            $request->file("photo")->storeAs("public/profilePhotos/benevoles",$filename);
+        }
         return Redirect::to('/benevole');
     }
 
@@ -94,7 +98,7 @@ class BenevoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("pages.benevole.edit")->with("id", $id);
     }
 
     /**
@@ -106,7 +110,31 @@ class BenevoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $benevole = Benevole::find($id);
+        $benevole->nom = $request->input("nom");
+        $benevole->prenom = $request->input("prenom");
+        $benevole->CIN = $request->input("CIN");
+        $benevole->tele = $request->input("tele");
+        $benevole->teleSec = $request->input("teleSec");
+        $benevole->dateNaissance = $request->input("dateNaissance");
+        $benevole->adresse = $request->input("adresse");
+        $benevole->x = 0;
+        $benevole->y = 0;
+        $benevole->email = $request->input("email");
+        $benevole->profession = $request->input("profession");
+        $benevole->sexe = $request->input("sexe");
+        $benevole->dateAdhesion = $request->input("dateAdhesion");
+        $benevole->login = $request->input("login");
+        $benevole->password = $request->input("password");
+        $benevole->etat = true;
+        $benevole->etat_civil = $request->input("etatCivil");
+        $benevole->droitAcces = false;
+        $benevole->save();
+        if($request->file("photo")){
+            $filename = $benevole->id.".".$request->file("photo")->getClientOriginalExtension();
+            $request->file("photo")->storeAs("public/profilePhotos/benevoles",$filename);
+        }
+        return Redirect::to('/benevole');
     }
 
     /**

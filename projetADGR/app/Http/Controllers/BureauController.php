@@ -16,7 +16,8 @@ class BureauController extends Controller
      */
     public function index()
     {
-        return view("pages.bureau.index");
+        $bureaux = Bureau::paginate(5);
+        return view("pages.bureau.index")->with("bureaux", $bureaux);
     }
 
     /**

@@ -15,7 +15,7 @@
                             @foreach(\App\Bureau::all() as $bureau)
                                 <option value="{{$bureau->id}}">{{"Bureau : ".$bureau->id}}</option>
                             @endforeach
-                        </select>
+                        </select><br>
                         <input type="submit" value="Ajouter" class="btn btn-primary">
                         <input type="reset" value="Annuler" class="btn btn-primary">
                     </form>

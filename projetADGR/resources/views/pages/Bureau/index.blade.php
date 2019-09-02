@@ -22,7 +22,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach(App\Bureau::All() as $bureau)
+                                    @foreach($bureaux as $bureau)
                                         <tr>
                                             <td>{{$bureau->id}}</td>
                                             <td>
@@ -39,6 +39,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                {{$bureaux->links()}}
                             </div>
                             <!-- /.table-responsive -->
                         </div>

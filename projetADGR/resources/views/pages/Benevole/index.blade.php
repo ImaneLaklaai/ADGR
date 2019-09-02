@@ -20,7 +20,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>Nom</th>
@@ -36,7 +36,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(App\Benevole::All() as $benevole)
+                                @foreach($benevoles as $benevole)
                                     <tr>
                                         <td>{{$benevole->nom}}</td>
                                         <td>{{$benevole->prenom}}</td>
@@ -63,6 +63,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $benevoles->links() }}
                         </div>
                     </div>
                 @else

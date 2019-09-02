@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-4">
                 @if($typeDon == "ADGR")
-                    <form action="/dons/adgr/update" method="post">
+                    <form action="/don/adgr/update" method="post">
                         {{csrf_field()}}
                         <?php
                         $don = App\DonAdgr::find($id);

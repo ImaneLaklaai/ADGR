@@ -15,7 +15,8 @@ class CentreController extends Controller
      */
     public function index()
     {
-        return view("pages.centre.index");
+        $centres = Centre::paginate(10);
+        return view("pages.centre.index")->with("centres", $centres);
     }
 
     /**

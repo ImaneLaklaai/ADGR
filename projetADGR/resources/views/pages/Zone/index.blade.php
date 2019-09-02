@@ -22,8 +22,15 @@
                                 <?php
                                 $ville = App\Ville ::all()->first()->libVille;
                                 $idVille = App\Ville ::all()->first()->id;
-                                echo "Zones: <a href='/zone/create/".$idVille."' class='btn btn-default'><span class=' glyphicon glyphicon-plus'></span> En ajouter une</a>";
                                 ?>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        Zones
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href='/zone/create/{{$idVille}}' class='btn btn-default'><span class=' glyphicon glyphicon-plus'></span> Ajouter </a>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- /.panel-heading -->
@@ -63,7 +70,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <?php
-                                echo "Zones de la ville de ". App\Ville::find($idVille)->libVille. " <a href='/zone/create/".$idVille."' class='btn btn-default'><span class=' glyphicon glyphicon-plus'></span> En ajouter une</a>";
+                                echo "Zones de la ville de ". App\Ville::find($idVille)->libVille. " <a href='/zone/create/".$idVille."' class='btn btn-default'><span class=' glyphicon glyphicon-plus'></span> Ajouter </a>";
                                 ?>
                             </div>
 
@@ -117,7 +124,7 @@
                     $.get("/getZones/"+$("#id_ville").val(),function(data){
                         let zones = JSON.parse(data);
                         let maDiv = document.getElementById("maDiv");
-                            let html = "<div class=\"panel-heading\" >Zones: <a href='/zone/create/"+$("#id_ville").val()+"' class='btn btn-default'><span class=' glyphicon glyphicon-plus'></span> En ajouter une</a></div>" +
+                            let html = "<div class=\"panel-heading\" ><div class='row'><div class='col-md-9'> Zones:</div><div class='col-md-3'> <a href='/zone/create/"+$("#id_ville").val()+"' class='btn btn-default'><span class=' glyphicon glyphicon-plus'></span> Ajouter </a></div></div></div>" +
                                 "<div class='panel-body'>" +
                                 "                        <div class=\"table-responsive\">" +
                                 "                            <table class=\"table table-striped\">" +

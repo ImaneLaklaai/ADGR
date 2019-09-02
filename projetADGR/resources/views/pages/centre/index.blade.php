@@ -6,11 +6,18 @@
             <div class="col-lg-10" id="collectesFixes">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Liste des centres
+                        <div class="row">
+                            <div class="col-md-10">
+                                Liste des centres
+                            </div>
+                            <div class="col-md-2">
+                                <a href="centre/create"><button class="btn btn-primary">Ajouter</button></a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                        <table width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>Libellé centre</th>
@@ -21,7 +28,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach(App\Centre::all() as $centre)
+                            @foreach($centres as $centre)
                                 <tr>
                                     <td>{{$centre->libCentre}}</td>
                                     <td>{{$centre->adresse}}</td>
@@ -35,6 +42,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{$centres->links()}}
                     </div>
                 </div>
             </div>

@@ -6,7 +6,14 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Villes
+                        <div class="row">
+                            <div class="col-md-9">
+                                Villes
+                            </div>
+                            <div class="col-md-2">
+                                <a href="ville/create"><button class="btn btn-primary">Ajouter</button></a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

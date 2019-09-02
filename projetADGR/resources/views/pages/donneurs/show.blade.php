@@ -267,8 +267,8 @@
                                                         @endif
                                                         <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
                                                         <td>
-                                                            <a href="/dons/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                                            <a href="/dons/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                            <a href="/don/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                            <a href="/don/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

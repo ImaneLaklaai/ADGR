@@ -102,7 +102,7 @@
                                     <h4 class="modal-title" id="myModalLabel">Transfert</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/compte/transferer" method="post" id="nouveauTransfert">
+                                    <form action="/transfert/store" method="post" id="nouveauTransfert">
                                         {{csrf_field()}}
                                         <input type="hidden" name="compte1" value="{{$compte->id}}">
                                         <label>Compte: </label> {{$compte->libelle}}
@@ -212,12 +212,61 @@
                                                                     <tr>
                                                                         <td>{{$depense->evenement->libelle}}</td>
                                                                         <td>{{$depense->montant}} DH</td>
-                                                                        <td> {{$depense->categorie->libelle}}</td>
+                                                                        <td>{{$depense->categorie->libelle}}</td>
                                                                         <td>{{$depense->created_at}}</td>
                                                                         <td>{{$depense->motif}}</td>
                                                                         <td>{{$depense->remarque}}</td>
                                                                     </tr>
                                                                 @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">Transferts</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                    <div class="panel-body">
+                                                        <b>Entrants:</b>
+                                                        <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>De</th>
+                                                                <th>Montant</th>
+                                                                <th>Date</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($compte->transfertsEntrants as $transfert)
+                                                                <tr>
+                                                                    <td><a href="/compte/show/{{$transfert->source->id}}">{{$transfert->source->libelle}}</a></td>
+                                                                    <td>{{$transfert->montant}} DH</td>
+                                                                    <td>{{$transfert->created_at}}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table><br>
+                                                        <b>Sortants</b>
+                                                        <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Vers</th>
+                                                                <th>Montant</th>
+                                                                <th>Date</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($compte->transfertsSortants as $transfert)
+                                                                <tr>
+                                                                    <td><a href="/compte/show/{{$transfert->destination->id}}">{{$transfert->destination->libelle}}</a></td>
+                                                                    <td>{{$transfert->montant}} DH</td>
+                                                                    <td>{{$transfert->created_at}}</td>
+                                                                </tr>
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>

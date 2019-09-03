@@ -139,7 +139,7 @@ Route::post("/compte/store", "ComptesController@store");
 Route::get("/compte/edit/{id}", "ComptesController@edit");
 Route::post("/compte/update/{id}", "ComptesController@update");
 Route::get("/compte/show/{id}", "ComptesController@show");
-Route::post("/compte/transferer", "ComptesController@transfert");
+Route::post("transfert/store", "TransfertController@store");
 
 
 

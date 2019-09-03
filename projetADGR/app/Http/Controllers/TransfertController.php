@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\accountLog;
-use App\depense;
 use App\Compte;
+use App\Transfert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class DepensesController extends Controller
+class TransfertController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,7 @@ class DepensesController extends Controller
      */
     public function index()
     {
-        return view("pages.GestionFinanciere.Depenses.index");
+        //
     }
 
     /**
@@ -27,7 +26,7 @@ class DepensesController extends Controller
      */
     public function create()
     {
-        return view("pages.GestionFinanciere.Depenses.create");
+
     }
 
     /**
@@ -38,25 +37,26 @@ class DepensesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'compte' => "required",
-            'event' => "required",
-            'montant' => 'required',
-            "motif" => "required",
-        ]);
-
-        $depense = new depense();
-        $depense->compte_id = $request->input("compte");
-        $compte = Compte::find($depense->compte_id);
-        $depense->Evenement_id = $request->input("event");
-        $depense->montant = $request->input("montant");
-        $depense->categorie_depense_id = $request->input("categorie");
-        $depense->motif = $request->input("motif");
-        $depense->remarque = $request->input("remarque");
-        $compte->retrait($depense->montant);
-        $compte->save();
-        $depense->save();
-        return Redirect::to("/compte/show/".$compte->id);
+//        $this->validate($request, [
+//            "compte1" => "required",
+//            "compte2" => "required",
+//            "montant" => "required"
+//        ]);
+        $source = Compte::find($request->input("compte1"));
+        $destination = Compte::find($request->input("compte2"));
+        $montant = $request->input("montant");
+        if($montant > 0){
+            $source->retrait($montant);
+            $destination->depos($montant);
+            $source->save();
+            $destination->save();
+            $transfert = new Transfert();
+            $transfert->compte1_id = $source->id;
+            $transfert->compte2_id = $destination->id;
+            $transfert->montant = $montant;
+            $transfert->save();
+        }
+        return Redirect::to("/compte/show/".$transfert->source->id);
     }
 
     /**
@@ -101,8 +101,6 @@ class DepensesController extends Controller
      */
     public function destroy($id)
     {
-        $depense = depense::find($id);
-        $depense->delete();
-        return Redirect::to("/depense");
+        //
     }
 }

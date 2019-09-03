@@ -53,10 +53,6 @@ class EntreesController extends Controller
         $log = new accountLog();
         $compte->depos($entree->montant);
         $compte->save();
-        $log->solde = $compte->solde;
-        $log->compte_id = $request->input("compte");
-        $log->date = date("Y-m-d");
-        $log->save();
         $entree->save();
         return Redirect::to("/compte/show/".$compte->id);
     }

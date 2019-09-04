@@ -52,41 +52,41 @@ class DonneurController extends Controller
     public function store(Request $request)
     {
         $file = $request->file("photo");
-        if($file->getClientOriginalExtension() == 'jpg') {
-            $this->validate($request, [
-                'nom' => 'required',
-                'prenom' => 'required',
-                'cin' => 'required|unique:donneurs',
-                'numeroTelephone' => 'required',
-                'groupe' => 'required',
-            ]);
-            $donneur = new Donneur();
-            $donneur->nom = $request->input('nom');
-            $donneur->prenom = $request->input('prenom');
-            $donneur->CIN = $request->input('cin');
-            $donneur->numeroTelephone = $request->input('numeroTelephone');
-            $donneur->numeroTelephoneSecondaire = $request->input('numeroTelephoneSecondaire');
-            $donneur->dateNaissance = $request->input('dateNaissance');
-            $donneur->adresse = $request->input('adresse');
-            $donneur->email = $request->input('email');
-            $donneur->profession = $request->input('profession');
-            $donneur->sexe = $request->input('sexe');
-            $donneur->etat = $request->input('etat');
-            $donneur->groupe_sanguin_id = $request->input('groupe');
-            $donneur->dateDernierDon = $request->input('dateDernierDon');
-            $donneur->etat_civil_id = $request->input('etatCivil');
-            $donneur->nombreEnfants = $request->input('nombreEnfants');
-            if ($request->type) {
-                $donneur->type = 1;
-            } else {
-                $donneur->type = 0;
-            }
-            $donneur->x = 0;
-            $donneur->y = 0;
-            $donneur->remarque = $request->input('remarque');
-            $donneur->zone_id = $request->input('zone_id');
-            $donneur->moyenAdhesion = $request->input("moyen");
-            $donneur->save();
+        $this->validate($request, [
+            'nom' => 'required',
+            'prenom' => 'required',
+            'cin' => 'required|unique:donneurs',
+            'numeroTelephone' => 'required',
+            'groupe' => 'required',
+        ]);
+        $donneur = new Donneur();
+        $donneur->nom = $request->input('nom');
+        $donneur->prenom = $request->input('prenom');
+        $donneur->CIN = $request->input('cin');
+        $donneur->numeroTelephone = $request->input('numeroTelephone');
+        $donneur->numeroTelephoneSecondaire = $request->input('numeroTelephoneSecondaire');
+        $donneur->dateNaissance = $request->input('dateNaissance');
+        $donneur->adresse = $request->input('adresse');
+        $donneur->email = $request->input('email');
+        $donneur->profession = $request->input('profession');
+        $donneur->sexe = $request->input('sexe');
+        $donneur->etat = $request->input('etat');
+        $donneur->groupe_sanguin_id = $request->input('groupe');
+        $donneur->dateDernierDon = $request->input('dateDernierDon');
+        $donneur->etat_civil_id = $request->input('etatCivil');
+        $donneur->nombreEnfants = $request->input('nombreEnfants');
+        if ($request->type) {
+            $donneur->type = 1;
+        } else {
+            $donneur->type = 0;
+        }
+        $donneur->x = 0;
+        $donneur->y = 0;
+        $donneur->remarque = $request->input('remarque');
+        $donneur->zone_id = $request->input('zone_id');
+        $donneur->moyenAdhesion = $request->input("moyen");
+        $donneur->save();
+        if($request->file("photo")){
             $filename = $donneur->id. "." .$file->getClientOriginalExtension();
             $file->storeAs("public/profilePhotos/donneurs/", $filename);
         }

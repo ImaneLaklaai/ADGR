@@ -30,7 +30,8 @@ class DonneurController extends Controller
     }
     public function index()
     {
-        return view("pages.donneurs.index");
+        $donneurs = Donneur::paginate(10);
+        return view("pages.donneurs.index")->with("donneurs", $donneurs);
     }
 
     /**

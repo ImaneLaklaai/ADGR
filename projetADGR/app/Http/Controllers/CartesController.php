@@ -14,7 +14,8 @@ class CartesController extends Controller
      */
     public function index()
     {
-        Return view("pages.cartes.index");
+        $cartes = Carte::paginate(10);
+        Return view("pages.cartes.index")->with("cartes", $cartes);
     }
 
     /**

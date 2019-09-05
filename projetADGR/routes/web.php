@@ -205,3 +205,22 @@ Route::post("/cinTest", "ajaxHandlers@CINtest");//Tester l'existence d'un CIN
 Route::get("/accountLogs/{id}", "ajaxHandlers@accountLogs"); //Les journaux d'un compte
 Route::get("/benevole/changeState", "ajaxHandlers@changeState"); //Changer l'etat d'activite d'un bénévole
 Route::get("/expensesByCat/{id}", "ajaxHandlers@expensesByCat");
+
+//Authentification:
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/benevole/login',"BenevoleController@getLoginForm")->name("benevole.login");
+Route::post('/benevole/login',"BenevoleController@login")->name("benevole.login.submit");
+
+
+//Comités
+Route::get("/comite", "ComiteController@index");
+Route::get("/comite/create", "ComiteController@create");
+Route::post("/comite/store", "ComiteController@store")->name("comite.store");
+Route::get("/comite/edit/{id}", "ComiteController@edit");
+Route::post("/comite/update/{id}", "ComiteController@edit");
+Route::get("/comite/delete/{id}", "ComiteController@destroy");
+Route::get("/comite/show/{id}","ComiteController@show");
+//ComiteEvenement
+Route::post("/comiteEvent/create", "ComiteEvenementController@store")->name("comiteEv.store");
+Route::get("/comiteEvent/delete/{id}", "ComiteEvenementController@destroy");

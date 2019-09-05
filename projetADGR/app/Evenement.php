@@ -18,4 +18,8 @@ class Evenement extends Model
         return $this->hasOne("App\Equipe","Evenement_id");
     }
 
+    public function comiteEvenement(){
+        return $this->hasOne("App\comiteEvenement", "Evenement_id");
+    }
+
 }

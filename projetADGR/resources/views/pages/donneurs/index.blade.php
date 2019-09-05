@@ -18,7 +18,7 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                        <table width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>Nom</th>
@@ -32,7 +32,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach(App\Donneur::All() as $donneur)
+                            @foreach($donneurs as $donneur)
                                 <tr>
                                     <td>{{$donneur->nom}}</td>
                                     <td>{{$donneur->prenom}}</td>
@@ -135,6 +135,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{$donneurs->links()}}
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@
                     {{csrf_field()}}
                     <label for="evenement">Evénement</label>
                     <select name="evenement" id="evenement" class="form-control">
+                                <option value="{{$equipe->evenement->id}}">{{$equipe->evenement->libelle}}</option>
                         @foreach(\App\Evenement::all() as $event)
                             @if(! $event->equipe)
                                 <option value="{{$event->id}}">{{$event->libelle}}</option>

@@ -24,16 +24,19 @@ class CreateBenevolesTable extends Migration
             $table->string("adresse");
             $table->string("x")->default('0');
             $table->string("y")->default('0');
-            $table->string("email");
+            $table->string("email")->unique();
             $table->string("profession");
             $table->string("sexe");
             $table->date("dateAdhesion");
-            $table->string("login");
+            $table->string("login")->unique();
             $table->string("password");
             $table->boolean("etat")->default(true);
             $table->boolean('droitAcces')->default(false);
             $table->integer('etat_civil')->unsigned()->index();
             $table->foreign('etat_civil')->references("id")->on("etat_civils");
+            $table->integer("role_id")->unsigned()->index();
+            $table->foreign("role_id")->references("id")->on("roles");
+            $table->rememberToken();
             $table->timestamps();
         });
     }

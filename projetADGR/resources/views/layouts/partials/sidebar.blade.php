@@ -48,6 +48,7 @@
                         <li>
                             <a href="/evenement"><i class="fa fa-heart fa-fw"></i> Evenement </a>
                             <a href="/equipe"><i class="fa fa-users fa-fw"></i> Equipes</a>
+                            <a href="/comite"><i class="fa fa-users fa-fw"></i> Comités</a>
                             <a href="/benevole"><i class="fa fa-user fa-fw"></i> Benevoles</a>
                         </li>
                     </ul>

@@ -42,9 +42,4 @@
     </div>
 </div>
 <script src="/js/jquery.js"></script>
-<script language="javascript" type="text/javascript">
-    $(document).ready(function(){
-
-    });
-</script>
 @endsection

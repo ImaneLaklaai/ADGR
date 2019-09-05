@@ -9,7 +9,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <a href="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg"><img src="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg" width="100%"></a>
+                @if(file_exists("/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg"))
+                    <a href="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg"><img src="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg" width="100%"></a>
+                @else
+                    <a href="/storage/logo.jpg"><img src="/storage/logo.jpg" width="100%"></a>
+                @endif
             </div>
             <div class="col-md-9">
                 <div class="well">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Benevole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -15,6 +16,27 @@ class BenevoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+//        $this->middleware("auth:benevole")->except( ["getLoginForm", "login"]);
+    }
+
+    public function getLoginForm(){
+        return view("auth.login");
+    }
+    public function login(Request $request){
+        //Validate:
+        $this->validate($request, [
+            "email" => "required|email",
+            "password" => "required",
+        ]);
+        //Login:
+        if(Auth::attempt(["email" => $request->email,"password" => $request->password],true)){
+            return redirect()->to("/benevole");
+        }
+        return redirect()->back();
+
+    }
     public function index()
     {
         $benevoles = Benevole::paginate(10);

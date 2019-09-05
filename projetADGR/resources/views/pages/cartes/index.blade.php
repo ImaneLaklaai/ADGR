@@ -22,7 +22,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(App\Carte::All() as $carte)
+                                @foreach($cartes as $carte)
                                     <tr>
                                         <td>{{$carte->donneur->CIN}}</td>
                                         <?php
@@ -47,6 +47,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$cartes->links()}}
                         </div>
                         <!-- /.table-responsive -->
                     </div>

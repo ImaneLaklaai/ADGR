@@ -9,7 +9,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
+        @if(file_exists("/storage/profilePhotos/benevoles/{{$benevole->id}}.jpg"))
             <a href="/storage/profilePhotos/benevoles/{{$benevole->id}}.jpg"><img src="/storage/profilePhotos/benevoles/{{$benevole->id}}.jpg" width="100%"></a>
+        @else
+                <a href="/storage/logo.jpg"><img src="/storage/logo.jpg" width="100%"></a>
+        @endif
         </div>
         <div class="well col-md-9">
             <b>Nom: </b> {{$benevole->nom}}<br>
@@ -31,7 +35,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Equipes</label>
             <div class="table-responsive">
                 <table class="table">
@@ -52,6 +56,35 @@
                                 <td><a href="/equipe/show/{{$be->equipe->id}}">Afficher</a></td>
                             </tr>
                         @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label>Comités</label>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Responsable</th>
+                        <th>Evenements</th>
+                        <th>Plus d'infos</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($benevole->benevoleComite as $be)
+                        <tr>
+                            <td>{{$be->comite->id}}</td>
+                            <td><a href="/benevole/show/{{$be->comite->responsable->id}}">{{$be->comite->responsable->nom." ".$be->comite->responsable->prenom}}</a></td>
+                            <td>
+                                @foreach($be->comite->comiteEvenement as $ce)
+                                    - {{$ce->evenement->libelle}}
+                                @endforeach
+                            </td>
+                            <td><a href="/comite/show/{{$be->comite->id}}">Afficher</a></td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

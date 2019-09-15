@@ -6,6 +6,7 @@ use App\Carte;
 use App\Donneur;
 use FontLib\EOT\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -17,6 +18,11 @@ class DonneurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware("auth:donneur,benevole");
+    }
+
     public function export_pdf($id)
     {
         $donneur = Donneur::find($id); //Chargement des informations depuis la base de données
@@ -41,6 +47,13 @@ class DonneurController extends Controller
      */
     public function create()
     {
+        if(!Auth::guard("benevole")->check()){
+            return redirect()->to("/");
+        }else{
+            if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2){
+                return redirect()->to("/");
+            }
+        }
         return view("pages.donneurs.create");
     }
 
@@ -102,6 +115,15 @@ class DonneurController extends Controller
      */
     public function show($id)
     {
+        if(!Auth::guard("benevole")->check()){
+            if(Auth::user()->id != $id){
+                return redirect()->to("/");
+            }
+        }else{
+            if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2 && Auth::user()->role->id != 4){
+                return redirect()->to("/");
+            }
+        }
         return view("pages.donneurs.show")->with("id", $id);
     }
 
@@ -114,6 +136,13 @@ class DonneurController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::guard("benevole")->check()){
+            return redirect()->to("/");
+        }else{
+            if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2){
+                return redirect()->to("/");
+            }
+        }
         return view("pages.donneurs.edit")->with("id", $id);
     }
 
@@ -170,6 +199,14 @@ class DonneurController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::guard("benevole")->check()){
+            return redirect()->to("/");
+        }else{
+            if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2){
+                return redirect()->to("/");
+            }
+        }
+
         $donneur = Donneur::find($id);
         Storage::delete("public/profilePhotos/donneurs/".$donneur->id.".jpg");
         $donneur->delete();

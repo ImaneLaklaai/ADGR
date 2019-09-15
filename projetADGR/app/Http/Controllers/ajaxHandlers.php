@@ -6,7 +6,9 @@ use App\Benevole;
 use App\categorieDepense;
 use App\Centre;
 use App\Compte;
+use App\Donneur;
 use App\Ville;
+use Doctrine\DBAL\Schema\Schema;
 use Illuminate\Http\Request;
 
 class ajaxHandlers extends Controller
@@ -40,5 +42,34 @@ class ajaxHandlers extends Controller
             array_push($expensesByCat, $myobj);
         }
         return json_encode($expensesByCat);
+    }
+    public function advancedSearch(Request $request){
+        if($request->recherche != "") {
+            if ($request->motCle == "donneur"){
+                if($request->option == "") {
+                    $donneurq = Donneur::where("nom", "like", "%" . $request->recherche . "%")
+                        ->orWhere("prenom", "like", "%" . $request->recherche . "%")
+                        ->orWhere("dateNaissance", "like", "%" . $request->recherche . "%")
+                        ->orWhere("email", "like", "%" . $request->recherche . "%")
+                        ->orWhere("username", "like", "%" . $request->recherche . "%")
+                        ->orWhere("CIN", "like", "%" . $request->recherche . "%")->get();
+                }else{
+                    $donneurq = Donneur::where($request->option, "like", "%" . $request->recherche . "%")->get();
+                }
+                return response(json_encode($donneurq));
+            } elseif ($request->motCle == "benevole") {
+                if($request->option == ""){
+                    $benevoles = Benevole::where("nom", "like", "%" . $request->recherche . "%")
+                        ->orWhere("prenom", "like", "%" . $request->recherche . "%")
+                        ->orWhere("dateNaissance", "like", "%" . $request->recherche . "%")
+                        ->orWhere("email", "like", "%" . $request->recherche . "%")
+                        ->orWhere("username", "like", "%" . $request->recherche . "%")
+                        ->orWhere("CIN", "like", "%" . $request->recherche . "%")->get();
+                }else{
+                    $benevoles = Benevole::where($request->option, "like", "%" . $request->recherche . "%")->get();
+                }
+                return response(json_encode($benevoles));
+            }
+        }
     }
 }

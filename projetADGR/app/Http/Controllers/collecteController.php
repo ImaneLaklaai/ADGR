@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class collecteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
     public function index(){
         return view("pages.collecte.index");
     }

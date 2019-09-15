@@ -18,27 +18,14 @@ class BenevoleController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware("auth:benevole")->except( ["getLoginForm", "login"]);
+            $this->middleware("auth:benevole");
     }
 
-    public function getLoginForm(){
-        return view("auth.login");
-    }
-    public function login(Request $request){
-        //Validate:
-        $this->validate($request, [
-            "email" => "required|email",
-            "password" => "required",
-        ]);
-        //Login:
-        if(Auth::attempt(["email" => $request->email,"password" => $request->password],true)){
-            return redirect()->to("/benevole");
-        }
-        return redirect()->back();
-
-    }
     public function index()
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2){
+            return redirect()->to("/");
+        }
         $benevoles = Benevole::paginate(10);
         return view("pages.Benevole.index")->with("benevoles", $benevoles);
     }
@@ -50,6 +37,9 @@ class BenevoleController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2){
+            return redirect()->to("/");
+        }
         return view("pages.Benevole.create");
     }
 
@@ -74,6 +64,20 @@ class BenevoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            "nom" => "required",
+            "prenom" => "required",
+            "CIN" => "required|unique:benevoles",
+            "tele" => "required",
+            "dateNaissance" => "required",
+            "adresse" => "required",
+            "email" => "required|email|unique:benevoles",
+            "sexe" => "required",
+            "dateAdhesion" => "required",
+            "username" => "required|unique:benevoles",
+            "password" => "required|min:6",
+            "etatCivil" => "required",
+            ]);
         $benevole = new Benevole();
         $benevole->nom = $request->input("nom");
         $benevole->prenom = $request->input("prenom");
@@ -88,11 +92,12 @@ class BenevoleController extends Controller
         $benevole->profession = $request->input("profession");
         $benevole->sexe = $request->input("sexe");
         $benevole->dateAdhesion = $request->input("dateAdhesion");
-        $benevole->login = $request->input("login");
-        $benevole->password = $request->input("password");
+        $benevole->username = $request->input("username");
+        $benevole->password = bcrypt($request->input("password"));
         $benevole->etat = true;
         $benevole->etat_civil = $request->input("etatCivil");
         $benevole->droitAcces = false;
+        $benevole->role_id = $request->input("role");
         $benevole->save();
         if($request->file("photo")){
             $filename = $benevole->id.".".$request->file("photo")->getClientOriginalExtension();
@@ -109,6 +114,9 @@ class BenevoleController extends Controller
      */
     public function show($id)
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2 && Auth::user()->id != $id){
+            return redirect()->to("/");
+        }
         return view("pages.Benevole.show")->with("id", $id);
     }
 
@@ -120,6 +128,9 @@ class BenevoleController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2 && (Auth::user()->id != $id && !Auth::guard("benevole")->check())){
+            return redirect()->to("/");
+        }
         return view("pages.benevole.edit")->with("id", $id);
     }
 
@@ -132,6 +143,21 @@ class BenevoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            "nom" => "required",
+            "prenom" => "required",
+            "CIN" => "required|unique:benevoles",
+            "tele" => "required",
+            "dateNaissance" => "required",
+            "adresse" => "required",
+            "email" => "required|email|unique:benevoles",
+            "sexe" => "required",
+            "dateAdhesion" => "required",
+            "username" => "required|unique:benevoles",
+            "password" => "required|min:6",
+            "etatCivil" => "required",
+        ]);
+
         $benevole = Benevole::find($id);
         $benevole->nom = $request->input("nom");
         $benevole->prenom = $request->input("prenom");
@@ -146,7 +172,7 @@ class BenevoleController extends Controller
         $benevole->profession = $request->input("profession");
         $benevole->sexe = $request->input("sexe");
         $benevole->dateAdhesion = $request->input("dateAdhesion");
-        $benevole->login = $request->input("login");
+        $benevole->username = $request->input("username");
         $benevole->password = $request->input("password");
         $benevole->etat = true;
         $benevole->etat_civil = $request->input("etatCivil");

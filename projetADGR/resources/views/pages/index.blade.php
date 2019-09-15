@@ -10,7 +10,7 @@
                             <i class="fa fa-tint fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">{{count(\App\collecteMobile::all()) + count(\App\collecteMobile::all())}}</div>
+                            <div class="huge">{{count(\App\collecteFixe::all()) + count(\App\collecteMobile::all())}}</div>
                             <div>Collectes !</div>
                         </div>
                     </div>

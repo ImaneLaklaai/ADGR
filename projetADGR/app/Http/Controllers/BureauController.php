@@ -14,6 +14,10 @@ class BureauController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
     public function index()
     {
         $bureaux = Bureau::paginate(5);

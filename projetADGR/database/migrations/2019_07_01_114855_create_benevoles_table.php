@@ -28,7 +28,7 @@ class CreateBenevolesTable extends Migration
             $table->string("profession");
             $table->string("sexe");
             $table->date("dateAdhesion");
-            $table->string("login")->unique();
+            $table->string("username")->unique();
             $table->string("password");
             $table->boolean("etat")->default(true);
             $table->boolean('droitAcces')->default(false);

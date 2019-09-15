@@ -14,6 +14,11 @@ class DonADGRController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
+
     public function index($id)
     {
         
@@ -44,15 +49,19 @@ class DonADGRController extends Controller
 //            'dateDon' => 'required',
 //        ]);
 
-        $don = new donAdgr();
-        $don->collecte_id = $request->input('collecte');
-        $don->donneur_id = $request->input('donneur');
-        $don->dateDon = $request->input('dateDon');
-        $donneur = Donneur::find($don->donneur_id);
-        $donneur->dateDernierDon = $don->dateDon;
-        $donneur->save();
-        $don->save();
-        return redirect('/don')->with('success', 'Don ajouté');
+        $donneur = Donneur::find($request->donneur);
+        if($donneur->isApte()) {
+            $don = new donAdgr();
+            $don->collecte_id = $request->input('collecte');
+            $don->donneur_id = $request->input('donneur');
+            $don->dateDon = $request->input('dateDon');
+            $donneur = Donneur::find($don->donneur_id);
+            $donneur->dateDernierDon = $don->dateDon;
+            $donneur->save();
+            $don->save();
+            return Redirect::to("/donneur/show/".$request->donneur)->with("success", "Don ADGR ajouté !");
+        }
+        return Redirect::to("/donneur/show/".$request->donneur)->with("error", "Donneur inapte !");
     }
 
     /**
@@ -97,7 +106,9 @@ class DonADGRController extends Controller
      */
     public function destroy($id)
     {
-        donAdgr::find($id)->delete();
-        return Redirect::to("/don");
+        $don = donAdgr::find($id);
+        $donneur = Donneur::find($don->donneur_id);
+        $don->delete();
+        return Redirect::to("/donneur/show/".$donneur->id);
     }
 }

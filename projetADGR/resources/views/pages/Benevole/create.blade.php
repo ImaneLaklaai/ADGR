@@ -15,6 +15,16 @@
                         <input type="text" name="nom" class="form-control" placeholder="Nom" id="nom" autofocus><br>
                         <label for="prenom">Prenom:</label>
                         <input type="text" name="prenom" class="form-control" placeholder="Prénom" id="prenom"><br>
+                        <label for="role">Rôle</label>
+                        <select name="role" id="role" class="form-control">
+                            @if(Auth::user()->role->id == 1)
+                                <option value="1">superadmin</option>
+                            @endif
+                            @foreach(\App\Role::all()->where("id", "!=", "1") as $role)
+                                <option value="{{$role->id}}">{{$role->libelle}}</option>
+                            @endforeach
+                        </select><br>
+
                         <label for="sexe">Sexe:</label>
                         <select name="sexe" id="sexe" class="form-control">
                             <option value="F">Femme</option>
@@ -50,7 +60,7 @@
                     </div>
                     <div id="part3" style="display:none">
                         <h4>Informations de connexion</h4>
-                        <input type="text" name="login" placeholder="Login" class="form-control" id="login"><br>
+                        <input type="text" name="username" placeholder="Nom d'utilisateur" class="form-control" id="username"><br>
                         <input type="password" name="password" placeholder="Mot de passe" class="form-control" id="password"><br>
                         <input type="submit" value="Ajouter" class="btn btn-success">
                         <input type="reset" value="Annuler" class="btn btn-primary">

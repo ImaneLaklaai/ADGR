@@ -10,7 +10,7 @@
     @endif
     @if(isset($idCollecte))
         <?php
-        $collecte = \App\collecteFixe::find($idCollecte);
+         $collecte = \App\collecteFixe::find($idCollecte);
         ?>
     @endif
     <div class="container">

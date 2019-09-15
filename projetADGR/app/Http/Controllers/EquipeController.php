@@ -16,6 +16,11 @@ class EquipeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
+
     public function index()
     {
         return view("pages.Equipe.index");
@@ -100,6 +105,17 @@ class EquipeController extends Controller
         $equipe->evenement_id = $request->input("evenement");
         $equipe->save();
         $membres = $request->input("membres");
+        foreach(benevoleEquipe::all() as $be){
+            $existe = false;
+            foreach($membres as $membre){
+                if($membre == $be->benevole->id){
+                    $existe = true;
+                }
+            }
+            if(!$existe){
+                $be->delete();
+            }
+        }
         foreach($membres as $membre){
             if(benevoleEquipe::all()->where("benevole_id", "=", $membre)->where("equipe_id", "=", $equipe->id)->count() == 0){
                 $benevoleEquipe = new benevoleEquipe();
@@ -108,7 +124,7 @@ class EquipeController extends Controller
                 $benevoleEquipe->save();
             }
         }
-        return Redirect::to("/equipe/show/".$equipe->id);
+        return Redirect::to("/equipe");
     }
 
     /**

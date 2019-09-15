@@ -32,7 +32,9 @@ class donneurs_table_seeder extends Seeder
             "remarque" => null,
             "etat_civil_id" => "1",
             "groupe_sanguin_id" => "1",
-            "zone_id" => "2"
+            "zone_id" => "2",
+            "username" => "anwarhssine",
+            "password" => bcrypt("123456789"),
         ]);
     }
 }

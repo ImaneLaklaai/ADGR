@@ -22,6 +22,9 @@ class Benevole extends Authenticatable
         "password", "remember_token"
     ];
 
+
+
+
     public function benevoleEquipe(){
         return $this->hasMany("App\benevoleEquipe");
     }
@@ -32,5 +35,9 @@ class Benevole extends Authenticatable
 
     public function etatCivil(){
         return $this->hasOne("App\EtatCivil","id","etat_civil");
+    }
+
+    public function role(){
+        return $this->hasOne("App\Role", "id", "role_id");
     }
 }

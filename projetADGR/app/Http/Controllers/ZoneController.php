@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class ZoneController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
+
     public function index($idVille=-1)
     {
         return view("pages.Zone.index")->with("idVille", $idVille);

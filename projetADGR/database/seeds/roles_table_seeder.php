@@ -11,6 +11,9 @@ class roles_table_seeder extends Seeder
      */
     public function run()
     {
+        Role::create(["libelle" => "superadmin"]);
         Role::create(["libelle" => "admin"]);
+        Role::create(["libelle" => "tresorier"]);
+        Role::create(["libelle" => "medecin"]);
     }
 }

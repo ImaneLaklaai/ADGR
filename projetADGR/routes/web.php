@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-});
+Route::get('/', "HomeController@index");
 //Collecte:
 Route::get("/collecte/","collecteController@index");
 Route::get("/collecte/create", "collecteController@create");
@@ -81,6 +79,9 @@ Route::get("/carte/edit/{id}", "CartesController@edit");
 Route::post("/carte/update/{id}", "CartesController@update");
 Route::get("/carte/delete/{id}", "CartesController@destroy");
 
+//Route::group(['middleware' => ['auth:benevole, donneur'] ], function(){
+//    Route::get("/donneur/show/{id}", "DonneurController@show");
+//});
 
 //Donneurs:
 Route::get("/donneur", "DonneurController@index");
@@ -92,6 +93,12 @@ Route::post("/donneur/update/{id}", "DonneurController@update");
 Route::get("/donneur/delete/{id}", "DonneurController@destroy");
 Route::get("/donneur/{id}/pdf", "DonneurController@export_pdf");
 Route::get("/donneur/printlist", "DonneurController@export_all_pdf");
+
+//Authentification donneur:
+Route::get("/donneur/login", "Auth\DonneurLoginController@showLoginForm")->name("donneur.login");
+Route::post("/donneur/login","Auth\DonneurLoginController@login")->name("donneur.login.submit");
+Route::get("/donneur/logout", "Auth\DonneurLoginController@logout")->name("donneur.logout");
+
 
 
 //Dons:
@@ -171,7 +178,7 @@ Route::post("/evenement/update/{id}", "EventsController@update");
 Route::get("/evenement/delete/{id}", "EventsController@destroy");
 
 //Bénévoles:
-Route::get("/benevole", "BenevoleController@index");
+Route::get("/benevole", "BenevoleController@index")->name("benevole");
 Route::get("/benevole/create", "BenevoleController@create");
 Route::post("/benevole/store", "BenevoleController@store");
 Route::get("/benevole/edit/{id}", "BenevoleController@edit");
@@ -205,12 +212,14 @@ Route::post("/cinTest", "ajaxHandlers@CINtest");//Tester l'existence d'un CIN
 Route::get("/accountLogs/{id}", "ajaxHandlers@accountLogs"); //Les journaux d'un compte
 Route::get("/benevole/changeState", "ajaxHandlers@changeState"); //Changer l'etat d'activite d'un bénévole
 Route::get("/expensesByCat/{id}", "ajaxHandlers@expensesByCat");
+Route::post("/search", "ajaxHandlers@advancedSearch");
 
 //Authentification:
-Auth::routes();
+//Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/benevole/login',"BenevoleController@getLoginForm")->name("benevole.login");
-Route::post('/benevole/login',"BenevoleController@login")->name("benevole.login.submit");
+Route::get('/login',"Auth\BenevoleLoginController@showLoginForm")->name("benevole.login");
+Route::post('/login',"Auth\BenevoleLoginController@login")->name("benevole.login.submit");
+Route::get("/logout", "Auth\BenevoleLoginController@logout")->name("benevole.logout");
 
 
 //Comités
@@ -218,9 +227,27 @@ Route::get("/comite", "ComiteController@index");
 Route::get("/comite/create", "ComiteController@create");
 Route::post("/comite/store", "ComiteController@store")->name("comite.store");
 Route::get("/comite/edit/{id}", "ComiteController@edit");
-Route::post("/comite/update/{id}", "ComiteController@edit");
+Route::post("/comite/update/{id}", "ComiteController@update");
 Route::get("/comite/delete/{id}", "ComiteController@destroy");
 Route::get("/comite/show/{id}","ComiteController@show");
+
+
 //ComiteEvenement
 Route::post("/comiteEvent/create", "ComiteEvenementController@store")->name("comiteEv.store");
 Route::get("/comiteEvent/delete/{id}", "ComiteEvenementController@destroy");
+
+
+//Test:
+Route::get("/test", function(){
+    $msg = "";
+    if(Auth::guard("benevole")->check()){
+        $msg .= "Logged in as 'benevole'<br>";
+    }
+    if(Auth::guard("donneur")->check()){
+        $msg .= "Logged in as 'donneur'";
+    }
+    if($msg == ""){
+        $msg .= "Not logged in !";
+    }
+    return $msg;
+});

@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'benevole',
+        'passwords' => 'users',
     ],
 
     /*
@@ -45,9 +45,15 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
         'benevole' => [
             'driver' => 'session',
-            'provider' => 'benevole'
+            'provider' => 'benevoles'
+        ],
+
+        'donneur' => [
+        'driver' => 'session',
+        'provider' => 'donneurs'
         ]
     ],
 
@@ -74,10 +80,15 @@ return [
             'model' => App\User::class,
         ],
 
-        'benevole' => [
+        'benevoles' => [
             'driver' => 'eloquent',
             'model' => App\Benevole::class,
-        ]
+        ],
+
+        'donneurs' => [
+            'driver' => 'eloquent',
+            'model' => App\Donneur::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -106,8 +117,13 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
-        'benevole' => [
-            'provider' => 'benevole',
+        'benevoles' => [
+            'provider' => 'benevoles',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'donneur' => [
+            'provider' => 'donneurs',
             'table' => 'password_resets',
             'expire' => 60,
         ],

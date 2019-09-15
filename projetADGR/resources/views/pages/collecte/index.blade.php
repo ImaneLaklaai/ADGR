@@ -5,7 +5,7 @@
         {{--<input type="radio" class="btn btn" name="typeCol" id='fixe' checked> <label for="fixe">Collectes fixes</label>--}}
         {{--<input type="radio" name="typeCol" id="mobile"> <label for="mobile">Collectes mobiles</label>--}}
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary">
                         <input type="radio" name="btnCol" class="btnCol" id="fixe" checked> <label for="fixe"> Collecte fixe</label><br>
@@ -14,6 +14,9 @@
                         <input type="radio" name="btnCol" class="btnCol" id="mobile"> <label for="mobile"> Collecte mobile</label>
                     </label>
                 </div>
+            </div>
+            <div class="col-md-3">
+                <a href="/evenement/create"><button class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Ajouter</button></a>
             </div>
         </div>
         <div class="row">

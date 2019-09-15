@@ -5,7 +5,6 @@
         <div class="row">
             <div class="col-md-12">
                 @if(count(App\Benevole::all()) > 0 )
-
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
@@ -32,6 +31,7 @@
                                     <th>Adresse</th>
                                     <th>Etat</th>
                                     <th>Date d'adhesion</th>
+                                    <th>Rôle</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -53,6 +53,7 @@
                                             @endif
                                         </td>
                                         <td>{{$benevole->dateAdhesion}}</td>
+                                        <td>{{$benevole->role->libelle}}</td>
                                         <td>
                                             <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
                                             <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>

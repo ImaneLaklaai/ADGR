@@ -17,14 +17,14 @@ class CreateDonneursTable extends Migration
             $table->increments('id');
             $table->string('nom');
             $table->string('prenom');
-            $table->string('CIN');
+            $table->string('CIN')->unique();
             $table->string('numeroTelephone');
             $table->string('numeroTelephoneSecondaire')->nullable()->default(null);
             $table->date('dateNaissance');
             $table->string('adresse');
             $table->string('x')->default('0');;
             $table->string('y')->default('0');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('profession');
             $table->string('sexe');
             $table->boolean('etat');
@@ -39,6 +39,9 @@ class CreateDonneursTable extends Migration
             $table->foreign("groupe_sanguin_id")->references("id")->on("groupe_sanguins");
             $table->integer('zone_id')->unsigned()->index();
             $table->foreign('zone_id')->references("id")->on("zones");
+            $table->string("username")->unique();
+            $table->string("password");
+            $table->rememberToken();
             $table->timestamps();
         });
     }

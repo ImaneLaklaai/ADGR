@@ -14,6 +14,11 @@ class DonExterneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
+
     public function index()
     {
         //
@@ -43,15 +48,19 @@ class DonExterneController extends Controller
                 "raison" => "required"
             ]
         );
-        $don = new donExterne();
-        $don->date  = $request->input("dateDon");
-        $don->donneur_id = $request->input("donneur");
-        $don->raison = $request->input("raison");
-        $donneur = Donneur::find($don->donneur_id);
-        $donneur->dateDernierDon = $don->date;
-        $donneur->save();
-        $don->save();
-        return Redirect::to("/don");
+        $donneur = Donneur::find($request->donneur);
+        if($donneur->isApte()) {
+            $don = new donExterne();
+            $don->date = $request->input("dateDon");
+            $don->donneur_id = $request->input("donneur");
+            $don->raison = $request->input("raison");
+            $donneur = Donneur::find($don->donneur_id);
+            $donneur->dateDernierDon = $don->date;
+            $donneur->save();
+            $don->save();
+            return Redirect::to("/donneur/show/" . $don->donneur_id)->with("success", "Don externe ajouté !");
+        }
+        return Redirect::to("/donneur/show/" . $request->donneur)->with("error", "Donneur inapte !");
     }
 
     /**
@@ -96,7 +105,9 @@ class DonExterneController extends Controller
      */
     public function destroy($id)
     {
-        donExterne::find($id)->delete();
-        return Redirect::to("/");
+        $don = donExterne::find($id);
+        $donneur = Donneur::find($don->donneur_id);
+        $don->delete();
+        return Redirect::to("/donneur/show/".$donneur->id);
     }
 }

@@ -1,5 +1,5 @@
 @section("title", "Connexion")
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 
 @include("layouts.partials.head")
@@ -9,10 +9,10 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Veuillez vous Connecter <strong>(Bénévole)</strong></h3>
+                    <h3 class="panel-title">Veuillez vous Connecter <strong>(Donneur)</strong></h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form" action="{{route("benevole.login.submit")}}" method="post" >
+                    <form role="form" action="{{route("donneur.login.submit")}}" method="post" >
                         {{csrf_field()}}
                         <fieldset>
                             <div class="form-group">

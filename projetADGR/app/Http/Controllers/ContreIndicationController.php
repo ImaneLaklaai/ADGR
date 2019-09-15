@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\contreIndication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ContreIndicationController extends Controller
@@ -13,6 +14,12 @@ class ContreIndicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware("auth:benevole");
+    }
+
     public function index()
     {
         return view("pages.contreIndications.index");
@@ -25,6 +32,9 @@ class ContreIndicationController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2 && Auth::user()->role->id != 4){
+            return redirect()->to("/");
+        }
         return view("pages.contreIndications.create");
     }
 
@@ -68,6 +78,9 @@ class ContreIndicationController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2 && Auth::user()->role->id != 4){
+            return redirect()->to("/");
+        }
         return view("pages.contreIndications.edit")->with("id", $id);
     }
 
@@ -107,7 +120,9 @@ class ContreIndicationController extends Controller
      */
     public function destroy($id)
     {
-        contreIndication::find($id)->delete();
+        if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2 || Auth::user()->role->id == 4){
+            contreIndication::find($id)->delete();
+        }
         return Redirect::to("/contreIndication");
     }
 }

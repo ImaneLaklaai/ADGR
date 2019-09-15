@@ -4,10 +4,24 @@ namespace App;
 
 //use http\Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use DateTime;
 
-class Donneur extends Model
+class Donneur extends Authenticatable
 {
+
+    protected $guard = "donneur";
+
+    protected $fillable = [
+        "nom", "prenom", "email", "CIN", "numeroTelephone", "numeroTelephoneSecondaire", "dateNaissance", "adresse", "profession", "sexe", "etat", "dateDernierDon",
+        "nombreEnfants", "moyenAdhesion", "type", "remarque", "etat_civil_id", "groupe_sanguin_id", "zone_id", "username",
+    ];
+    protected $hidden = [
+        "password", "remember_token"
+    ];
+
+
+
     public function carte()
     {
         return $this->hasOne("App\Carte");

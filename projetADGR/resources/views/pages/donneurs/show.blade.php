@@ -127,9 +127,13 @@
                                 </div>
                             </div>
                         @endif
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                            Modifier l'état de la carte
-                        </button>
+                        @if(Auth::guard("benevole")->check())
+                            @if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2)
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    Modifier l'état de la carte
+                                </button>
+                            @endif
+                        @endif
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog">
@@ -245,6 +249,66 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         Dons
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#ajouterDon">
+                                            <i class="glyphicon glyphicon-plus"></i>Ajouter un don
+                                        </button>
+                                        <div class="modal fade" id="ajouterDon" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h4 class="modal-title" id="ajouterDonLabel"><i class="glyphicon glyphicon-plus"></i> Ajouter un don</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <input type="radio" name="type" id="donADGR" checked><label for="donADGR">Don ADGR</label>
+                                                            <input type="radio" name="type" id="donExt"><label for="donExt">Don externe</label>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div id="donADGRDiv">
+                                                                        <form action="/don/adgr/store" method="post" id="ajouterDonADGRForm">
+                                                                            {{csrf_field()}}
+                                                                            <label for="collecte">Collecte</label>
+                                                                            <select id="collecte" name="collecte" class="form-control">
+                                                                                @foreach(App\collecteFixe::all() as $collecte)
+                                                                                    <option value="{{$collecte->id}}">{{$collecte->libCollecte}}</option>
+                                                                                @endforeach
+                                                                            </select><br>
+                                                                            {{--<label for="donneur">CIN du donneur</label>--}}
+                                                                            {{--<select name="donneur" id="donneur" class="form-control">--}}
+                                                                                {{--@foreach(\App\Donneur::all() as $donneur)--}}
+                                                                                    {{--<option value="{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom . "(".$donneur->CIN.")"}}</option>--}}
+                                                                                {{--@endforeach--}}
+                                                                            {{--</select><br>--}}
+                                                                            <input type="hidden" name="donneur" value="{{$donneur->id}}">
+                                                                            <label for="dateDon">Date du don</label>
+                                                                            <input type="hidden" name="typeCollecte" value="0">
+                                                                            <input type="date" name="dateDon" id="dateDon" class="form-control" > <br>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div id="donExtDiv" style="display:none">
+                                                                        <form action="/don/externe/store" method="post" id="ajouterDonExterneForm">
+                                                                            {{csrf_field()}}
+                                                                            <input type="hidden" name="donneur" value="{{$donneur->id}}">
+                                                                            <input type="hidden" name="typeCollecte" value="1">
+                                                                            <label for="dateDon">Date du don</label>
+                                                                            <input type="date" name="dateDon" class="form-control" id="dateDon"><br>
+
+                                                                            <label for="raison">Raison du don</label>
+                                                                            <input type="text" name="raison" class="form-control" id="raison"><br>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                        <button type="button" class="btn btn-primary" id="btnSubmit">Ajouter</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 <!-- /.panel-heading -->
                                     <div class="panel-body" id="donsADGR">
@@ -393,9 +457,13 @@
                                         Pas de contre indications !
                                     </div>
                                 @endif
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#contreIndication">
-                                    Ajouter
-                                </button>
+                                @if(Auth::guard("benevole")->check())
+                                    @if(Auth::user()->role->id == 1 || Auth::user()->id == 2 || Auth::user()->role->id == 4)
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#contreIndication">
+                                            Ajouter
+                                        </button>
+                                    @endif
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="contact">
                                 <h4>Moyens de contact : </h4>
@@ -447,6 +515,25 @@
             $("#btnDonsExternes").on("change", function(){
                 $("#donsADGR").fadeOut();
                 $("#donsExternes").delay(400).fadeIn();
+            });
+
+            $("#btnSubmit").click(function(){
+                $("#ajouterDonADGRForm").submit()
+            });
+
+            $("#donADGR").on("change",function(){
+                $("#donExtDiv").fadeOut();
+                $("#donADGRDiv").delay(400).fadeIn();
+                $("#btnSubmit").click(function(){
+                    $("#ajouterDonADGRForm").submit()
+                });
+            });
+            $("#donExt").on("change",function(){
+                $("#donADGRDiv").fadeOut();
+                $("#donExtDiv").delay(400).fadeIn();
+                $("#btnSubmit").click(function(){
+                    $("#ajouterDonExterneForm").submit()
+                });
             });
         })
     </script>

@@ -58,6 +58,9 @@ class collecteMobileController extends Controller
         $collecte->y = 0;
         $collecte->lieu = $request->input("lieuCollecte");
         $collecte->zone_id = $request->input("zone_id");
+        $collecte->nombre_presents = $request->input("nombre_presents");
+        $collecte->nombre_contre_indiques = $request->input("nombre_contre_indiques");
+        $collecte->nombre_dons = $request->input("nombre_dons");
         $collecte->save();
         $collecte2 = new collecte();
         $collecte2->collecte_id = $collecte->id;
@@ -94,6 +97,9 @@ class collecteMobileController extends Controller
         $collecte->date = $request->input("dateCollecte");
         $collecte->lieu= $request->input("lieuCollecte");
         $collecte->zone_id= $request->input("zone_id");
+        $collecte->nombre_presents = $request->input("nombre_presents");
+        $collecte->nombre_contre_indiques = $request->input("nombre_contre_indiques");
+        $collecte->nombre_dons = $request->input("nombre_dons");
         $collecte->save();
         return Redirect::to("/collecte");
 

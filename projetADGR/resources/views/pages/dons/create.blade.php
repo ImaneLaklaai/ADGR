@@ -26,9 +26,7 @@
                                 <option value="{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom . "(".$donneur->CIN.")"}}</option>
                             @endforeach
                         </select><br>
-                        <label for="dateDon">Date du don</label>
                         <input type="hidden" name="typeCollecte" value="0">
-                        <input type="date" name="dateDon" id="dateDon" class="form-control" > <br>
                         <input type="submit" value="Ajouter" class="btn btn-primary">
                         <input type="reset" value="Annuler" class="btn btn-primary">
                     </form>

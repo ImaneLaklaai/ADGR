@@ -26,7 +26,6 @@
                         </select><br>
                         <label for="donneur" >CIN du donneur</label>
                         <input type="text" name="donneur" id="donneur" class="form-control" value={{$don->donneur->CIN }}><br>
-                        <input type="date" name="dateDon" id="dateDon" class="" value={{$don->dateDon}}> <br>
                         <input type="submit" value="Enregistrer" class="btn btn-primary">
                         <input type="reset" value="Annuler" class="btn btn-primary">
                     </form>

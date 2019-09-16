@@ -237,17 +237,12 @@ Route::post("/comiteEvent/create", "ComiteEvenementController@store")->name("com
 Route::get("/comiteEvent/delete/{id}", "ComiteEvenementController@destroy");
 
 
-//Test:
-Route::get("/test", function(){
-    $msg = "";
-    if(Auth::guard("benevole")->check()){
-        $msg .= "Logged in as 'benevole'<br>";
-    }
-    if(Auth::guard("donneur")->check()){
-        $msg .= "Logged in as 'donneur'";
-    }
-    if($msg == ""){
-        $msg .= "Not logged in !";
-    }
-    return $msg;
-});
+
+//Appels Telephoniques
+Route::get("/appelTelephonique", "appelTelephoniqueController@index");
+Route::get("/appelTelephonique/create", "appelTelephoniqueController@create");
+Route::post("/appelTelephonique/store", "appelTelephoniqueController@store");
+Route::get("/appelTelephonique/edit/{id}", "appelTelephoniqueController@edit");
+Route::post("/appelTelephonique/update/{id}", "appelTelephoniqueController@update");
+Route::get("/appelTelephonique/delete/{id}", "appelTelephoniqueController@destroy");
+

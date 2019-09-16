@@ -19,7 +19,7 @@
             <b>Nom: </b> {{$benevole->nom}}<br>
             <b>Prénom: </b> {{$benevole->prenom}}<br>
             <b>Date de naissance: </b>{{$benevole->dateNaissance}}<br>
-            <b>Email: </b> {{$benevole->email}}<br>
+            <b>Email: </b> <a href="mailto:{{$benevole->email}}">{{$benevole->email}}</a><br>
             <b>Rôle: </b> {{$benevole->role->libelle}}<br>
             <b>Etat d'activité:</b>
             @if($benevole->etat == 1)

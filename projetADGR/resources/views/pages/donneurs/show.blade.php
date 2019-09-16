@@ -244,6 +244,7 @@
                             </div>
                             <div class="tab-pane fade" id="profile">
                                 <h4>Dons</h4>
+                                <input type="radio" id="btnDonsTOUS" name="typeDon" checked><label for="btnDonsTOUS">Tous les dons</label>
                                 <input type="radio" id="btnDonsADGR" checked name="typeDon"><label for="btnDonsADGR">Dons ADGR</label>
                                 <input type="radio" id="btnDonsExternes" name="typeDon"><label for="btnDonsExternes">Dons Externes</label>
                                 <div class="panel panel-default">
@@ -508,13 +509,20 @@
     </script>
     <script>
         $(document).ready(function(){
-            $("#btnDonsADGR").on("change", function(){
+           $("#btnDonsADGR").on("change", function(){
                 $("#donsExternes").fadeOut();
+                $("#donsTOUS").fadeOut();
                 $("#donsADGR").delay(400).fadeIn();
             });
             $("#btnDonsExternes").on("change", function(){
                 $("#donsADGR").fadeOut();
+                $("#donsTOUS").fadeOut();
                 $("#donsExternes").delay(400).fadeIn();
+            });
+            $("#btnDonsTOUS").on("change", function(){
+                $("#donsADGR").fadeOut();
+                $("#donsExternes").fadeOut();
+                $("#donsTOUS").delay(400).fadeIn();
             });
 
             $("#btnSubmit").click(function(){

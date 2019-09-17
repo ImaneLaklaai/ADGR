@@ -12,6 +12,7 @@
                         <td>Prénom</td>
                         <td>Réponse</td>
                         <td>Bénévole appelant</td>
+                        <td>Evénement</td>
                         <td>Date</td>
                         <td>Actions</td>
                         <td><a href="/appelTelephonique/create"><button class="btn btn-primary">Nouvel appel</button></a></td>
@@ -23,11 +24,12 @@
                             $reponse =  $appel->reponse == "1"? "Favorable":($appel->reponse == "2"? "Défavorable":"Pas de réponse");
                         ?>
                         <tr>
-                            <td><a href="tel:{{$appel->tele}}">{{$appel->tele}}</a></td>
-                            <td>{{$appel->nom}}</td>
-                            <td>{{$appel->prenom}}</td>
+                            <td><a href="tel:{{$appel->donneur->numeroTelephone}}">{{$appel->donneur->numeroTelephone}}</a></td>
+                            <td>{{$appel->donneur->nom}}</td>
+                            <td>{{$appel->donneur->prenom}}</td>
                             <td>{{$reponse}}</td>
                             <td><a href="/benevole/show/{{$appel->Benevole->id}}">{{$appel->Benevole->nom. " ". $appel->Benevole->prenom}}</a></td>
+                            <td>{{$appel->evenement->libelle}}</td>
                             <td>{{$appel->created_at}}</td>
                             <td colspan="2">
                                 <a href="/appelTelephonique/edit/{{$appel->id}}">Modifier</a>

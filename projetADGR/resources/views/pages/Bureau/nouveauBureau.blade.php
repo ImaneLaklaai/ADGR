@@ -23,9 +23,27 @@
                     <label for="responsable">Responsable</label><br>
                     <select name="responsable" class="form-control" id="responsable">
                         @foreach(\App\Benevole::all() as $benevole)
-                            <option value="{{$benevole->id}}">{{$benevole->nom." ".$benevole->prenom}}</option>
+                            @if(Auth::user()->role->id != 1)
+                                @if($benevole->zone->ville->id == Auth::user()->zone->ville->id)
+                                    <option value="{{$benevole->id}}">{{$benevole->nom." ".$benevole->prenom}}</option>
+                                @endif
+                            @else
+                                <option value="{{$benevole->id}}">{{$benevole->nom." ".$benevole->prenom}}</option>
+                            @endif
                         @endforeach
                     </select><br>
+                    @if(Auth::user()->role->id != 1)
+                        Ville:<br>
+                        <label for="villes">{{Auth::user()->zone->ville->libVille}}</label>
+                        <input id="villes" type="checkbox" name="villes[]" value="{{Auth::user()->zone->ville->id}}" checked>
+                    @else
+                        <label for="villes">Villes</label><br>
+                        @foreach(\App\Ville::all() as $ville)
+                            <label for="ville{{$ville->id}}">{{$ville->libVille}}</label>
+                            <input type="checkbox" name="villes[]" value="{{$ville->id}}" id="ville{{$ville->id}}"><br>
+                        @endforeach
+                    @endif
+                    <br>
                     @if(count(\App\Benevole::all())>0)
                         <input type="submit" value="Ajouter" class="btn btn-primary">
                         <input type="reset" value="Annuler" class="btn btn-primary">

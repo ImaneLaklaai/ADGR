@@ -29,16 +29,31 @@
                             </thead>
                             <tbody>
                             @foreach($centres as $centre)
-                                <tr>
-                                    <td>{{$centre->libCentre}}</td>
-                                    <td>{{$centre->adresse}}</td>
-                                    <td>{{$centre->zone->ville->libVille}}</td>
-                                    <td>{{$centre->zone->libZone}}</td>
-                                    <td>
-                                        <a href="/centre/delete/{{$centre->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                        <a href="/centre/edit/{{$centre->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
-                                    </td>
-                                </tr>
+                                @if(Auth::user()->role->id != 1)
+                                    @if($centre->zone->ville->id == Auth::user()->zone->ville->id)
+                                        <tr>
+                                            <td>{{$centre->libCentre}}</td>
+                                            <td>{{$centre->adresse}}</td>
+                                            <td>{{$centre->zone->ville->libVille}}</td>
+                                            <td>{{$centre->zone->libZone}}</td>
+                                            <td>
+                                                <a href="/centre/delete/{{$centre->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                <a href="/centre/edit/{{$centre->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @else
+                                    <tr>
+                                        <td>{{$centre->libCentre}}</td>
+                                        <td>{{$centre->adresse}}</td>
+                                        <td>{{$centre->zone->ville->libVille}}</td>
+                                        <td>{{$centre->zone->libZone}}</td>
+                                        <td>
+                                            <a href="/centre/delete/{{$centre->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                            <a href="/centre/edit/{{$centre->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

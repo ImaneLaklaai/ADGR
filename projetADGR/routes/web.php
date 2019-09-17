@@ -15,6 +15,7 @@ Route::get('/', "HomeController@index");
 //Collecte:
 Route::get("/collecte/","collecteController@index");
 Route::get("/collecte/create", "collecteController@create");
+Route::get("/collecte/printlist","collecteController@export_all_pdf");
 
 
 //Collecte fixe:
@@ -208,7 +209,7 @@ Route::get("/equipe/show/{id}","EquipeController@show");
 Route::get("/getAllCenters", "ajaxHandlers@getAllCenters");//Tous les centres
 Route::get("/getZones/{id}", "ajaxHandlers@getZones");//Toutes les zones d'une ville
 Route::get("/getAllCities","ajaxHandlers@getAllCities");//Toutes les villes
-Route::post("/cinTest", "ajaxHandlers@CINtest");//Tester l'existence d'un CIN
+Route::post("/cinTest", "ajaxHandlers@CINtest");//Tester l'existence d'un CIN dans "donneurs"
 Route::get("/accountLogs/{id}", "ajaxHandlers@accountLogs"); //Les journaux d'un compte
 Route::get("/benevole/changeState", "ajaxHandlers@changeState"); //Changer l'etat d'activite d'un bénévole
 Route::get("/expensesByCat/{id}", "ajaxHandlers@expensesByCat");

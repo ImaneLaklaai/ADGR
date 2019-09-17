@@ -28,8 +28,8 @@
                         <tr>
                             <td>{{$collecte->date}}</td>
                             <td>{{$collecte->libCollecte}}</td>
-                            <td>{{$collecte->centre->libelle}}</td>
-                            <td>{{$collecte->centre->ville->libVille}}</td>
+                            <td>{{$collecte->centre->libCentre}}</td>
+                            <td>{{$collecte->centre->zone->ville->libVille}}</td>
                         </tr>
                     @endforeach
                 </tbody>

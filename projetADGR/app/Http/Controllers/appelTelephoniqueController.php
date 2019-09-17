@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\appelTelephonique;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class appelTelephoniqueController extends Controller
 {
@@ -41,20 +42,28 @@ class appelTelephoniqueController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            "nom" => "required",
-            "prenom" => "required",
-            "tele" => "required",
-            "reponse" => "required",
-            "benevole" => "required",
-        ]);
-        $appel = new appelTelephonique();
-        $appel->nom = $request->input("nom");
-        $appel->prenom = $request->input("prenom");
-        $appel->tele = $request->input("tele");
-        $appel->reponse = $request->input("reponse");
-        $appel->benevole_id = $request->input("benevole");
-        $appel->save();
+//        $this->validate($request, [
+//            "nom" => "required",
+//            "prenom" => "required",
+//            "tele" => "required",
+//            "reponse" => "required",
+//            "benevole" => "required",
+//        ]);
+        $reponses = $request->reponses;
+        $donneurs = $request->donneursAppeles;
+        $i = 0;
+        $appels = array();
+        foreach($donneurs as $donneur){
+            array_push($appels, ["Donneur" => $donneur, "Reponse" => $reponses[$i++]]);
+        }
+        foreach($appels as $appel){
+            $nvlAppel = new appelTelephonique();
+            $nvlAppel->reponse = $appel["Reponse"];
+            $nvlAppel->donneur_id = $appel["Donneur"];
+            $nvlAppel->benevole_id = Auth::user()->id;
+            $nvlAppel->evenement_id = $request->evenement;
+            $nvlAppel->save();
+        }
         return redirect()->to("/appelTelephonique");
     }
 

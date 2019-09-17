@@ -163,11 +163,16 @@
                             <!-- /.modal-dialog -->
                         </div>
                     @else
-                        <form  action="/carte/store" method="post">
-                            {{csrf_field()}}
-                            <input type="hidden" name="donneur_id" value={{$donneur->id}}>
-                            <input type="submit" class="btn btn-primary" value="Créer une carte">
-                        </form>
+                        Aucune carte <br>
+                        @if(Auth::guard("benevole")->check())
+                            @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                <form  action="/carte/store" method="post">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="donneur_id" value={{$donneur->id}}>
+                                    <input type="submit" class="btn btn-primary" value="Créer une carte">
+                                </form>
+                            @endif
+                        @endif
                     @endif
                 </div>
             </div>
@@ -250,6 +255,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         Dons
+                                        @if(\Illuminate\Support\Facades\Auth::guard("benevole")->check())
                                         <button class="btn btn-primary" data-toggle="modal" data-target="#ajouterDon">
                                             <i class="glyphicon glyphicon-plus"></i>Ajouter un don
                                         </button>
@@ -276,12 +282,6 @@
                                                                                     <option value="{{$collecte->id}}">{{$collecte->libCollecte}}</option>
                                                                                 @endforeach
                                                                             </select><br>
-                                                                            {{--<label for="donneur">CIN du donneur</label>--}}
-                                                                            {{--<select name="donneur" id="donneur" class="form-control">--}}
-                                                                                {{--@foreach(\App\Donneur::all() as $donneur)--}}
-                                                                                    {{--<option value="{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom . "(".$donneur->CIN.")"}}</option>--}}
-                                                                                {{--@endforeach--}}
-                                                                            {{--</select><br>--}}
                                                                             <input type="hidden" name="donneur" value="{{$donneur->id}}">
                                                                             <label for="dateDon">Date du don</label>
                                                                             <input type="hidden" name="typeCollecte" value="0">
@@ -310,6 +310,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                            @endif
                                     </div>
                                 <!-- /.panel-heading -->
                                     <div class="panel-body" id="donsADGR">

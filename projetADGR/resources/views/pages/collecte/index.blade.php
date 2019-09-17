@@ -17,6 +17,7 @@
             </div>
             <div class="col-md-3">
                 <a href="/evenement/create"><button class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Ajouter</button></a>
+                <a href="/collecte/printlist"><button class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Imprimer tout</button></a>
             </div>
         </div>
         <div class="row">

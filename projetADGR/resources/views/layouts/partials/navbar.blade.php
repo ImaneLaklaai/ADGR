@@ -10,15 +10,15 @@
 </div>
 
 <ul class="nav navbar-top-links navbar-right">
-    <li class="dropdown">
-        @include("layouts.partials.dropdowns.messages")
-    </li>
-    <li class="dropdown">
-        @include("layouts.partials.dropdowns.tasks")
-    </li>
-    <li class="dropdown">
-        @include("layouts.partials.dropdowns.alerts")
-    </li>
+    {{--<li class="dropdown">--}}
+        {{--@include("layouts.partials.dropdowns.messages")--}}
+    {{--</li>--}}
+    {{--<li class="dropdown">--}}
+        {{--@include("layouts.partials.dropdowns.tasks")--}}
+    {{--</li>--}}
+    {{--<li class="dropdown">--}}
+        {{--@include("layouts.partials.dropdowns.alerts")--}}
+    {{--</li>--}}
     <li class="dropdown">
         @include("layouts.partials.dropdowns.user")
     </li>

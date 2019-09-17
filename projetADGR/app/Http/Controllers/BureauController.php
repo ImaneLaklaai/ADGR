@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Bureau;
+use App\BureauVille;
 use App\Ville;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class BureauController extends Controller
@@ -31,6 +33,7 @@ class BureauController extends Controller
      */
     public function create($id=-1)
     {
+        if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2) return redirect()->to("/");
         return view("pages.bureau.nouveauBureau")->with("idVille", $id);
     }
 
@@ -44,12 +47,19 @@ class BureauController extends Controller
     {
         $this->validate($request,[
             "responsable"=>"required",
+            "villes" => "required",
             "dateCreation"=>"required",
         ]);
         $bureau = new Bureau();
         $bureau->responsable_id = $request->input("responsable");
         $bureau->dateCreation = $request->input("dateCreation");
         $bureau->save();
+        foreach($request->villes as $ville){
+            $BV = new BureauVille();
+            $BV->ville_id = $ville;
+            $BV->bureau_id = $bureau->id;
+            $BV->save();
+        }
         return Redirect::to("/bureau");
     }
 
@@ -85,19 +95,19 @@ class BureauController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            "ville_id"=>"required",
+            "villes"=>"required",
             "dateCreation"=>"required"
         ]);
         $bureau = Bureau::find($id);
-        $ville = Ville::find($bureau->ville_id);
-        $ville->bureau_id = null;
-        $ville->save();
-        $bureau->ville_id = $request->input("ville_id");
-        $ville = Ville::find($bureau->ville_id);
-        $ville->bureau_id = $bureau->id;
         $bureau->dateCreation = $request->input("dateCreation");
         $bureau->save();
-        $ville->save();
+        $villes = $request->input("villes");
+        foreach($villes as $ville){
+            $BV = new BureauVille();
+            $BV->ville_id = $ville;
+            $BV->bureau_id = $bureau->id;
+            $BV->save();
+        }
         return Redirect::to("/bureau");
     }
 
@@ -110,10 +120,7 @@ class BureauController extends Controller
     public function destroy($id)
     {
         $bureau = Bureau::find($id);
-        $ville = Ville::find($bureau->ville->id);
         $bureau->delete();
-        $ville->bureau_id = null;
-        $ville->save();
         return Redirect::to("/bureau");
     }
 }

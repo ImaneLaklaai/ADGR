@@ -19,7 +19,7 @@
                 </span>
                 </li>
                 <li>
-                    <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a href="/"><i class="fa fa-dashboard fa-fw"></i> Accueil</a>
                 </li>
                 @if(Auth::guard("benevole")->check())
                 @if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2)
@@ -56,7 +56,7 @@
                     <!-- /.nav-second-level -->
                 </li>
                 @endif
-            @if(Auth::user()->role->id == 1)
+            @if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2)
                 <li>
                     <a href="#"><i class="fa fa-heart fa-fw"></i> Gestion des événements <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -65,6 +65,7 @@
                             <a href="/equipe"><i class="fa fa-users fa-fw"></i> Equipes</a>
                             <a href="/comite"><i class="fa fa-users fa-fw"></i> Comités</a>
                             <a href="/benevole"><i class="fa fa-user fa-fw"></i> Benevoles</a>
+                            <a href="/appelTelephonique"><i class="fa fa-phone fa-fw"></i> Appels téléphoniques</a>
                         </li>
                     </ul>
                 </li>

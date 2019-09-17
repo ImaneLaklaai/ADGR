@@ -22,16 +22,24 @@
             <b>Email: </b> <a href="mailto:{{$benevole->email}}">{{$benevole->email}}</a><br>
             <b>Rôle: </b> {{$benevole->role->libelle}}<br>
             <b>Etat d'activité:</b>
-            @if($benevole->etat == 1)
-                <label class="switch">
-                    <input type="checkbox" id="etatActivite" checked>
-                    <span class="slider round"></span>
-                </label>
+            @if(\Illuminate\Support\Facades\Auth::user()->role_id == 1 | \Illuminate\Support\Facades\Auth::user()->role_id == 2)
+                @if($benevole->etat == 1)
+                    <label class="switch">
+                        <input type="checkbox" id="etatActivite" checked>
+                        <span class="slider round"></span>
+                    </label>
+                @else
+                    <label class="switch">
+                        <input type="checkbox" id="etatActivite">
+                        <span class="slider round"></span>
+                    </label>
+                @endif
             @else
-                <label class="switch">
-                    <input type="checkbox" id="etatActivite">
-                    <span class="slider round"></span>
-                </label>
+                @if($benevole->etat == 1)
+                    Actif
+                @else
+                    Inactif
+                @endif
             @endif
         </div>
     </div>

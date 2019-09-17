@@ -13,11 +13,9 @@ class villes_table_seeder extends Seeder
     {
         Ville::create([
             "libVille" => "Marrakech",
-            "bureau_id" => "1"
         ]);
         Ville::create([
             "libVille" => "Casablanca",
-            "bureau_id" => "1"
         ]);
     }
 }

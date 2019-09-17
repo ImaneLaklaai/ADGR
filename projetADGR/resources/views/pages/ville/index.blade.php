@@ -31,11 +31,11 @@
                                 @foreach(App\Ville::All() as $ville)
                                     <tr>
                                         <td>{{$ville->libVille}}</td>
-                                        @if($ville->bureau_id == null)
-                                            <td><a href="/bureau/create/{{$ville->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-plus removeCollecte"></span></a></td>
-                                        @else
-                                            <td>{{$ville->bureau_id}}</td>
-                                        @endif
+                                        <td>
+                                            @foreach($ville->bureauVille as $bv)
+                                                - Bureau {{$bv->bureau->id}}<br>
+                                            @endforeach
+                                        </td>
                                         <td>{{count($ville->zone)}}
                                             @if(count($ville->zone))<a href="/zone/{{$ville->id}}"> Afficher tout</a>@endif
                                         </td>

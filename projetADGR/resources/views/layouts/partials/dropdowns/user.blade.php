@@ -10,10 +10,10 @@ if(\Illuminate\Support\Facades\Auth::guard("benevole")->check()){
 //dd(auth()->user());
 ?>
 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+    {{--<li><strong><i class="fa fa-user fa-fw"></i> </strong></li>--}}
+    <i class="fa fa-user fa-fw"></i> {{Auth::user()->nom. " ". Auth::user()->prenom}} <i class="fa fa-caret-down"></i>
 </a>
 <ul class="dropdown-menu dropdown-user">
-    <li><strong><i class="fa fa-user fa-fw"></i> {{Auth::user()->nom. " ". Auth::user()->prenom}}</strong></li>
     <li><a href="/{{$user}}/show/{{\Illuminate\Support\Facades\Auth::user()->id }}"><i class="fa fa-user fa-fw"></i> User Profile</a>
     </li>
     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>

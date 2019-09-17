@@ -86,6 +86,7 @@ class BenevoleController extends Controller
         $benevole->teleSec = $request->input("teleSec");
         $benevole->dateNaissance = $request->input("dateNaissance");
         $benevole->adresse = $request->input("adresse");
+        $benevole->zone_id = $request->input("zone_id");
         $benevole->x = 0;
         $benevole->y = 0;
         $benevole->email = $request->input("email");

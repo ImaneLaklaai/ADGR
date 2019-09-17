@@ -106,6 +106,14 @@
                         </select><br>
                     </div>
 
+
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur" value={{$donneur->username}}><br>
+
+                    <label for="password">Mot de passe</label>
+                    <input type="password" name="password" class="form-control" placeholder="Mot de passe"><br>
+
+
                     <label for="remarque">Remarque(s)</label>
                     <input type="textarea" name="remarque" id="remarque" class="form-control" value={{$donneur->remarque}}><br>
 

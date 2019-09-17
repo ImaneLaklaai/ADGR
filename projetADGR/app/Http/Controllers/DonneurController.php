@@ -36,6 +36,7 @@ class DonneurController extends Controller
     }
     public function index()
     {
+        if(!Auth::guard("benevole")->check())return redirect()->to("/");
         $donneurs = Donneur::paginate(10);
         return view("pages.donneurs.index")->with("donneurs", $donneurs);
     }
@@ -72,6 +73,8 @@ class DonneurController extends Controller
             'cin' => 'required|unique:donneurs',
             'numeroTelephone' => 'required',
             'groupe' => 'required',
+            'username' => 'required|unique:benevoles',
+            "password" => "required",
         ]);
         $donneur = new Donneur();
         $donneur->nom = $request->input('nom');
@@ -96,6 +99,8 @@ class DonneurController extends Controller
         }
         $donneur->x = 0;
         $donneur->y = 0;
+        $donneur->username = $request->input("username");
+        $donneur->password = bcrypt($request->input("password"));
         $donneur->remarque = $request->input('remarque');
         $donneur->zone_id = $request->input('zone_id');
         $donneur->moyenAdhesion = $request->input("moyen");
@@ -115,13 +120,21 @@ class DonneurController extends Controller
      */
     public function show($id)
     {
+        $donneur = Donneur::find($id);
         if(!Auth::guard("benevole")->check()){
             if(Auth::user()->id != $id){
                 return redirect()->to("/");
             }
         }else{
             if(Auth::user()->role->id != 1 && Auth::user()->role->id != 2 && Auth::user()->role->id != 4){
+
                 return redirect()->to("/");
+            }else{
+                if(Auth::user()->role->id != 1){
+                    if(Auth::user()->zone->ville->id != $donneur->zone->ville->id){
+                        return redirect()->to("/");
+                    }
+                }
             }
         }
         return view("pages.donneurs.show")->with("id", $id);
@@ -185,6 +198,10 @@ class DonneurController extends Controller
         }
         $donneur->x = 0;
         $donneur->y = 0;
+        $donneur->username = $request->input("username");
+        if($request->password != ""){
+            $donneur->password = bcrypt($request->input("password"));
+        }
         $donneur->remarque = $request->input('remarque');
         $donneur->zone_id = $request->input('zone_id');
         $donneur->save();

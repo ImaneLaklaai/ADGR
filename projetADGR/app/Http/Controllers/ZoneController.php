@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Zone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ZoneController extends Controller
@@ -15,6 +16,19 @@ class ZoneController extends Controller
 
     public function index($idVille=-1)
     {
+        if (Auth::user()->role->id != 1){
+            if(Auth::user()->role->id == 2) {
+                if ($idVille == -1) {
+                    return \redirect()->to("/zone/" . Auth::user()->zone->ville->id);
+                } elseif ($idVille != -1) {
+                    if (Auth::user()->zone->ville->id != $idVille) {
+                        return \redirect("/zone/" . Auth::user()->zone->ville->id);
+                    }
+                }
+            }else{
+                return \redirect("/");
+            }
+        }
         return view("pages.Zone.index")->with("idVille", $idVille);
     }
 

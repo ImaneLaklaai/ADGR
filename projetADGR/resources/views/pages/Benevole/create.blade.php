@@ -55,6 +55,21 @@
                         <input type="text" name="teleSec" class="form-control" placeholder="Numero de telephone secondaire" id="teleSec"><br>
                         <label for="adresse">Adresse</label>
                         <input type="text" name="adresse" class="form-control" placeholder="Adresse" id="adresse"><br>
+                        <label for="ville">Ville</label>
+                        <select id="ville" name="ville" class="form-control">
+                            @foreach(App\Ville::all() as $ville)
+                                <option value="{{$ville->id}}">{{$ville->libVille}}</option>
+                            @endforeach
+                        </select><br>
+
+                        <label for="zone">Zone</label>
+                        <div id="listeZones">
+                            <select id="zone" name="zone_id" class="form-control">
+                                @foreach(App\Zone::all()->where("ville_id", App\Ville::all()->first()->id) as $zone)
+                                    <option value="{{$zone->id}}">{{$zone->libZone}}</option>
+                                @endforeach
+                            </select><br>
+                        </div>
                         <label for="email">Email</label>
                         <input type="email" name="email" class="form-control" placeholder="Email" id="email"><br>
                     </div>
@@ -73,6 +88,7 @@
     <script src="/js/jQuery.js"></script>
     <script>
         $(document).ready(function(){
+
             $("#part1").css("padding","10px");
             $("#part2").css("padding","10px");
             $("#part3").css("padding","10px");
@@ -111,6 +127,22 @@
                     $("#part3").slideToggle();
                     $("#part2").slideToggle();
                 }
+            });
+            let divZone = document.getElementById("listeZones");
+
+            $("#ville").ready(function() {
+                $("#ville").on("change", function () {
+                    $.get("/getZones/" + $("#ville").val(), function (data) {
+                        let zones = JSON.parse(data);
+                        let html = "";
+                        html += "<select id=\"zone\" class=\"form-control\" name='zone_id'>";
+                        for (let i in zones) {
+                            html += "<option value='" + zones[i].id + "'>" + zones[i].libZone + "</option>";
+                        }
+                        html += "</select><br>";
+                        divZone.innerHTML = html;
+                    })
+                });
             });
         });
     </script>

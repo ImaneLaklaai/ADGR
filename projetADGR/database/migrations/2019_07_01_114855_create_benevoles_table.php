@@ -34,6 +34,8 @@ class CreateBenevolesTable extends Migration
             $table->boolean('droitAcces')->default(false);
             $table->integer('etat_civil')->unsigned()->index();
             $table->foreign('etat_civil')->references("id")->on("etat_civils");
+            $table->integer("zone_id")->unsigned()->index();
+            $table->foreign("zone_id")->references("id")->on("zones");
             $table->integer("role_id")->unsigned()->index();
             $table->foreign("role_id")->references("id")->on("roles");
             $table->rememberToken();

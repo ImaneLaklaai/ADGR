@@ -40,4 +40,8 @@ class Benevole extends Authenticatable
     public function role(){
         return $this->hasOne("App\Role", "id", "role_id");
     }
+
+    public function zone(){
+        return $this->hasOne("App\Zone", "id", "zone_id");
+    }
 }

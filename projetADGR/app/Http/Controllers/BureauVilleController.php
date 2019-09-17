@@ -3,26 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\BureauVille;
-use App\Ville;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Redirect;
 
-class VilleController extends Controller
+class BureauVilleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware("auth:benevole");
-    }
-
     public function index()
     {
-        return view("pages.ville.index");
+        //
     }
 
     /**
@@ -32,7 +24,6 @@ class VilleController extends Controller
      */
     public function create()
     {
-        return view("pages.ville.nouvelleVille");
     }
 
     /**
@@ -43,16 +34,14 @@ class VilleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'libVille' => "required|unique:villes",
-            'bureau' => 'required'
+        $this->validate($this, [
+            "ville_id" => "required",
+            "bureau_id" => "required",
         ]);
-        $ville = new Ville();
-        $ville->libVille = $request->input("libVille");
-        $bureauville = new BureauVille();
-        $bureauville->
-        $ville->save();
-        return redirect("/ville");
+        $BV = new BureauVille();
+        $BV->ville_id = $request->input("ville_id");
+        $BV->bureau_id = $request->input("bureau_id");
+        $BV->save();
     }
 
     /**
@@ -74,7 +63,7 @@ class VilleController extends Controller
      */
     public function edit($id)
     {
-        return view("pages.ville.modifierVille")->with("idVille", $id);
+        //
     }
 
     /**
@@ -86,11 +75,7 @@ class VilleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ville = Ville::find($id);
-        $ville->libVille = $request->input("libVille");
-        $ville->bureau_id = $request->input("bureau");
-        $ville->save();
-        return Redirect::to("/ville");
+        //
     }
 
     /**
@@ -101,7 +86,6 @@ class VilleController extends Controller
      */
     public function destroy($id)
     {
-        Ville::find($id)->delete();
-        return Redirect::to("ville");
+        //
     }
 }

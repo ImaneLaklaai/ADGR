@@ -22,6 +22,8 @@ class CreateCollecteMobilesTable extends Migration
             $table->string("lieu");
             $table->integer("zone_id")->unsigned()->index();
             $table->foreign("zone_id")->references("id")->on("zones")->onDelete("cascade")->onUpdate("cascade");
+            $table->integer("nombre_presents")->nullable()->default(null);
+            $table->integer("nombre_contre_indiques")->nullable()->default(null);
             $table->timestamps();
         });
     }

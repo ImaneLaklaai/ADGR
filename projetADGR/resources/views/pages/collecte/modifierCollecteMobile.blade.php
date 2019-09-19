@@ -47,7 +47,6 @@
                     </div><br>
                     <label for="nombre_presents">Nombre de présents :</label><input class='form-control' type="number" id="nombre_presents"  name="nombre_presents" value={{$collecte->nombre_presents}}><br>
                     <label for="nombre_contre_indiques">Nombre de contre-indiqués :</label><input class='form-control' type="number" id="nombre_contre_indiques"  name="nombre_contre_indiques" value={{$collecte->nombre_contre_indiques}}><br>
-                    <label for="nombre_dons">Nombre de dons :</label><input class='form-control' type="number" id="nombre_dons"  name="nombre_dons" value={{$collecte->nombre_dons}}><br>    
                     <input type="submit" id="ajouterCollecte" class="btn btn-primary" value="Ajouter">
                     <input type='reset' id="annuler" class="btn btn-primary" value="Annuler">
                 </form>

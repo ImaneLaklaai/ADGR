@@ -37,7 +37,6 @@ class collecteFixeController extends Controller
             $collecte->centre_id = $request->input("idCentre");
             $collecte->nombre_presents = $request->input("nombre_presents");
             $collecte->nombre_contre_indiques = $request->input("nombre_contre_indiques");
-            $collecte->nombre_dons = $request->input("nombre_dons");
             $collecte->save();
             $collecte2 = new collecte();
             $collecte2->collecte_id = $collecte->id;
@@ -69,7 +68,7 @@ class collecteFixeController extends Controller
         $collecte->centre_id = $request->input("idCentre");
         $collecte->nombre_presents = $request->input("nombre_presents");
         $collecte->nombre_contre_indiques = $request->input("nombre_contre_indiques");
-        $collecte->nombre_dons = $request->input("nombre_dons");
+//        $collecte->nombre_dons = $request->input("nombre_dons");
         $collecte->save();
         return Redirect::to('/collecte');
     }

@@ -16,7 +16,7 @@
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-            <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+            <table width="100%" class="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>Libelle</th>
@@ -26,7 +26,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach(App\Compte::all() as $compte)
+                    <?php
+                        $comptes = App\Compte::paginate(10);
+                    ?>
+                    @foreach($comptes as $compte)
                         <tr>
                             <?php
                                 $type = $compte->type==0?"Secondaire":"Principal";
@@ -43,6 +46,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{$comptes->links()}}
         </div>
     </div>
 @endsection

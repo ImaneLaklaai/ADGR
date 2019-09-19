@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Membres</h3><br>
-                    <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                    <table width="100%" class="table table-striped table-responsive table-bordered">
                         <thead>
                             <tr>
                                 <td>Nom</td>
@@ -27,7 +27,10 @@
                                 <td>Action</td>
                             </tr>
                         </thead>
-                        @foreach($equipe->benevoleEquipe as $be)
+                        <?php
+                            $benevoles = $equipe->benevoleEquipe()->paginate(10);
+                        ?>
+                        @foreach($benevoles as $be)
                             <tr>
                                 <td>{{$be->benevole->nom}}</td>
                                 <td>{{$be->benevole->prenom}}</td>
@@ -45,6 +48,7 @@
                             </tr>
                         @endforeach
                     </table>
+                    {{$benevoles->links()}}
                 </div>
             </div>
         </div>

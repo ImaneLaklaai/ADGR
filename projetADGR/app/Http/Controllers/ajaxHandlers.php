@@ -10,6 +10,7 @@ use App\Donneur;
 use App\Ville;
 use Doctrine\DBAL\Schema\Schema;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ajaxHandlers extends Controller
 {

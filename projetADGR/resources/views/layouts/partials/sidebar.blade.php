@@ -1,4 +1,3 @@
-
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
@@ -31,7 +30,9 @@
                             <a href="/donneur"><i class="fa fa-users fa-fw"></i> Donneurs</a>
                             <a href="/contreIndication"><i class="fa fa-remove fa-fw"></i> Contre indications</a>
                             <a href="/centre"> <i class="fa fa-building fa-fw"></i> Centres</a>
-                            <a href="/ville"><i class="fa fa-home fa-fw"></i> Villes</a>
+                            @if(Auth::user()->role->id == 1)
+                                <a href="/ville"><i class="fa fa-home fa-fw"></i> Villes</a>
+                            @endif
                             <a href="/zone"><i class="fa fa-map-marker fa-fw"></i> Zones</a>
                             <a href="/bureau"><i class="fa fa-desktop fa-fw"></i> Bureaux</a>
                         </li>
@@ -69,9 +70,12 @@
                         </li>
                     </ul>
                 </li>
+            @endif
+            @endif
+                <li>
+                    <a href="/message"><i class="fa fa-comments fa-fw"></i> Support </a>
+                </li>
             </ul>
-            @endif
-            @endif
         </div>
         <!-- /.sidebar-collapse -->
     </div>

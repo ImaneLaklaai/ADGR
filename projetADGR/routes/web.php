@@ -247,3 +247,11 @@ Route::get("/appelTelephonique/edit/{id}", "appelTelephoniqueController@edit");
 Route::post("/appelTelephonique/update/{id}", "appelTelephoniqueController@update");
 Route::get("/appelTelephonique/delete/{id}", "appelTelephoniqueController@destroy");
 
+//Messages:
+Route::get("/message", "MessageController@index");
+Route::get("/message/create", "MessageController@create");
+Route::post("/message/store", "MessageController@store");
+Route::get("/message/delete/{id}", "MessageController@destroy");
+Route::get("/message/show/{id}", "MessageController@show");
+Route::post("/message/answer/{id}", "MessageController@answer");
+

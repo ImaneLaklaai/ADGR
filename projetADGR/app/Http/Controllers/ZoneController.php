@@ -18,13 +18,7 @@ class ZoneController extends Controller
     {
         if (Auth::user()->role->id != 1){
             if(Auth::user()->role->id == 2) {
-                if ($idVille == -1) {
-                    return \redirect()->to("/zone/" . Auth::user()->zone->ville->id);
-                } elseif ($idVille != -1) {
-                    if (Auth::user()->zone->ville->id != $idVille) {
-                        return \redirect("/zone/" . Auth::user()->zone->ville->id);
-                    }
-                }
+                    return view("pages.Zone.index")->with("idVille", Auth::user()->zone->ville->id);
             }else{
                 return \redirect("/");
             }

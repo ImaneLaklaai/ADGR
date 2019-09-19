@@ -32,36 +32,71 @@
                                     <th>Etat</th>
                                     <th>Date d'adhesion</th>
                                     <th>Rôle</th>
-                                    <th>Actions</th>
+                                    @if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2)
+                                        <th>Actions</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($benevoles as $benevole)
-                                    <tr>
-                                        <td>{{$benevole->nom}}</td>
-                                        <td>{{$benevole->prenom}}</td>
-                                        <td>{{$benevole->CIN}}</td>
-                                        <td>{{$benevole->tele}}</td>
-                                        <td>{{$benevole->teleSec}}</td>
-                                        <td>{{$benevole->dateNaissance}}</td>
-                                        <td>{{$benevole->adresse}}</td>
-                                        <td>
-                                            @if($benevole->etat)
-                                                Actif
-                                            @else
-                                                Inactif
-                                            @endif
-                                        </td>
-                                        <td>{{$benevole->dateAdhesion}}</td>
-                                        <td>{{$benevole->role->libelle}}</td>
-                                        <td>
-                                            <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
-                                            <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
-                                            <a href="/benevole/show/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
-                                            <a href="/benevole/printable/{{$benevole->id}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if(Auth::user()->role->id == 1)
+                                    @foreach($benevoles as $benevole)
+                                        <tr>
+                                            <td>{{$benevole->nom}}</td>
+                                            <td>{{$benevole->prenom}}</td>
+                                            <td>{{$benevole->CIN}}</td>
+                                            <td>{{$benevole->tele}}</td>
+                                            <td>{{$benevole->teleSec}}</td>
+                                            <td>{{$benevole->dateNaissance}}</td>
+                                            <td>{{$benevole->adresse}}</td>
+                                            <td>
+                                                @if($benevole->etat)
+                                                    Actif
+                                                @else
+                                                    Inactif
+                                                @endif
+                                            </td>
+                                            <td>{{$benevole->dateAdhesion}}</td>
+                                            <td>{{$benevole->role->libelle}}</td>
+                                            <td>
+                                                <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
+                                                <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                <a href="/benevole/show/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
+                                                <a href="/benevole/printable/{{$benevole->id}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    @foreach($benevoles as $benevole)
+                                        @if($benevole->zone->ville->id == Auth::user()->zone->ville->id)
+                                            <tr>
+                                                <td>{{$benevole->nom}}</td>
+                                                <td>{{$benevole->prenom}}</td>
+                                                <td>{{$benevole->CIN}}</td>
+                                                <td>{{$benevole->tele}}</td>
+                                                <td>{{$benevole->teleSec}}</td>
+                                                <td>{{$benevole->dateNaissance}}</td>
+                                                <td>{{$benevole->adresse}}</td>
+                                                <td>
+                                                    @if($benevole->etat)
+                                                        Actif
+                                                    @else
+                                                        Inactif
+                                                    @endif
+                                                </td>
+                                                <td>{{$benevole->dateAdhesion}}</td>
+                                                <td>{{$benevole->role->libelle}}</td>
+                                                @if(Auth::user()->role->id == 2)
+                                                    <td>
+                                                        <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
+                                                        <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                        <a href="/benevole/show/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
+                                                        <a href="/benevole/printable/{{$benevole->id}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                             {{ $benevoles->links() }}

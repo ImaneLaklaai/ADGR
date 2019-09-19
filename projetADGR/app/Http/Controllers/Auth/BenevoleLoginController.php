@@ -33,7 +33,7 @@ class BenevoleLoginController extends Controller
         ]);
         //Login:
         if(Auth::guard("benevole")->attempt(["username" => $request->username,"password" => $request->password],$request->remember)){
-            return redirect()->intended("/benevole");
+            return redirect()->intended("/");
         }
         return redirect()->back();
     }

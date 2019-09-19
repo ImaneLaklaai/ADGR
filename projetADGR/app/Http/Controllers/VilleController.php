@@ -6,6 +6,7 @@ use App\BureauVille;
 use App\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class VilleController extends Controller
@@ -22,6 +23,7 @@ class VilleController extends Controller
 
     public function index()
     {
+        if(Auth::user()->role->id != 1)return redirect("/");
         return view("pages.ville.index");
     }
 
@@ -32,6 +34,7 @@ class VilleController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->role->id != 1)return redirect("/");
         return view("pages.ville.nouvelleVille");
     }
 
@@ -43,6 +46,7 @@ class VilleController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->role->id != 1)return redirect("/");
         $this->validate($request, [
             'libVille' => "required|unique:villes",
             'bureau' => 'required'
@@ -74,6 +78,7 @@ class VilleController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role->id != 1)return redirect("/");
         return view("pages.ville.modifierVille")->with("idVille", $id);
     }
 
@@ -86,6 +91,7 @@ class VilleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(Auth::user()->role->id != 1)return redirect("/");
         $ville = Ville::find($id);
         $ville->libVille = $request->input("libVille");
         $ville->bureau_id = $request->input("bureau");
@@ -101,6 +107,7 @@ class VilleController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->role->id != 1)return redirect("/");
         Ville::find($id)->delete();
         return Redirect::to("ville");
     }

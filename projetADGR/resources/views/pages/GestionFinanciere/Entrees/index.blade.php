@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                    <table width="100%" class="table table-striped">
                         <thead>
                         <tr>
                             <th>Compte</th>
@@ -29,7 +29,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach(\App\entree::all() as $entree)
+                        <?php
+                            $entrees = \App\entree::paginate(10);
+                        ?>
+                        @foreach($entrees as $entree)
                             <tr>
                                 <td><a href="/compte/show/{{$entree->compte->id}}">{{$entree->compte->libelle}}</a></td>
                                 <td>{{$entree->source}}</td>
@@ -42,6 +45,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    {{$entrees->links()}}
                 </div>
             </div>
         </div>

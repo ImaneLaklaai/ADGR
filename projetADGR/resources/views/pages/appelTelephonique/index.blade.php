@@ -7,15 +7,15 @@
             <table class="table-hover table table-striped">
                 <thead>
                     <tr>
-                        <td>Téléphone</td>
-                        <td>Nom</td>
-                        <td>Prénom</td>
-                        <td>Réponse</td>
-                        <td>Bénévole appelant</td>
-                        <td>Evénement</td>
-                        <td>Date</td>
-                        <td>Actions</td>
-                        <td><a href="/appelTelephonique/create"><button class="btn btn-primary">Nouvel appel</button></a></td>
+                        <th>Téléphone</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Réponse</th>
+                        <th>Bénévole appelant</th>
+                        <th>Evénement</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                        <th><a href="/appelTelephonique/create"><button class="btn btn-primary">Nouvel appel</button></a></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -40,16 +40,31 @@
                             </thead>
                             <tbody>
                             @foreach(App\collecteFixe::all() as $collecte)
-                                <tr>
-                                    <td>{{$collecte->libCollecte}}</td>
-                                    <td>{{$collecte->centre->libCentre}}</td>
-                                    <td>{{$collecte->date}}</td>
-                                    <td>Fixe</td>
-                                    <td>
-                                        <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                        <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
-                                    </td>
-                                </tr>
+                                @if(Auth::user()->role->id == 1)
+                                    <tr>
+                                        <td>{{$collecte->libCollecte}}</td>
+                                        <td>{{$collecte->centre->libCentre}}</td>
+                                        <td>{{$collecte->date}}</td>
+                                        <td>Fixe</td>
+                                        <td>
+                                            <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                            <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                        </td>
+                                    </tr>
+                                @elseif(Auth::user()->role->id == 2)
+                                    @if($collecte->centre->zone->ville->id == Auth::user()->zone->ville->id)
+                                        <tr>
+                                            <td>{{$collecte->libCollecte}}</td>
+                                            <td>{{$collecte->centre->libCentre}}</td>
+                                            <td>{{$collecte->date}}</td>
+                                            <td>Fixe</td>
+                                            <td>
+                                                <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -77,17 +92,33 @@
                                 </thead>
                                 <tbody>
                                 @foreach(App\collecteMobile::all() as $collecte)
-                                    <tr>
-                                        <td>{{$collecte->libCollecte}}</td>
-                                        <td>{{$collecte->date}}</td>
-                                        <td>{{$collecte->zone->ville->libVille}}</td>
-                                        <td>{{$collecte->zone->libZone}}</td>
-                                        <td>{{$collecte->lieu}}</td>
-                                        <td>
-                                            <a href="/collecte/mobile/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                            <a href="/collecte/mobile/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
-                                        </td>
-                                    </tr>
+                                    @if(Auth::user()->role->id == 1)
+                                        <tr>
+                                            <td>{{$collecte->libCollecte}}</td>
+                                            <td>{{$collecte->date}}</td>
+                                            <td>{{$collecte->zone->ville->libVille}}</td>
+                                            <td>{{$collecte->zone->libZone}}</td>
+                                            <td>{{$collecte->lieu}}</td>
+                                            <td>
+                                                <a href="/collecte/mobile/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                <a href="/collecte/mobile/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                            </td>
+                                        </tr>
+                                    @elseif (Auth::user()->role->id == 2)
+                                        @if(Auth::user()->zone->ville->id == $collecte->zone->ville->id)
+                                            <tr>
+                                                <td>{{$collecte->libCollecte}}</td>
+                                                <td>{{$collecte->date}}</td>
+                                                <td>{{$collecte->zone->ville->libVille}}</td>
+                                                <td>{{$collecte->zone->libZone}}</td>
+                                                <td>{{$collecte->lieu}}</td>
+                                                <td>
+                                                    <a href="/collecte/mobile/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                    <a href="/collecte/mobile/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <table width="100%" class="table table-striped table-bordered table-hover dataTables-example">
+                    <table width="100%" class="table table-striped">
                         <thead>
                         <tr>
                             <th>Compte</th>
@@ -30,7 +30,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach(\App\depense::all() as $depense)
+                        <?php
+                            $depenses = \App\depense::paginate(10);
+                        ?>
+                        @foreach($depenses as $depense)
                             <tr>
                                 <td>{{$depense->compte->libelle}}</td>
                                 <td>{{$depense->evenement->libelle}}</td>
@@ -49,6 +52,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    {{$depenses->links()}}
                 </div>
             </div>
         </div>

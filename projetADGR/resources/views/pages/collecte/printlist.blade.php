@@ -9,7 +9,7 @@
             <img width="100px" src="{{config('app.url')."/storage/logo.jpg"}}">
         </div>
         <div class="col-md-9" align="center">
-            <h1>Liste des collectes mobiles</h1>
+            <h1>Liste des collectes fixes</h1>
         </div>
     </div>
     <div class="row">
@@ -38,7 +38,7 @@
     </div>
 </div>
 </body>
-
+<body>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">

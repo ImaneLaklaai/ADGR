@@ -58,7 +58,14 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        return view("pages.Messages.show")->with("id", $id);
+        $message = Message::find($id);
+        if(Auth::guard("benevole")->check()) {
+            return view("pages.Messages.show")->with("id", $id);
+        }
+        if(Auth::user()->id == $message->donneur->id){
+            return view("pages.Messages.show")->with("id", $id);
+        }
+        return redirect("/");
     }
 
     /**
@@ -69,7 +76,11 @@ class MessageController extends Controller
      */
     public function edit($id)
     {
-
+        if(!Auth::guard("donneur")->check())return redirect("/");
+        $message = Message::find($id);
+        if($message->status == 2)return redirect("/message/show/".$id);
+        if($message->donneur_id != Auth::user()->id)return redirect("/message/");
+        return view("pages.Messages.edit")->with("id", $id);
     }
 
     /**
@@ -81,7 +92,11 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $message = Message::find($id);
+        $message->objet = $request->objet;
+        $message->contenu = $request->contenu;
+        $message->save();
+        return redirect("/message/show/".$message->id);
     }
 
     public function answer(Request $request, $id){
@@ -92,6 +107,25 @@ class MessageController extends Controller
         $message->date_reponse = new \DateTime(date("Y-m-d H:i:s"));
         $message->save();
         return redirect("/message/show/".$message->id);
+    }
+
+    public function deleteAnswer($id){
+        if(Auth::guard("benevole")->check()) {
+            $message = Message::find($id);
+            $message->reponse = NULL;
+            $message->benevole_id = NULL;
+            $message->status = 1;
+            $message->date_reponse = NULL;
+            $message->save();
+        }
+        return redirect("/message/show/".$message->id);
+    }
+
+    public function editAnswer($id){
+        if(Auth::guard("donneur")->check()){
+            return redirect("/");
+        }
+        return view("pages.messages.editanswer")->with("id", $id);
     }
 
     /**

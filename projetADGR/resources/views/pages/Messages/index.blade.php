@@ -5,6 +5,9 @@
     @section("title","Messages")
 @endif
 @section("content")
+    @if(Auth::guard("donneur")->check())
+        <a href="/message/create"><button class="btn btn-primary">Nouveau message</button></a>
+    @endif
     <table class="table table-responsive table-striped table-hover">
         <thead>
             <tr>
@@ -16,7 +19,7 @@
                 <th>Objet</th>
                 <th>Contenu</th>
                 <th>Statut</th>
-                <th>Actions</th>
+                <th>Actions </th>
             </tr>
         </thead>
         <tbody>

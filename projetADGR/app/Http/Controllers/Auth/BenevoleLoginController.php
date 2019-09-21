@@ -14,19 +14,18 @@ class BenevoleLoginController extends Controller
 
 
     public function __construct(){
-        $this->middleware("guest:donneur,benevole")->except("logout");
+        $this->middleware("guest:benevole")->except("logout");
     }
 
     public function showLoginForm(){
         if(Auth::guard("donneur")->check()){
-            return redirect()->intended("/");
+            return redirect("/");
         }
         return view("auth.login");
     }
 
     public function login(Request $request){
         //Validate:
-
         $this->validate($request, [
             "username" => "required",
             "password" => "required",

@@ -10,5 +10,4 @@ class collecteFixe extends Model
         return $this->belongsTo("App\Centre");
     }
 
-
 }

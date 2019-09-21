@@ -45,11 +45,6 @@ class collecteFixeController extends Controller
             return view("pages.collecte.nouvelleCollecte")->with(["sucess"=>true]);
     }
 
-    public function show($id)
-    {
-
-    }
-
     public function edit($id)
     {
         return view("pages.collecte.modifierCollecteFixe")->with("idCollecte",$id);

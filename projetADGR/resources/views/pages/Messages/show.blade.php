@@ -47,7 +47,7 @@
         </div>
     <br><br>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" style="margin-bottom: 100px">
                 @if($message->reponse != "")
                     <h4>Réponse:</h4>
                     <div class="container-fluid" style="border: black solid 1px; border-radius: 10px 10px 0 0;">
@@ -65,6 +65,14 @@
                                 ?>
                                 <h4 style="text-align: center;"> {{$message->objet}} [{{$statut}}]</h4>
                             </div>
+                            @if(Auth::guard("benevole")->check())
+                                @if(Auth::user()->role->id == 1 || Auth::user()->role->id)
+                                    <div class="col-md-1">
+                                        <a href="/message/answer/delete/{{$message->id}}" style="color:white; text-decoration: none;"><i class="fa-fw fa fa-remove"></i></a>
+                                        <a href="/message/answer/edit/{{$message->id}}" style="color:white; text-decoration: none;"><i class="fa-fw fa fa-pencil"></i></a>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                         <div class="row">
                             <div class="col-md-2" style="text-align: center;">

@@ -16,6 +16,8 @@ Route::get('/', "HomeController@index");
 Route::get("/collecte/","collecteController@index");
 Route::get("/collecte/create", "collecteController@create");
 Route::get("/collecte/printlist","collecteController@export_all_pdf");
+Route::get("/collecte/show/{id}","collecteController@show");
+Route::get("/collecte/printable/{id}", "collecteController@export_pdf");
 
 
 //Collecte fixe:
@@ -253,5 +255,16 @@ Route::get("/message/create", "MessageController@create");
 Route::post("/message/store", "MessageController@store");
 Route::get("/message/delete/{id}", "MessageController@destroy");
 Route::get("/message/show/{id}", "MessageController@show");
+Route::get("/message/edit/{id}", "MessageController@edit");
+Route::post("/message/update/{id}", "MessageController@update");
 Route::post("/message/answer/{id}", "MessageController@answer");
+Route::get("/message/answer/delete/{id}", "MessageController@deleteAnswer");
+Route::get("/message/answer/edit/{id}", "MessageController@editAnswer");
+
+Route::get("/printablecollecte/{id}",function($id){
+    return view("pages.collecte.printable")->with("id", $id);
+});
+
+Route::post("/donsParGroupeSanguin", "ajaxHandlers@donsParGroupeSanguin");
+Route::post("/donsParZone", "ajaxHandlers@donsParZone");
 

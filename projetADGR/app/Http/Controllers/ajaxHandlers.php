@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Benevole;
 use App\categorieDepense;
 use App\Centre;
+use App\collecte;
 use App\Compte;
 use App\Donneur;
+use App\groupeSanguin;
 use App\Ville;
+use App\Zone;
 use Doctrine\DBAL\Schema\Schema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ajaxHandlers extends Controller
 {
-    public function construct(){
-
-    }
     public function CINTest(Request $request){
         return count(\App\Donneur::all()->where("CIN",$request->CIN));
     }
@@ -75,5 +75,46 @@ class ajaxHandlers extends Controller
                 return response(json_encode($benevoles));
             }
         }
+    }
+    public function donsParGroupeSanguin(Request $request){
+        $collecte = collecte::find($request->collecte_id);
+        $dons = $collecte->dons()->get();
+        $groupesSanguins = groupeSanguin::all();
+        $reponse = array();
+        foreach($groupesSanguins as $gs){
+            $c = 0;
+            foreach($dons as $don){
+                if($don->donneur->groupeSanguin->id == $gs->id){
+                    $c++;
+                }
+            }
+            array_push($reponse, [
+                "libelle" => $gs->libelle.$gs->rhesus,
+                "nombre" => $c,
+            ]);
+        }
+        return json_encode($reponse);
+
+    }
+    public function donsParZone(Request $request){
+        $collecte = collecte::find($request->collecte_id);
+        $dons = $collecte->dons()->get();
+//        return $collecte->collecte->centre->zone->ville->id;
+        $zones = $collecte->typeCollecte==1?Zone::where("ville_id", "=", $collecte->collecte->centre->zone->ville->id)->get():Zone::where("ville_id", "=", $collecte->collecte->zone->ville->id)->get();
+        $reponse = array();
+        foreach($zones as $zone){
+            $c = 0;
+            foreach($dons as $don){
+                if($don->donneur->zone->id == $zone->id){
+                    $c++;
+                }
+            }
+            array_push($reponse, [
+                "zone" => $zone->libZone,
+                "nombre" => $c,
+            ]);
+        }
+        return json_encode($reponse);
+
     }
 }

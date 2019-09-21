@@ -14,7 +14,11 @@ if(isset($id)){
         <table>
             <tr>
                 <td>
-                    <img width="200px" src="{{config('app.url')."/storage/profilePhotos/donneurs/".$id.".jpg"}}">
+                    @if(file_exists(config('app.url')."/storage/profilePhotos/donneurs/".$id.".jpg"))
+                        <img width="200px" src="{{config('app.url')."/storage/profilePhotos/donneurs/".$id.".jpg"}}">
+                    @else
+                        <img width="200px" src="{{config('app.url')."/storage/logo.jpg"}}">
+                    @endif
                 </td>
                 <td align="center">
                     <h1>{{$donneur->nom." ".$donneur->prenom}}</h1>

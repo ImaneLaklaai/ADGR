@@ -10,9 +10,11 @@
 </div>
 
 <ul class="nav navbar-top-links navbar-right">
-    {{--<li class="dropdown">--}}
-        {{--@include("layouts.partials.dropdowns.messages")--}}
-    {{--</li>--}}
+    @if(Auth::guard("benevole")->check())
+        <li class="dropdown">
+            @include("layouts.partials.dropdowns.messages")
+        </li>
+    @endif
     {{--<li class="dropdown">--}}
         {{--@include("layouts.partials.dropdowns.tasks")--}}
     {{--</li>--}}

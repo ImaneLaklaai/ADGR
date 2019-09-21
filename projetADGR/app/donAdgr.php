@@ -11,10 +11,6 @@ class donAdgr extends Model
     }
     public function collecte(){
         $collecte = collecte::find($this->collecte_id);
-        if($collecte->type == "0"){
-            return $this->belongsTo("App\collecteMobile", "collecte_id");
-        }else{
-            return $this->belongsTo("App\collecteFixe","collecte_id");
-        }
+        return $this->belongsTo(collecte::class,"collecte_id", "id");
     }
 }

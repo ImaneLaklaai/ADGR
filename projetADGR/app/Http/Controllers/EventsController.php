@@ -100,7 +100,7 @@ class EventsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("pages.Evenements.edit")->with("id", $id);
     }
 
     /**
@@ -112,7 +112,13 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $event = Evenement::find($id);
+        $event->libelle = $request->input("libelle");
+        $event->type_event_id = $request->input("typeEvent");
+        $event->date_debut = $request->input("dateDebut");
+        $event->date_fin =  $request->input("dateFin");
+        $event->save();
+        return \redirect("/evenement");
     }
 
     /**

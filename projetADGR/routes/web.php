@@ -96,6 +96,8 @@ Route::post("/donneur/update/{id}", "DonneurController@update");
 Route::get("/donneur/delete/{id}", "DonneurController@destroy");
 Route::get("/donneur/{id}/pdf", "DonneurController@export_pdf");
 Route::get("/donneur/printlist", "DonneurController@export_all_pdf");
+Route::get("/donneur/listeaptes", "DonneurController@listeAptes");
+Route::get("/donneur/printlisteaptes", "DonneurController@printListeAptes");
 
 //Authentification donneur:
 Route::get("/donneur/login", "Auth\DonneurLoginController@showLoginForm")->name("donneur.login");

@@ -47,8 +47,9 @@
                                         <td>{{$collecte->date}}</td>
                                         <td>Fixe</td>
                                         <td>
-                                            <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                            <a href="/collecte/show/{{$collecte->collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
                                             <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                            <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
                                         </td>
                                     </tr>
                                 @elseif(Auth::user()->role->id == 2)
@@ -59,8 +60,9 @@
                                             <td>{{$collecte->date}}</td>
                                             <td>Fixe</td>
                                             <td>
-                                                <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                <a href="/collecte/show/{{$collecte->collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
                                                 <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
                                             </td>
                                         </tr>
                                     @endif
@@ -100,8 +102,9 @@
                                             <td>{{$collecte->zone->libZone}}</td>
                                             <td>{{$collecte->lieu}}</td>
                                             <td>
-                                                <a href="/collecte/mobile/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                                <a href="/collecte/mobile/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                <a href="/collecte/show/{{$collecte->collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
+                                                <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
                                             </td>
                                         </tr>
                                     @elseif (Auth::user()->role->id == 2)
@@ -113,8 +116,9 @@
                                                 <td>{{$collecte->zone->libZone}}</td>
                                                 <td>{{$collecte->lieu}}</td>
                                                 <td>
-                                                    <a href="/collecte/mobile/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
-                                                    <a href="/collecte/mobile/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                    <a href="/collecte/show/{{$collecte->collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
+                                                    <a href="/collecte/fixe/edit/{{$collecte->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                    <a href="/collecte/fixe/delete/{{$collecte->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
                                                 </td>
                                             </tr>
                                         @endif

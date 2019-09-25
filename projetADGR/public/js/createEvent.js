@@ -98,7 +98,9 @@ function creerCollecteForm(typeCollecte){
     }
 }
 
-
+function dateCollecte(){
+    console.log("pl");
+}
 $(document).ready(function(){
     let typeEvent = document.getElementById("typeEvent");
     let typeCollecteDiv = document.getElementById("typeCollecteDiv");
@@ -126,7 +128,6 @@ $(document).ready(function(){
                     creerCollecteForm(typeCollecte.value);
                 });
             });
-
         }else{
             formCollecte.innerHTML = "";
             formCollecte.className = "";

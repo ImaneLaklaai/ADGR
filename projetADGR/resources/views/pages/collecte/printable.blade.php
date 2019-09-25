@@ -125,8 +125,10 @@
                     let groupesSanguins = [];
                     let nombres = [];
                     for(let i in reponse){
-                        groupesSanguins.push(reponse[i]["libelle"]);
-                        nombres.push(reponse[i]["nombre"]);
+                        if(reponse[i]["nombre"] > 0){
+                            groupesSanguins.push(reponse[i]["libelle"]);
+                            nombres.push(reponse[i]["nombre"]);
+                        }
                     }
                     new Vue({
                         el: '#chart',
@@ -169,8 +171,10 @@
                     let zones = [];
                     let nombres = [];
                     for(let i in reponse){
-                        zones.push(reponse[i]["zone"]);
-                        nombres.push(reponse[i]["nombre"]);
+                        if(reponse[i]["nombre"] > 0){
+                            zones.push(reponse[i]["zone"]);
+                            nombres.push(reponse[i]["nombre"]);
+                        }
                     }
                     console.log(zones);
                     new Vue({

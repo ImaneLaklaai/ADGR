@@ -10,4 +10,8 @@ class collecteFixe extends Model
         return $this->belongsTo("App\Centre");
     }
 
+    public function collecte(){
+        return $this->hasOne(collecte::class, "collecte_id" ,"id");
+    }
+
 }

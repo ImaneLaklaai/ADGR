@@ -7,12 +7,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 Liste des donneurs
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                     <a href="/donneur/create"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Ajouter</button></a>
                                 <a href="/donneur/printlist"><button class="btn btn-primary"><span class="glyphicon glyphicon-print"></span>Imprimer</button></a>
+                                <a href="/donneur/listeaptes"><button class="btn btn-primary"><span class="fa fa-fw fa-check"></span>Aptes</button></a>
                             </div>
                         </div>
                     </div>

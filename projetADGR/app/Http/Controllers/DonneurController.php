@@ -46,6 +46,22 @@ class DonneurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function listeAptes(){
+        if(Auth::guard("benevole")->check()){
+            if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2){
+                return view("pages.donneurs.listeAptes");
+            }
+        }
+        return redirect("/");
+    }
+
+    public function printListeAptes(){
+        $pdf = PDF::loadView("pages.donneurs.printlistaptes");
+        return $pdf->download("listeAptes.pdf");
+    }
+
+
     public function create()
     {
         if(!Auth::guard("benevole")->check()){

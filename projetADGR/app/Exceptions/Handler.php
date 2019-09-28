@@ -44,11 +44,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($this->isHttpException($exception)){
-            if($exception->getStatusCode() == 404){
-                return response()->view("pages.notFound");
-            }
-        }
         return parent::render($request, $exception);
     }
 
@@ -65,18 +60,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        $guard = array_get($exception->guards(), 0);
-        switch($guard){
-            case 'benevole':
-                $login = "benevole.login";
-                break;
-            case 'donneur':
-                $login = "donneur.login";
-                break;
-            default:
-                $login ="benevole.login";
-                break;
-        }
-        return redirect()->guest(route($login));
+        return redirect()->guest(route('login'));
     }
 }

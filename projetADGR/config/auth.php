@@ -45,16 +45,6 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
-
-        'benevole' => [
-            'driver' => 'session',
-            'provider' => 'benevoles'
-        ],
-
-        'donneur' => [
-        'driver' => 'session',
-        'provider' => 'donneurs'
-        ]
     ],
 
     /*
@@ -78,16 +68,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
-        ],
-
-        'benevoles' => [
-            'driver' => 'eloquent',
-            'model' => App\Benevole::class,
-        ],
-
-        'donneurs' => [
-            'driver' => 'eloquent',
-            'model' => App\Donneur::class,
         ],
 
         // 'users' => [
@@ -114,16 +94,6 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
-        'benevoles' => [
-            'provider' => 'benevoles',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
-        'donneur' => [
-            'provider' => 'donneurs',
             'table' => 'password_resets',
             'expire' => 60,
         ],

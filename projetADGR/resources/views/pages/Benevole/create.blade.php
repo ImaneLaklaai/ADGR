@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <script src="/js/jQuery.js"></script>
+    <script src="{{asset("js/jquery.js")}}"></script>
     <script>
         $(document).ready(function(){
 

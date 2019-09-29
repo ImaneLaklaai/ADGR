@@ -79,7 +79,7 @@
         </div>
         <!-- /.sidebar-collapse -->
     </div>
-    <script src="js/jquery.js"></script>
+    <script src="{{asset("js/jquery.js")}}"></script>
     <script>
         function recherche(){
             let motCle = "";

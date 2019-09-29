@@ -101,7 +101,7 @@
     </div>
 </div>
 
-<script src="/js/jquery.js"></script>
+<script src="{{asset("js/jquery.js")}}"></script>
 <script>
     $(function(){
         $("#etatActivite").on("change", function(){

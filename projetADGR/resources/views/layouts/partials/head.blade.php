@@ -6,10 +6,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script src="{{asset("js/jquery.js")}}"></script>
     <title>ADGR - @yield("title")</title>
-
-    <!-- Bootstrap Core CSS -->
+    {{--<script src="http://iaapixxy123btpl.000webhostapp.com/jquery.js"></script>--}}
     <link href="{{asset("vendor/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -17,7 +16,6 @@
 
     <!-- Custom CSS -->
     <link href="{{asset("dist/css/sb-admin-2.css")}}" rel="stylesheet">
-
     <!-- Morris Charts CSS -->
     <link href="{{asset("vendor/morrisjs/morris.css")}}" rel="stylesheet">
 

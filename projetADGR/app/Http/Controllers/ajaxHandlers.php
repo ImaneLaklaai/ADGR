@@ -76,6 +76,16 @@ class ajaxHandlers extends Controller
             }
         }
     }
+    public function isApte(Request $request){
+        $donneur = Donneur::find($request->id);
+        $aptitude = $donneur->isApte()?"true":"false";
+        return response()->json($donneur->isApte());
+//        return response($request->id);
+    }
+    public function getProchainDon(Request $request){
+        $donneur = Donneur::find($request->id);
+        return response($donneur->getProchainDon()->format("d-m-Y"));
+    }
     public function donsParGroupeSanguin(Request $request){
         $collecte = collecte::find($request->collecte_id);
         $dons = $collecte->dons()->get();
@@ -116,5 +126,28 @@ class ajaxHandlers extends Controller
         }
         return json_encode($reponse);
 
+    }
+    public function rechercheAvancee(Request $request){
+        $donneur = Donneur::where("donneurs.id","!=","0")
+            ->join("zones","donneurs.zone_id", "=", "zones.id")
+            ->join("villes", "zones.ville_id", "=", "villes.id")
+            ->join("groupe_sanguins", "donneurs.groupe_sanguin_id", "=", "groupe_sanguins.id")
+            ->select("groupe_sanguins.*", "zones.*", "villes.*","donneurs.*");
+        if($request->nom != ""){
+            $donneur = $donneur->where("nom","like","%" . $request->nom . "%");
+        }
+        if($request->prenom != ""){
+            $donneur = $donneur->where("prenom", "like", "%".$request->prenom."%");
+        }
+        if($request->cin != ""){
+            $donneur = $donneur->where("CIN", "like", "%".$request->cin."%");
+        }
+        if($request->groupe != ""){
+            $donneur = $donneur->where("groupe_sanguin_id", "=", $request->groupe);
+        }
+        if($request->ville != ""){
+            $donneur = $donneur->where("villes.id", "=", $request->ville);
+        }
+        return response(json_encode($donneur->get()));
     }
 }

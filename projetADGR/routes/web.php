@@ -270,3 +270,6 @@ Route::get("/printablecollecte/{id}",function($id){
 Route::post("/donsParGroupeSanguin", "ajaxHandlers@donsParGroupeSanguin");
 Route::post("/donsParZone", "ajaxHandlers@donsParZone");
 
+Route::post("/search", "ajaxHandlers@rechercheAvancee");
+
+Route::post("/isapte", "ajaxHandlers@isApte");

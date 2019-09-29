@@ -72,7 +72,7 @@
     </div>
 </div>
 @endif
-<script src="/js/jQuery.js"></script>
+<script src="{{asset("js/jquery.js")}}"></script>
 <script>
     $(document).ready(function(){
         $("#part1").css("padding","10px");

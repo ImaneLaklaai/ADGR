@@ -243,6 +243,6 @@ class DonneurController extends Controller
         $donneur = Donneur::find($id);
         Storage::delete("public/profilePhotos/donneurs/".$donneur->id.".jpg");
         $donneur->delete();
-        return redirect('/donneur')->with('success', 'Donneur supprimé');
+        return response($id);
     }
 }

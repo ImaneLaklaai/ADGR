@@ -33,6 +33,6 @@
             </div>
         </div>
     </div>
-    <script src="/js/jquery.js"></script>
+    <script src="{{asset("js/jquery.js")}}"></script>
     <script src="/js/createEvent.js"></script>
 @endsection

@@ -50,7 +50,7 @@
            </div>
        </div>
    </div>
-   <script src="/js/jquery.js"></script>
+   <script src="{{asset("js/jquery.js")}}"></script>
    <script type="text/javascript">
        let divZone = document.getElementById("listeZones");
        $(document).ready(function() {

@@ -107,7 +107,7 @@ Route::get("/donneur/logout", "Auth\DonneurLoginController@logout")->name("donne
 
 
 //Dons:
-Route::get("/don/", "DonController@index");
+//Route::get("/don/", "DonController@index");
 Route::get("/don/create", "DonController@create");
 Route::get("/don/{idDonneur}", "DonController@index");
 Route::post("/don/store", "DonController@store");
@@ -271,5 +271,7 @@ Route::post("/donsParGroupeSanguin", "ajaxHandlers@donsParGroupeSanguin");
 Route::post("/donsParZone", "ajaxHandlers@donsParZone");
 
 Route::post("/search", "ajaxHandlers@rechercheAvancee");
-
 Route::post("/isapte", "ajaxHandlers@isApte");
+Route::post("/nbreDonneursParGroupe", "ajaxHandlers@nbreDonneursParGroupe");
+Route::post("/nbreDonneursParAptitude", "ajaxHandlers@nbreDonneursParAptitude");
+Route::post("/eventsStats", "ajaxHandlers@eventsStats");

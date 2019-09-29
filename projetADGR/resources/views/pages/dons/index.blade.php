@@ -180,7 +180,7 @@
             });
 
             $("#donneurs").on("change", function(){
-
+                alert($(this).attr("value"));
             });
         })
     </script>

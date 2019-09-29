@@ -14,9 +14,9 @@
         margin: 35px auto;
     }
 </style>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+<script src="{{asset("/js/vue.js")}}"></script>
+<script src="{{asset("/js/apexchartslatest.js")}}"></script>
+<script src="{{asset("/js/jsapexcharts.js")}}"></script>
 <style>
     body{
         background-color: white;

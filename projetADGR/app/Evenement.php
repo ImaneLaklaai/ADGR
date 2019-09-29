@@ -22,4 +22,7 @@ class Evenement extends Model
         return $this->hasOne("App\comiteEvenement", "Evenement_id");
     }
 
+    public function appelTelephonique(){
+        return $this->hasMany(appelTelephonique::class, "evenement_id");
+    }
 }

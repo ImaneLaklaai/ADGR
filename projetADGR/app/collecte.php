@@ -16,4 +16,8 @@ class collecte extends Model
     public function dons(){
         return $this->hasMany(donAdgr::class, "collecte_id", "id");
     }
+
+    public function evenement(){
+        return $this->belongsTo(Evenement::class, "Evenement_id", "id");
+    }
 }

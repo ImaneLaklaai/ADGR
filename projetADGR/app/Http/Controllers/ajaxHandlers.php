@@ -6,8 +6,10 @@ use App\Benevole;
 use App\categorieDepense;
 use App\Centre;
 use App\collecte;
+use App\collecteFixe;
 use App\Compte;
 use App\Donneur;
+use App\Evenement;
 use App\groupeSanguin;
 use App\Ville;
 use App\Zone;
@@ -149,5 +151,75 @@ class ajaxHandlers extends Controller
             $donneur = $donneur->where("villes.id", "=", $request->ville);
         }
         return response(json_encode($donneur->get()));
+    }
+    public function nbreDonneursParGroupe(Request $request){
+        $reponse = array();
+        foreach(groupeSanguin::all() as $gs){
+            $c = 0;
+            if($request->ville != ""){
+                foreach ($gs->donneur as $d){
+                    if($d->zone->ville->id == $request->ville)$c++;
+                }
+                array_push($reponse, [
+                    "libelleGroupe" => $gs->libelle.$gs->rhesus,
+                    "nombre" => $c,
+                ]);
+            }else{
+                array_push($reponse, [
+                    "libelleGroupe" => $gs->libelle.$gs->rhesus,
+                    "nombre" => $gs->donneur()->count(),
+                ]);
+            }
+        }
+        return response(json_encode($reponse));
+    }
+    public function nbreDonneursParAptitude(Request $request){
+        if($request->ville == ""){
+            $reponse = array();
+            $nbreAptes = 0;
+            $nbreInaptes = 0;
+            foreach(Donneur::all() as $donneur){
+                if($donneur->isApte())$nbreAptes++;
+                else $nbreInaptes++;
+            }
+            array_push($reponse, [
+                "Aptes" => $nbreAptes,
+                "Inaptes" => $nbreInaptes,
+            ]);
+            return response(json_encode($reponse));
+        }else{
+            $reponse = array();
+            $nbreAptes = 0;
+            $nbreInaptes = 0;
+            foreach(Donneur::all() as $donneur){
+                if($donneur->zone->ville->id == $request->ville){
+                    if($donneur->isApte())$nbreAptes++;
+                    else $nbreInaptes++;
+                }
+            }
+            array_push($reponse, [
+                "Aptes" => $nbreAptes,
+                "Inaptes" => $nbreInaptes,
+            ]);
+            return response(json_encode($reponse));
+        }
+    }
+    public function eventsStats(){
+        $reponse = array();
+        $evenements = Evenement::all();
+        foreach($evenements as $ev){
+            foreach (collecte::all()->sortBy("date") as $collecte){
+                if($collecte->evenement->id == $ev->id){
+                    array_push($reponse, [
+                        "date" => $collecte->collecte->date,
+                        "dons" => $collecte->dons()->count(),
+                        "appelsTelephoniques" => $ev->appelTelephonique()->count(),
+                        "presence" => $collecte->collecte->nombre_presents,
+                    ]);
+                }
+            }
+        }
+
+        return response(json_encode($reponse));
     }
 }

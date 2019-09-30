@@ -86,6 +86,6 @@ class BureauVilleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        BureauVille::find($id)->delete();
     }
 }

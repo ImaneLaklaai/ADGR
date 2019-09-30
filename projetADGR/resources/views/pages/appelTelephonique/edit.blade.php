@@ -21,6 +21,7 @@
                     <option value="1">Favorable</option>
                     <option value="2">Défavorable</option>
                     <option value="3">Pas de réponse</option>
+                    <option value="4">A rappeler</option>
                 </select><br>
                 <input type="hidden" value="{{auth()->user()->id}}" name="benevole">
                 <input type="submit" class="btn btn-primary" value="Enregistrer">

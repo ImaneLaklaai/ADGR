@@ -40,7 +40,7 @@
                                 <tbody>
                                 @if(Auth::user()->role->id == 1)
                                     @foreach($benevoles as $benevole)
-                                        <tr>
+                                        <tr id="benevole{{$benevole->id}}">
                                             <td>{{$benevole->nom}}</td>
                                             <td>{{$benevole->prenom}}</td>
                                             <td>{{$benevole->CIN}}</td>
@@ -58,7 +58,7 @@
                                             <td>{{$benevole->dateAdhesion}}</td>
                                             <td>{{$benevole->role->libelle}}</td>
                                             <td>
-                                                <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
+                                                <a href="/benevole/delete/{{$benevole->id}}" class="btn_delete_benevole"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
                                                 <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                                 <a href="/benevole/show/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
                                                 <a href="/benevole/printable/{{$benevole->id}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
@@ -68,7 +68,7 @@
                                 @else
                                     @foreach($benevoles as $benevole)
                                         @if($benevole->zone->ville->id == Auth::user()->zone->ville->id)
-                                            <tr>
+                                            <tr id="benevole{{$benevole->id}}">
                                                 <td>{{$benevole->nom}}</td>
                                                 <td>{{$benevole->prenom}}</td>
                                                 <td>{{$benevole->CIN}}</td>
@@ -87,7 +87,7 @@
                                                 <td>{{$benevole->role->libelle}}</td>
                                                 @if(Auth::user()->role->id == 2)
                                                     <td>
-                                                        <a href="/benevole/delete/{{$benevole->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
+                                                        <a href="/benevole/delete/{{$benevole->id}}" class="btn_delete_benevole"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
                                                         <a href="/benevole/edit/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                                         <a href="/benevole/show/{{$benevole->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
                                                         <a href="/benevole/printable/{{$benevole->id}}"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
@@ -110,4 +110,24 @@
             </div>
         </div>
     </div>
+    <script src="{{asset("/js/jquery.js")}}"></script>
+    <script>
+        $(function(){
+            $(".btn_delete_benevole").click(function(){
+                event.preventDefault();
+                if(confirm("Voulez-vous vraiment supprimer ce bénévole?")){
+                    $.ajax({
+                        type: "get",
+                        url: $(this).attr("href"),
+                        success: function(data){
+                            $("#benevole"+data).remove();
+                        },
+                        error: function(){
+                            console.log("Erreur !");
+                        },
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

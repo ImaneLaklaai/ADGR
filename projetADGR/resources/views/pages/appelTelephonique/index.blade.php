@@ -21,7 +21,7 @@
                 <tbody>
                     @foreach($appels as $appel)
                         <?php
-                            $reponse =  $appel->reponse == "1"? "Favorable":($appel->reponse == "2"? "Défavorable":"Pas de réponse");
+                            $reponse =  $appel->reponse == "1"? "Favorable":($appel->reponse == "2"?"Défavorable":($appel->reponse == "3"?"Pas de réponse":"A rappeler"));
                         ?>
                         <tr>
                             <td><a href="tel:{{$appel->donneur->numeroTelephone}}">{{$appel->donneur->numeroTelephone}}</a></td>

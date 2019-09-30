@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bureau;
 use App\BureauVille;
 use App\Ville;
 use Illuminate\Http\Request;
@@ -53,9 +54,11 @@ class VilleController extends Controller
         ]);
         $ville = new Ville();
         $ville->libVille = $request->input("libVille");
-        $bureauville = new BureauVille();
-        $bureauville->
         $ville->save();
+        $bureauville = new BureauVille();
+        $bureauville->bureau_id = $request->bureau;
+        $bureauville->ville_id = $ville->id;
+        $bureauville->save();
         return redirect("/ville");
     }
 
@@ -94,8 +97,14 @@ class VilleController extends Controller
         if(Auth::user()->role->id != 1)return redirect("/");
         $ville = Ville::find($id);
         $ville->libVille = $request->input("libVille");
-        $ville->bureau_id = $request->input("bureau");
         $ville->save();
+        foreach(BureauVille::All()->where("ville_id", "=", $id) as $bureau){
+            $bureau->delete();
+        }
+        $bv = new BureauVille();
+        $bv->bureau_id = $request->bureau;
+        $bv->ville_id = $ville->id;
+        $bv->save();
         return Redirect::to("/ville");
     }
 
@@ -109,6 +118,6 @@ class VilleController extends Controller
     {
         if(Auth::user()->role->id != 1)return redirect("/");
         Ville::find($id)->delete();
-        return Redirect::to("ville");
+        return response($id);
     }
 }

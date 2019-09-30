@@ -17,8 +17,8 @@ class CreateBureauVillesTable extends Migration
             $table->increments('id');
             $table->integer("ville_id")->unsigned()->index();
             $table->integer("bureau_id")->unsigned()->index();
-            $table->foreign("ville_id")->references("id")->on("villes");
-            $table->foreign("bureau_id")->references("id")->on("bureaus");
+            $table->foreign("ville_id")->references("id")->on("villes")->onDelete("cascade");
+            $table->foreign("bureau_id")->references("id")->on("bureaus")->onDelete("cascade");
             $table->timestamps();
         });
     }

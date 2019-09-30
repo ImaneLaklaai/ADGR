@@ -123,6 +123,6 @@ class ContreIndicationController extends Controller
         if(Auth::user()->role->id == 1 || Auth::user()->role->id == 2 || Auth::user()->role->id == 4){
             contreIndication::find($id)->delete();
         }
-        return Redirect::to("/contreIndication");
+        return response($id);
     }
 }

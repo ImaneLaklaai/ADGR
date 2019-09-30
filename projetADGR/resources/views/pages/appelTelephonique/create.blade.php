@@ -44,6 +44,7 @@
                                                     <option value="1">Favorable</option>
                                                     <option value="2">Défavorable</option>
                                                     <option value="3">Pas de réponse</option>
+                                                    <option value="4">A rappeler</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -64,6 +65,7 @@
                                                 <option value="1">Favorable</option>
                                                 <option value="2">Défavorable</option>
                                                 <option value="3">Pas de réponse</option>
+                                                <option value="4">A rappeler</option>
                                             </select>
                                         </td>
                                     </tr>

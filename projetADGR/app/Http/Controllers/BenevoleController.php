@@ -196,6 +196,6 @@ class BenevoleController extends Controller
     {
         Benevole::find($id)->delete();
         Storage::delete("public/profilePhotos/benevoles/".$id.".jpg");
-        return Redirect::to("/benevole");
+        return response($id);
     }
 }

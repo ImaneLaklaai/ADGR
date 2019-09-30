@@ -121,6 +121,6 @@ class BureauController extends Controller
     {
         $bureau = Bureau::find($id);
         $bureau->delete();
-        return Redirect::to("/bureau");
+        return response($id);
     }
 }

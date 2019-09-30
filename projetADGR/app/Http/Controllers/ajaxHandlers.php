@@ -82,7 +82,6 @@ class ajaxHandlers extends Controller
         $donneur = Donneur::find($request->id);
         $aptitude = $donneur->isApte()?"true":"false";
         return response()->json($donneur->isApte());
-//        return response($request->id);
     }
     public function getProchainDon(Request $request){
         $donneur = Donneur::find($request->id);

@@ -103,6 +103,6 @@ class CentreController extends Controller
     public function destroy($id)
     {
         Centre::find($id)->delete();
-        return Redirect::to("/centre");
+        return response($id);
     }
 }

@@ -283,9 +283,7 @@
                                                                                 @endforeach
                                                                             </select><br>
                                                                             <input type="hidden" name="donneur" value="{{$donneur->id}}">
-                                                                            <label for="dateDon">Date du don</label>
                                                                             <input type="hidden" name="typeCollecte" value="0">
-                                                                            <input type="date" name="dateDon" id="dateDon" class="form-control" > <br>
                                                                         </form>
                                                                     </div>
                                                                     <div id="donExtDiv" style="display:none">
@@ -328,7 +326,7 @@
                                                 <tbody>
                                                 @foreach($donneur->donsADGR as $don)
                                                     <tr>
-                                                        <td>{{$don->dateDon}}</td>
+                                                        <td>{{$don->collecte->collecte->date}}</td>
                                                         <td>{{$don->collecte->collecte->libCollecte}}</td>
                                                         @if($don->typeCollecte == 1)
                                                             <td>Fixe</td>
@@ -416,7 +414,7 @@
                                                 <tbody>
                                                 @foreach($donneur->donsADGR as $don)
                                                     <tr>
-                                                        <td>{{$don->dateDon}}</td>
+                                                        <td>{{$don->collecte->collecte->date}}</td>
                                                         <td>{{$don->collecte->collecte->libCollecte}}</td>
                                                         @if($don->typeCollecte == 1)
                                                             <td>Fixe</td>
@@ -562,10 +560,7 @@
             </div>
         </div>
     </div>
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
+    <script src="{{asset("/js/jquery.js")}}">
     </script>
     <script>
         $(document).ready(function(){

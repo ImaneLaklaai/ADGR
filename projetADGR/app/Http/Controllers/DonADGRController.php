@@ -54,11 +54,11 @@ class DonADGRController extends Controller
             $don = new donAdgr();
             $don->collecte_id = $request->input('collecte');
             $don->donneur_id = $request->input('donneur');
-            $don->dateDon = $request->input('dateDon');
-            $donneur = Donneur::find($don->donneur_id);
-            $donneur->dateDernierDon = $don->dateDon;
-            $donneur->save();
+//            $don->dateDon = $request->input('dateDon');
             $don->save();
+            $donneur = Donneur::find($don->donneur_id);
+            $donneur->dateDernierDon = $don->collecte->collecte->date;
+            $donneur->save();
             return Redirect::to("/donneur/show/".$request->donneur)->with("success", "Don ADGR ajouté !");
         }
         return Redirect::to("/donneur/show/".$request->donneur)->with("error", "Donneur inapte !");

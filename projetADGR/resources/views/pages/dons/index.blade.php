@@ -30,7 +30,7 @@
                                             <tbody>
                                             @foreach($donneur->donsADGR as $don)
                                                 <tr>
-                                                    <td>{{$don->dateDon}}</td>
+                                                    <td>{{$don->collecte->collecte->date}}</td>
                                                     <td>{{$don->collecte->libCollecte}}</td>
                                                     <td><a href="/donneur/show/{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom}}</a></td>
                                                     <td>
@@ -112,7 +112,7 @@
                                             <tbody>
                                             @foreach($donneur->donsADGR as $don)
                                                 <tr>
-                                                    <td>{{$don->dateDon}}</td>
+                                                    <td>{{$don->collecte->collecte->date}}</td>
                                                     <td>{{$don->collecte->libCollecte}}</td>
                                                     <td><a href="/donneur/show/{{$donneur->id}}">{{$donneur->nom . " " . $donneur->prenom}}</a></td>
                                                     <td>

@@ -157,7 +157,134 @@
                                             <a href="/donneur/delete/{{$donneur->id}}" class="delete_donneur_btn"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove"></span></a>
                                             <a href="/donneur/edit/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
                                             <a href="/donneur/show/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-list"></span></a>
-                                            <a href="/don/{{$donneur->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-heart"></span></a>
+                                            <!-- Modal -->
+                                            <span class="btn btn-default btn-circle btn-md glyphicon glyphicon-heart" data-toggle="modal" data-target="{{"#modalDon".$donneur->id}}"></span>
+                                            <div class="modal fade" id="{{"modalDon".$donneur->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Apte</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">
+                                                                    Dons
+                                                                </div>
+                                                                <!-- /.panel-heading -->
+                                                                <div class="panel-body">
+                                                                    <!-- Nav tabs -->
+                                                                    <ul class="nav nav-tabs">
+                                                                        <li class="active"><a href="#ajouterDon" data-toggle="tab" aria-expanded="true">Ajouer un don</a></li>
+                                                                        <li class=""><a href="#listeDons" data-toggle="tab" aria-expanded="false">Tous les dons</a></li>
+                                                                    </ul>
+
+                                                                    <!-- Tab panes -->
+                                                                    <div class="tab-content">
+                                                                        <div class="tab-pane fade active in" id="ajouterDon">
+                                                                            <h4>Ajouter un don</h4>
+                                                                                <input type="radio" name="type" id="donADGR" checked><label for="donADGR">Don ADGR</label>
+                                                                                <input type="radio" name="type" id="donExt"><label for="donExt">Don externe</label>
+                                                                                <div id="donADGRDiv">
+                                                                                    <form action="/don/adgr/store" method="post" id="ajouterDonADGRForm">
+                                                                                        {{csrf_field()}}
+                                                                                        <label for="collecte">Collecte</label>
+                                                                                        <select id="collecte" name="collecte" class="form-control">
+                                                                                            @foreach(App\collecteFixe::all() as $collecte)
+                                                                                                <option value="{{$collecte->id}}">{{$collecte->libCollecte}}</option>
+                                                                                            @endforeach
+                                                                                        </select><br>
+                                                                                        <input type="hidden" name="donneur" value="{{$donneur->id}}">
+                                                                                        <input type="hidden" name="typeCollecte" value="0">
+                                                                                        <input type="submit" class="btn btn-primary" value="Ajouter">
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div id="donExtDiv" style="display:none">
+                                                                                    <form action="/don/externe/store" method="post" id="ajouterDonExterneForm">
+                                                                                        {{csrf_field()}}
+                                                                                        <input type="hidden" name="donneur" value="{{$donneur->id}}">
+                                                                                        <input type="hidden" name="typeCollecte" value="1">
+                                                                                        <label for="dateDon">Date du don</label>
+                                                                                        <input type="date" name="dateDon" class="form-control" id="dateDon"><br>
+
+                                                                                        <label for="raison">Raison du don</label>
+                                                                                        <input type="text" name="raison" class="form-control" id="raison"><br>
+                                                                                        <input type="submit" class="btn btn-primary" value="Ajouter">
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        <div class="tab-pane fade" id="listeDons">
+                                                                            <h4>Liste des dons</h4>
+                                                                            <h3>Dons Externes</h3>
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th>Date du don</th>
+                                                                                        <th>Raison</th>
+                                                                                        <th>Donneur</th>
+                                                                                        <th>Actions</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    @foreach($donneur->donsExternes as $don)
+                                                                                        <tr>
+                                                                                            <td>{{$don->date}}</td>
+                                                                                            <td>{{$don->raison}}</td>
+                                                                                            <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
+                                                                                            <td>
+                                                                                                <a href="/don/externe/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                                                                <a href="/don/externe/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <h3>Dons ADGR</h3>
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th>Date du don</th>
+                                                                                        <th>Collecte</th>
+                                                                                        <th>Type de collecte</th>
+                                                                                        <th>Donneur</th>
+                                                                                        <th>Actions</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    @foreach($donneur->donsADGR as $don)
+                                                                                        <tr>
+                                                                                            <td>{{$don->collecte->collecte->date}}</td>
+                                                                                            <td>{{$don->collecte->collecte->libCollecte}}</td>
+                                                                                            @if($don->typeCollecte == 1)
+                                                                                                <td>Fixe</td>
+                                                                                            @else
+                                                                                                <td>Mobile</td>
+                                                                                            @endif
+                                                                                            <td>{{$donneur->nom . " " . $donneur->prenom}}</td>
+                                                                                            <td>
+                                                                                                <a href="/don/adgr/delete/{{$don->id}}"><span class=" btn btn-warning btn-circle btn-md glyphicon glyphicon-remove removeCollecte"></span></a>
+                                                                                                <a href="/don/adgr/edit/{{$don->id}}"><span class=" btn btn-default btn-circle btn-md glyphicon glyphicon-pencil"></span></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endforeach
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.panel-body -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
                                             <a href="/donneur/{{$donneur->id}}/pdf"><span class="btn btn-default btn-circle btn-md glyphicon glyphicon-print"></span></a>
                                         </td>
                                     </tr>
@@ -296,6 +423,40 @@
             });
         }
         $(function(){
+            $("#btnDonsADGR").on("change", function(){
+                $("#donsExternes").fadeOut();
+                $("#donsTOUS").fadeOut();
+                $("#donsADGR").delay(400).fadeIn();
+            });
+            $("#btnDonsExternes").on("change", function(){
+                $("#donsADGR").fadeOut();
+                $("#donsTOUS").fadeOut();
+                $("#donsExternes").delay(400).fadeIn();
+            });
+            $("#btnDonsTOUS").on("change", function(){
+                $("#donsADGR").fadeOut();
+                $("#donsExternes").fadeOut();
+                $("#donsTOUS").delay(400).fadeIn();
+            });
+
+            $("#btnSubmit").click(function(){
+                $("#ajouterDonADGRForm").submit()
+            });
+
+            $("#donADGR").on("change",function(){
+                $("#donExtDiv").fadeOut();
+                $("#donADGRDiv").delay(400).fadeIn();
+                $("#btnSubmit").click(function(){
+                    $("#ajouterDonADGRForm").submit()
+                });
+            });
+            $("#donExt").on("change",function(){
+                $("#donADGRDiv").fadeOut();
+                $("#donExtDiv").delay(400).fadeIn();
+                $("#btnSubmit").click(function(){
+                    $("#ajouterDonExterneForm").submit()
+                });
+            });
             deleteDonneur();
             $("#foo").click(function(){
                 $("#bar").slideToggle(500, "swing", function(){

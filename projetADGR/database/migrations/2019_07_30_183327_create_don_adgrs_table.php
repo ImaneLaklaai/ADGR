@@ -17,7 +17,6 @@ class CreateDonAdgrsTable extends Migration
             $table->increments('id');
             $table->integer('collecte_id')->unsigned()->index();
             $table->integer('donneur_id')->unsigned()->index();
-            $table->date('dateDon');
             $table->foreign("donneur_id")->references("id")->on("donneurs")->onDelete("cascade");
             $table->foreign("collecte_id")->references("id")->on("collectes")->onDelete("cascade");
             $table->timestamps();

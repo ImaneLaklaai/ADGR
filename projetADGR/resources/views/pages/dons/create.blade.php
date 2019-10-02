@@ -41,8 +41,6 @@
                             @endforeach
                         </select><br>
                         <input type="hidden" name="typeCollecte" value="1">
-                        <label for="dateDon">Date du don</label>
-                        <input type="date" name="dateDon" class="form-control" id="dateDon"><br>
 
                         <label for="raison">Raison du don</label>
                         <input type="text" name="raison" class="form-control" id="raison"><br>

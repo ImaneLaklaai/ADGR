@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10">
-                <div id="foo" style="cursor: pointer; background-color: #F5F5F5; border: solid 1px #DDDDDD; padding:10px; text-align: center; border-radius: 4px 4px 0 0">Recherche avancée <span class="fa arrow" id="arr"></span></div>
+                <div id="foo" style="cursor: pointer; background-color: #F5F5F5; border: solid 1px #DDDDDD; padding:10px; text-align: center; border-radius: 4px 4px 0 0">Recherche avancée<span class="fa arrow" id="arr"></span></div>
                 <div id="bar" style="background-color: #F5F5F5; border:solid 1px #DDDDDD; border-top: none; display:none; text-align:center; border-radius: 0 0 4px 4px; padding:20px;">
                     @if(Auth::user()->role->id == 1)
                         <label for="ville">Ville</label><select id='ville'>
@@ -60,6 +60,9 @@
                             </thead>
                             <tbody>
                             @if(Auth::user()->role->id == 1)
+                                <?php
+                                    $donneurs = \App\Donneur::paginate(5);
+                                ?>
                                 @foreach($donneurs as $donneur)
                                     <tr id="donneur{{$donneur->id}}">
                                         <td>{{$donneur->nom}}</td>
@@ -100,7 +103,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <b>Ajouter une contre indication</b>
-                                                                <form action="/donneurContreIndication/store/{{$donneur->id}}" method="post" id="ajouterContreIndication">
+                                                                <form action="/donneurContreIndication/store/{{$donneur->id}}" method="post" id="ajouterContreIndication{{$donneur->id}}">
                                                                     {{csrf_field()}}
                                                                     <label for="contre_indication_id">Contre indication</label>
                                                                     <select id="contre_indication_id" name="contre_indication_id" class="form-control">
@@ -114,7 +117,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('ajouterContreIndication').submit()">Ajouter</button>
+                                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('ajouterContreIndication{{$donneur->id}}').submit()">Ajouter</button>
                                                             </div>
                                                         </div>
                                                         <!-- /.modal-content -->
@@ -175,18 +178,18 @@
                                                                 <div class="panel-body">
                                                                     <!-- Nav tabs -->
                                                                     <ul class="nav nav-tabs">
-                                                                        <li class="active"><a href="#ajouterDon" data-toggle="tab" aria-expanded="true">Ajouer un don</a></li>
-                                                                        <li class=""><a href="#listeDons" data-toggle="tab" aria-expanded="false">Tous les dons</a></li>
+                                                                        <li class="active"><a href="#ajouterDon{{$donneur->id}}" data-toggle="tab" aria-expanded="true">Ajouer un don</a></li>
+                                                                        <li class=""><a href="#listeDons{{$donneur->id}}" data-toggle="tab" aria-expanded="false">Tous les dons</a></li>
                                                                     </ul>
 
                                                                     <!-- Tab panes -->
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane fade active in" id="ajouterDon">
                                                                             <h4>Ajouter un don</h4>
-                                                                                <input type="radio" name="type" id="donADGR" checked><label for="donADGR">Don ADGR</label>
-                                                                                <input type="radio" name="type" id="donExt"><label for="donExt">Don externe</label>
-                                                                                <div id="donADGRDiv">
-                                                                                    <form action="/don/adgr/store" method="post" id="ajouterDonADGRForm">
+                                                                                <input type="radio" name="type" id="donADGR{{$donneur->id}}" class="donADGR" data-donneur="{{$donneur->id}}" checked><label for="donADGR{{$donneur->id}}">Don ADGR</label>
+                                                                                <input type="radio" name="type" id="donExt{{$donneur->id}}" class="donExt" data-donneur="{{$donneur->id}}"><label for="donExt{{$donneur->id}}">Don externe</label>
+                                                                                <div id="donADGRDiv{{$donneur->id}}">
+                                                                                    <form action="/don/adgr/store" method="post" id="ajouterDonADGRForm{{$donneur->id}}">
                                                                                         {{csrf_field()}}
                                                                                         <label for="collecte">Collecte</label>
                                                                                         <select id="collecte" name="collecte" class="form-control">
@@ -199,8 +202,8 @@
                                                                                         <input type="submit" class="btn btn-primary" value="Ajouter">
                                                                                     </form>
                                                                                 </div>
-                                                                                <div id="donExtDiv" style="display:none">
-                                                                                    <form action="/don/externe/store" method="post" id="ajouterDonExterneForm">
+                                                                                <div id="donExtDiv{{$donneur->id}}" style="display:none">
+                                                                                    <form action="/don/externe/store" method="post" id="ajouterDonExterneForm{{$donneur->id}}">
                                                                                         {{csrf_field()}}
                                                                                         <input type="hidden" name="donneur" value="{{$donneur->id}}">
                                                                                         <input type="hidden" name="typeCollecte" value="1">
@@ -209,11 +212,11 @@
 
                                                                                         <label for="raison">Raison du don</label>
                                                                                         <input type="text" name="raison" class="form-control" id="raison"><br>
-                                                                                        <input type="submit" class="btn btn-primary" value="Ajouter">
+                                                                                        <input type="submit" class="btn btn-primary" value="Ajouter" id="ajouterDonExterneForm{{$donneur->id}}">
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
-                                                                        <div class="tab-pane fade" id="listeDons">
+                                                                        <div class="tab-pane fade" id="listeDons{{$donneur->id}}">
                                                                             <h4>Liste des dons</h4>
                                                                             <h3>Dons Externes</h3>
                                                                             <div class="table-responsive">
@@ -336,7 +339,7 @@
                                                                         <label for="contre_indication_id">Contre indication</label>
                                                                         <select id="contre_indication_id" name="contre_indication_id" class="form-control">
                                                                             @foreach(\App\contreIndication::All() as $ci)
-                                                                                <option value={{$ci->id}}>{{$ci->nom}}</option>
+                                                                                <option value="{{$ci->id}}">{{$ci->nom}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                         <label for="dateDebut">Date de début</label>
@@ -423,38 +426,43 @@
             });
         }
         $(function(){
-            $("#btnDonsADGR").on("change", function(){
-                $("#donsExternes").fadeOut();
-                $("#donsTOUS").fadeOut();
-                $("#donsADGR").delay(400).fadeIn();
-            });
-            $("#btnDonsExternes").on("change", function(){
-                $("#donsADGR").fadeOut();
-                $("#donsTOUS").fadeOut();
-                $("#donsExternes").delay(400).fadeIn();
-            });
-            $("#btnDonsTOUS").on("change", function(){
-                $("#donsADGR").fadeOut();
-                $("#donsExternes").fadeOut();
-                $("#donsTOUS").delay(400).fadeIn();
-            });
+            // $("#btnDonsADGR").on("change", function(){
+            //     $("#donsExternes").fadeOut();
+            //     $("#donsTOUS").fadeOut();
+            //     $("#donsADGR").delay(400).fadeIn();
+            // });
+            // $("#btnDonsExternes").on("change", function(){
+            //     $("#donsADGR").fadeOut();
+            //     $("#donsTOUS").fadeOut();
+            //     $("#donsExternes").delay(400).fadeIn();
+            // });
+            // $("#btnDonsTOUS").on("change", function(){
+            //     $("#donsADGR").fadeOut();
+            //     $("#donsExternes").fadeOut();
+            //     $("#donsTOUS").delay(400).fadeIn();
+            // });
+            //
+            // $("#btnSubmit").click(function(){
+            //     $("#ajouterDonADGRForm").submit()
+            // });
 
-            $("#btnSubmit").click(function(){
-                $("#ajouterDonADGRForm").submit()
-            });
-
-            $("#donADGR").on("change",function(){
-                $("#donExtDiv").fadeOut();
-                $("#donADGRDiv").delay(400).fadeIn();
-                $("#btnSubmit").click(function(){
-                    $("#ajouterDonADGRForm").submit()
+            $(".donADGR").each(function(){
+                $(this).on("change",function(){
+                    $("#donExtDiv"+$(this).attr("data-donneur")).fadeOut();
+                    $("#donADGRDiv"+$(this).attr("data-donneur")).delay(400).fadeIn();
+                    $("#btnSubmit").click(function(){
+                        $("#ajouterDonADGRForm").submit()
+                    });
                 });
             });
-            $("#donExt").on("change",function(){
-                $("#donADGRDiv").fadeOut();
-                $("#donExtDiv").delay(400).fadeIn();
-                $("#btnSubmit").click(function(){
-                    $("#ajouterDonExterneForm").submit()
+            $(".donExt").each(function(){
+                $(this).on("change",function(){
+                    console.log($(this).attr("data-donneur"));
+                    $("#donADGRDiv"+$(this).attr("data-donneur")).fadeOut();
+                    $("#donExtDiv"+$(this).attr("data-donneur")).delay(400).fadeIn();
+                    $("#btnSubmit"+$(this).attr("data-donneur")).click(function(){
+                        $("#ajouterDonExterneForm"+this.attr("data-donneur")).submit()
+                    });
                 });
             });
             deleteDonneur();

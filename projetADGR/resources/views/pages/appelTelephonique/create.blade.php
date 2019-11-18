@@ -74,7 +74,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{$donneurs->links()}}
+                {!! $donneurs->links() !!}
                 <input type="hidden" value="{{auth()->user()->id}}" name="benevole">
                 <input type="submit" class="btn btn-primary" value="Enregistrer">
                 <input type="reset" class="btn btn-danger" value="Annuler">

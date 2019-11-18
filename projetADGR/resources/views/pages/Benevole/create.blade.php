@@ -76,7 +76,9 @@
                     <div id="part3" style="display:none">
                         <h4>Informations de connexion</h4>
                         <input type="text" name="username" placeholder="Nom d'utilisateur" class="form-control" id="username"><br>
+                        <span id="mdpmsg"></span><br>
                         <input type="password" name="password" placeholder="Mot de passe" class="form-control" id="password"><br>
+                        <input type="password" id="passwordVerification" class="form-control" placeholder="Resaisissez le mot de passe"><br>
                         <input type="submit" value="Ajouter" class="btn btn-success">
                         <input type="reset" value="Annuler" class="btn btn-primary">
                     </div>
@@ -143,6 +145,38 @@
                         divZone.innerHTML = html;
                     })
                 });
+            });
+            $("#passwordVerification").on("keyup", function(){
+                if($(this).val() !== $("#password").val()){
+                    $("#mdpmsg").text("Les mots de passe ne sont pas identiques :(");
+                    $("#mdpmsg").css("color", "red");
+                    $(this).css("background-color", "#FF5050");
+                    $(this).css("color", "#FFFFFF");
+                    $("#password").css("background-color", "#FF5050");
+                    $("#password").css("color", "#FFFFFF");
+                }else{
+                    $("#mdpmsg").text("");
+                    $(this).css("background-color","");
+                    $(this).css("color", "");
+                    $("#password").css("background-color", "");
+                    $("#password").css("color", "");
+                }
+            });
+            $("#password").on("keyup", function(){
+                if($(this).val() !== $("#passwordVerification").val()){
+                    $("#mdpmsg").text("Les mots de passe ne sont pas identiques :(");
+                    $("#mdpmsg").css("color", "red");
+                    $(this).css("background-color", "#FF5050");
+                    $(this).css("color", "#FFFFFF");
+                    $("#passwordVerification").css("background-color", "#FF5050");
+                    $("#passwordVerification").css("color", "#FFFFFF");
+                }else{
+                    $("#mdpmsg").text("");
+                    $(this).css("background-color","");
+                    $(this).css("color", "");
+                    $("#passwordVerification").css("background-color", "");
+                    $("#passwordVerification").css("color", "");
+                }
             });
         });
     </script>

@@ -57,7 +57,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(App\Ville::All() as $ville)
+                                <?php
+                                    $villes = App\Ville::paginate(5);
+                                ?>
+                                @foreach($villes as $ville)
                                     <tr id="ville{{$ville->id}}">
                                         <td>{{$ville->libVille}}</td>
                                         <td>
@@ -76,6 +79,8 @@
                                 @endforeach
                                 </tbody>
                             </table>
+
+                            {!! $villes->links() !!}
                         </div>
                         <!-- /.table-responsive -->
                     </div>

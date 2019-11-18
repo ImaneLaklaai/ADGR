@@ -15,7 +15,6 @@ function creerCollecteForm(typeCollecte){
         let fixe = "" +
             "<input type='hidden' value='f' name='typeCollecte'>" +
             "<label for='libCollecte'>Libellé collecte</label><input class='form-control' type='text' id='libCollecte'  name='libCollecte'><br>" +
-            "   <label for='dateCollecte'>Date Collecte</label><input class='form-control' type='date' id='dateCollecte'  name='dateCollecte'><br>" +
             "   <label for='centre'>Centre</label>";
         $.ajax({
             type: "get",
@@ -38,7 +37,6 @@ function creerCollecteForm(typeCollecte){
     }else{
         let innerHTML = "<input type='hidden' value='m' name='typeCollecte'>" +
             "<label for=\"libCollecte\">Libellé collecte</label><input class='form-control' type=\"text\" id=\"libCollecte\"  name=\"libCollecte\"><br>" +
-            "                        <label for=\"dateCollecte\">Date Collecte</label><input class='form-control' type=\"date\" id=\"dateCollecte\"  name=\"dateCollecte\"><br>" +
             "                        <label for='lieuCollecte'>Lieu</label><input type='text' class='form-control' id='lieuCollecte' name='lieuCollecte'><br>" +
             "                        <label for='ville'>Ville</label>" +
             "                        <select id=\"ville\" class=\"form-control\" name='ville'>";
@@ -97,10 +95,6 @@ function creerCollecteForm(typeCollecte){
             });
     }
 }
-
-function dateCollecte(){
-    console.log("pl");
-}
 $(document).ready(function(){
     let typeEvent = document.getElementById("typeEvent");
     let typeCollecteDiv = document.getElementById("typeCollecteDiv");
@@ -132,7 +126,6 @@ $(document).ready(function(){
             formCollecte.innerHTML = "";
             formCollecte.className = "";
             typeCollecteDiv.innerHTML = "";
-            console.log("Autre type d'evenement");
         }
     });
 });

@@ -18,7 +18,7 @@ class CreateMessagesTable extends Migration
             $table->integer("donneur_id")->unsigned()->index();
             $table->foreign("donneur_id")->references("id")->on("donneurs")->onDelete("cascade");
             $table->string("objet");
-            $table->string("contenu");
+            $table->text("contenu");
             $table->string("reponse")->nullable()->default(null);
             $table->timestamp("date_reponse")->nullable()->default(null);
             $table->integer("benevole_id")->unsigned()->index()->nullable()->default(null);

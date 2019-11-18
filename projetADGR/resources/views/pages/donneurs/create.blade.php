@@ -103,8 +103,11 @@
                     <label for="username">Nom d'utilisateur</label>
                     <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur"><br>
 
+                    <span id="mdpmsg"></span>
                     <label for="password">Mot de passe</label>
-                    <input type="password" name="password" class="form-control" placeholder="Mot de passe"><br>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe"><br>
+                    <label for="passwordVerification">Resaisissez le mot de passe</label>
+                    <input type="password" id="passwordVerification" class="form-control" placeholder="Resaisissez le mot de passe"><br>
 
                     <label for="remarque">Remarque(s)</label>
                     <input type="textarea" name="remarque" id="remarque" class="form-control" placeholder="Remarque(s)"><br>
@@ -165,6 +168,38 @@
                         console.log(reject);
                     }
                 });
+            });
+            $("#passwordVerification").on("keyup", function(){
+                if($(this).val() !== $("#password").val()){
+                    $("#mdpmsg").text("Les mots de passe ne sont pas identiques :(");
+                    $("#mdpmsg").css("color", "red");
+                    $(this).css("background-color", "#FF5050");
+                    $(this).css("color", "#FFFFFF");
+                    $("#password").css("background-color", "#FF5050");
+                    $("#password").css("color", "#FFFFFF");
+                }else{
+                    $("#mdpmsg").text("");
+                    $(this).css("background-color","");
+                    $(this).css("color", "");
+                    $("#password").css("background-color", "");
+                    $("#password").css("color", "");
+                }
+            });
+            $("#password").on("keyup", function(){
+                if($(this).val() !== $("#passwordVerification").val()){
+                    $("#mdpmsg").text("Les mots de passe ne sont pas identiques :(");
+                    $("#mdpmsg").css("color", "red");
+                    $(this).css("background-color", "#FF5050");
+                    $(this).css("color", "#FFFFFF");
+                    $("#passwordVerification").css("background-color", "#FF5050");
+                    $("#passwordVerification").css("color", "#FFFFFF");
+                }else{
+                    $("#mdpmsg").text("");
+                    $(this).css("background-color","");
+                    $(this).css("color", "");
+                    $("#passwordVerification").css("background-color", "");
+                    $("#passwordVerification").css("color", "");
+                }
             });
         });
     </script>

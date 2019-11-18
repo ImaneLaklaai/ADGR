@@ -12,7 +12,11 @@
                 @if(file_exists("/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg"))
                     <a href="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg"><img src="/storage/profilePhotos/donneurs/{{$donneur->id}}.jpg" width="100%"></a>
                 @else
-                    <a href="/storage/logo.jpg"><img src="/storage/logo.jpg" width="100%"></a>
+                    @if($donneur->sexe == "Homme")
+                        <a href="/storage/profilePhotos/man.jpg"><img src="/storage/profilePhotos/man.jpg" width="80%"></a>
+                    @else
+                        <a href="/storage/profilePhotos/woman.jpg"><img src="/storage/profilePhotos/woman.jpg" width="100%"></a>
+                    @endif
                 @endif
             </div>
             <div class="col-md-9">

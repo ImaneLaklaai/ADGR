@@ -103,8 +103,9 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="ville" value="{{Auth::user()->zone->ville->id}}">
+    @if(Auth::user()->role->id == 1)
     <div class="row">
-
         <div class="col-lg-10">
             <div id="foo" style="cursor: pointer; background-color: #F5F5F5; border: solid 1px #DDDDDD; padding:10px; text-align: center; border-radius: 4px 4px 0 0">Recherche avancée <span class="fa arrow" id="arr"></span></div>
             <div id="bar" style="background-color: #F5F5F5; border:solid 1px #DDDDDD; border-top: none; display:none; text-align:center; border-radius: 0 0 4px 4px; padding:20px;">
@@ -132,6 +133,13 @@
             Nombre de donneurs par groupe sanguin
         </div>
     </div>
+    @else
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Distribution des donneurs par Groupe/aptitude</h3>
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-3">
             <div id="chart">
@@ -251,7 +259,8 @@
                 type: "post",
                 url: '/eventsStats',
                 data: {
-                    _token: "{{csrf_token()}}"
+                    _token: "{{csrf_token()}}",
+                    ville: ville,
                 },
                 success: function(data){
                     let reponse = JSON.parse(data);

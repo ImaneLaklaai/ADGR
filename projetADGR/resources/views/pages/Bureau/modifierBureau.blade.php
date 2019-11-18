@@ -9,22 +9,16 @@
                 <form action="/bureau/update/{{$idBureau}}" method="post">
                     {{csrf_field()}}
                     <?php
-                    $bureau = App\Bureau::find($idBureau)
+                        $bureau = App\Bureau::find($idBureau)
                     ?>
-                    <label for="libVille">Villes</label>
-                    {{--<select id="libVille" class="form-control" name="ville_id">--}}
-                        {{--@foreach(App\Ville::all() as $ville)--}}
-                            {{--@if($ville->id == $bureau->ville->id)--}}
-                                {{--<option value="{{$ville->id}}" selected>{{$ville->libVille}}</option>--}}
-                            {{--@else--}}
-                                {{--<option value="{{$ville->id}}">{{$ville->libVille}}</option>--}}
-                            {{--@endif--}}
-                        {{--@endforeach--}}
-                    {{--</select><br>--}}
-                    @foreach(\App\Ville::all() as $ville)
 
+                    <label for="villes">Villes</label><br>
+                    @foreach(\App\Ville::all() as $ville)
+                        <label for="ville{{$ville->id}}">{{$ville->libVille}}</label>
+                        <input type="checkbox" name="villes[]" value="{{$ville->id}}" id="ville{{$ville->id}}">
                     @endforeach
-                    <input type="date" class="form-control" name="dateCreation" value={{$bureau->dateCreation}}><br>
+                    <br><label for="dateCreation">Date de création</label>
+                    <input type="date" class="form-control" id="dateCreation" name="dateCreation" value={{$bureau->dateCreation}}><br>
                     <input type="submit" value="Modifier" class="btn btn-primary">
                     <input type="reset" value="Annuler" class="btn btn-primary">
                 </form>

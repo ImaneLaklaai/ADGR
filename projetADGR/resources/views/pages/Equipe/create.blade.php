@@ -9,11 +9,20 @@
                     {{csrf_field()}}
                     <label for="evenement">Evénement</label>
                     <select name="evenement" id="evenement" class="form-control">
+                        <?php
+                            $flag = false;
+                        ?>
                         @foreach(\App\Evenement::all() as $event)
-                            @if(! $event->equipe)
+                            @if(! isset($event->equipe) && !isset($event->comiteEvenement->comite))
                                 <option value="{{$event->id}}">{{$event->libelle}}</option>
+                                <?php
+                                    $flag = true;
+                                ?>
                             @endif
                         @endforeach
+                        @if(!$flag)
+                            <option value="" selected>Aucun événement sans résponsable</option>
+                        @endif
                     </select><br>
                     <fieldset>
                         <legend>Membres</legend>

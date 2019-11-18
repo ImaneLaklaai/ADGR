@@ -11,12 +11,14 @@ class centres_table_seeder extends Seeder
      */
     public function run()
     {
-        Centre::create([
-            "adresse" => "Adresse Centre",
-            "x" => "0",
-            "y" => "0",
-            "libCentre" => "CRTS",
-            "zone_id" => "1",
-        ]);
+        for($i = 1 ; $i <= 20; $i++){
+            Centre::create([
+                "adresse" => "Adresse Centre".$i,
+                "x" => "0",
+                "y" => "0",
+                "libCentre" => "CRTS".$i,
+                "zone_id" => $i,
+            ]);
+        }
     }
 }

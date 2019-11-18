@@ -11,11 +11,12 @@ class villes_table_seeder extends Seeder
      */
     public function run()
     {
-        Ville::create([
-            "libVille" => "Marrakech",
-        ]);
-        Ville::create([
-            "libVille" => "Casablanca",
-        ]);
+
+        for($i = 1; $i<=10; $i++){
+            Ville::create([
+                "libVille" => "Ville".$i,
+            ]);
+        }
+
     }
 }

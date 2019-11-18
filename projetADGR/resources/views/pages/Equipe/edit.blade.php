@@ -25,27 +25,28 @@
                     <fieldset>
                         <legend>Membres</legend>
                             @foreach(\App\Benevole::all() as $benevole)
-                                @if(count($benevole->benevoleEquipe) > 0)
-                                    <?php
-                                    $flag = false;
-                                        ?>
+                                <?php
+                                    $flag1 = false;
+                                ?>
                                     @foreach ($benevole->benevoleEquipe as $be)
+                                        <?php
+                                            $flag2 = false;
+                                        ?>
                                         @if($be->equipe->id == $equipe->id)
                                             <?php
-                                                $flag = true;
+                                                $flag1 = true;
+                                                $flag2 = true;
                                             ?>
                                         @endif
-                                        @if($flag)
+                                        @if($flag2)
+
                                                 <input type="checkbox" class="membres" data-nom="{{$benevole->nom." ". $benevole->prenom}}" name="membres[]" value="{{$benevole->id}}" id="benevole{{$benevole->id}}" checked> <label for="benevole{{$benevole->id}}">{{$benevole->nom." ". $benevole->prenom}}</label>
-                                                <a href="/benevole/show/{{$benevole->id}}">Afficher...</a><br>
-                                        @else
-                                                <input type="checkbox" class="membres" data-nom="{{$benevole->nom." ". $benevole->prenom}}" name="membres[]" value="{{$benevole->id}}" id="benevole{{$benevole->id}}"> <label for="benevole{{$benevole->id}}">{{$benevole->nom." ". $benevole->prenom}}</label>
                                                 <a href="/benevole/show/{{$benevole->id}}">Afficher...</a><br>
                                         @endif
                                     @endforeach
-                                @else
-                                <input type="checkbox" class="membres" data-nom="{{$benevole->nom." ". $benevole->prenom}}" name="membres[]" value="{{$benevole->id}}" id="benevole{{$benevole->id}}"> <label for="benevole{{$benevole->id}}">{{$benevole->nom." ". $benevole->prenom}}</label>
-                                <a href="/benevole/show/{{$benevole->id}}">Afficher...</a><br>
+                                @if(!$flag1)
+                                        <input type="checkbox" class="membres" data-nom="{{$benevole->nom." ". $benevole->prenom}}" name="membres[]" value="{{$benevole->id}}" id="benevole{{$benevole->id}}"> <label for="benevole{{$benevole->id}}">{{$benevole->nom." ". $benevole->prenom}}</label>
+                                        <a href="/benevole/show/{{$benevole->id}}">Afficher...</a><br>
                                 @endif
                             @endforeach
                     </fieldset><br>
@@ -53,7 +54,7 @@
                         <label for="responsable">Responsable</label>
                         <div class="well">Choisissez un membre !</div>
                     </div>
-                    <input type="submit" value="Créer" class="btn btn-primary">
+                    <input type="submit" value="Modifier" class="btn btn-primary">
                     <input type="reset" value="Annuler" class="btn btn-danger">
                 </form>
             </div>
